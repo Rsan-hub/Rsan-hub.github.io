@@ -29,8 +29,9 @@
 <meta property="og:description" content="前言用元宝DeepSeek盘了一下代码随想录的机试营题目，拟定了一个刷题计划。 这周刷完基础题，下周开始二叉树。树、dp和图才是重点。 练习模式 ACM 模式：机试规定模式，自己写输入输出逻辑。适合数组、字符串的模拟题、规则题。 核心代码模式：只需实现核心算法。适合链表、树等数据结构操作题，快速验证算法思路。  对于复杂数据输入题，前期可先用核心代码模式攻坚算法思想，后期再找 ACM 模式题目巩固">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://file1.kamacoder.com/i/algo/27.%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0-%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95.gif">
+<meta property="og:image" content="https://file1.kamacoder.com/i/algo/977.%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E5%B9%B3%E6%96%B9.gif">
 <meta property="article:published_time" content="2026-01-27T14:57:05.000Z">
-<meta property="article:modified_time" content="2026-01-30T07:29:02.401Z">
+<meta property="article:modified_time" content="2026-01-30T08:41:04.136Z">
 <meta property="article:author" content="Rsan Ding">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://file1.kamacoder.com/i/algo/27.%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0-%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95.gif">
@@ -226,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.4k 字
+          2.7k 字
         
       </span>
     
@@ -237,7 +238,7 @@
         
         
         
-          20 分钟
+          23 分钟
         
       </span>
     
@@ -499,7 +500,7 @@
 <tbody><tr>
 <td><code>[left, right]</code></td>
 <td>填<code>&lt;=</code>。闭区间上<code>left == right</code>合法，例如<code>[1,1]</code>显然符合区间定义。</td>
-<td>填<code>mid-1</code>。条件语句为真时，<code>mid</code>在区间外，但右端点<code>right</code>始终在区间内。<br />因此，右端点只能再向左偏移一个单位。</td>
+<td>填<code>mid-1</code>。条件语句为真时，<code>mid</code>在区间外，但右端点<code>right</code>始终在区间内。因此，右端点只能再向左偏移一个单位。</td>
 </tr>
 <tr>
 <td><code>[left, right)</code></td>
@@ -510,22 +511,32 @@
 <p>实际上，当传入数组只有一个元素时，不能用左闭右开区间定义。左闭右闭是最保险的。</p>
 <h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-comment">// 区间1：[left, right]</span><br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">search1</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums, <span class="hljs-type">int</span> target)</span> </span>&#123;<br>        <span class="hljs-type">int</span> mid, left=<span class="hljs-number">0</span>, right=nums.<span class="hljs-built_in">size</span>()<span class="hljs-number">-1</span>;<br>        <span class="hljs-keyword">while</span> (left &lt;= right) &#123;                 <span class="hljs-comment">// 边界条件1❗️</span><br>            mid = left + (right - left) / <span class="hljs-number">2</span>;    <span class="hljs-comment">// 防止溢出</span><br>            <span class="hljs-keyword">if</span> (nums[mid] &gt; target) &#123;<br>                right = mid<span class="hljs-number">-1</span>;                  <span class="hljs-comment">// 边界条件2❗️</span><br>            &#125;<br>            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (nums[mid] &lt; target) &#123;<br>                left = mid<span class="hljs-number">+1</span>;                   <span class="hljs-comment">// left必在区间内，因此总是mid+1</span><br>            &#125;<br>            <span class="hljs-keyword">else</span> <span class="hljs-keyword">break</span>;<br>        &#125;<br>        <span class="hljs-keyword">if</span> (nums[mid] == target) <span class="hljs-keyword">return</span> mid;<br>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>    &#125;<br>    <span class="hljs-comment">// 区间2：[left, right)</span><br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">search2</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums, <span class="hljs-type">int</span> target)</span> </span>&#123;<br>        <span class="hljs-type">int</span> mid, left=<span class="hljs-number">0</span>, right=nums.<span class="hljs-built_in">size</span>()<span class="hljs-number">-1</span>;<br>        <span class="hljs-keyword">while</span> (left &lt; right) &#123;                  <span class="hljs-comment">// 边界条件1❗️</span><br>            mid = left + (right - left) / <span class="hljs-number">2</span>;    <span class="hljs-comment">// 防止溢出</span><br>            <span class="hljs-keyword">if</span> (nums[mid] &gt; target) &#123;<br>                right = mid;                    <span class="hljs-comment">// 边界条件2❗️</span><br>            &#125;<br>            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (nums[mid] &lt; target) &#123;<br>                left = mid<span class="hljs-number">+1</span>;                   <span class="hljs-comment">// left必在区间内，因此总是mid+1</span><br>            &#125;<br>            <span class="hljs-keyword">else</span> <span class="hljs-keyword">break</span>;<br>        &#125;<br>        <span class="hljs-keyword">if</span> (nums[mid] == target) <span class="hljs-keyword">return</span> mid;<br>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
-<h3 id="27-移除元素（双指针法）"><a href="#27-移除元素（双指针法）" class="headerlink" title="27. 移除元素（双指针法）"></a>27. 移除元素（双指针法）</h3><p>参考：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/remove-element">力扣题目链接</a>、<a target="_blank" rel="noopener" href="https://programmercarl.com/0027.%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0.html">27. 移除元素 | 代码随想录</a></p>
+<hr>
+<h3 id="27-移除元素（快慢指针）"><a href="#27-移除元素（快慢指针）" class="headerlink" title="27. 移除元素（快慢指针）"></a>27. 移除元素（快慢指针）</h3><p>参考：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/remove-element">力扣题目链接</a>、<a target="_blank" rel="noopener" href="https://programmercarl.com/0027.%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0.html">27. 移除元素 | 代码随想录</a></p>
 <h4 id="数组基础"><a href="#数组基础" class="headerlink" title="数组基础"></a>数组基础</h4><p>地址空间连续，是数组良好性质的前提，不能被数组操作破坏。例如，不能单独删除数组中的某个元素，只能用后续元素覆盖。覆盖结束后，即可无视最后一个元素，视数组长度为n-1。</p>
 <p>删除操作后，数组的<strong>大小</strong>(有效元素个数)改变，但<strong>容量</strong>(所占存储空间)不变。对应C++ vector容器即vec.erase()操作后，vec.size()改变，而vec.capacity()不变。</p>
-<p>一种原地实现方法是<strong>循环覆盖</strong>，因此最低时间复杂度为O(n)，这就是vec.erase()的实现方法：双指针法。</p>
-<h4 id="双指针法"><a href="#双指针法" class="headerlink" title="双指针法"></a>双指针法</h4><p>双指针法（快慢指针法）： <strong>通过一个快指针和慢指针，在一个 for 循环下完成两个 for 循环的工作。</strong></p>
+<p>一种原地实现方法是<strong>循环覆盖</strong>，因此时间复杂度最低为O(n)，这就是vec.erase()的实现方法：快慢指针法。</p>
+<h4 id="快慢指针"><a href="#快慢指针" class="headerlink" title="快慢指针"></a>快慢指针</h4><p>快慢指针法（双指针法）： <strong>通过一个快指针和慢指针，在一个 for 循环下完成两个 for 循环的工作。</strong></p>
 <p>双指针更新一个新数组，即不含有目标元素的数组。定义快慢指针为</p>
 <ul>
 <li>快指针：<strong>寻找</strong>新数组元素的指针，指向下一个待检查元素；</li>
 <li>慢指针：<strong>承接</strong>新数组元素的指针，指向新数组后一个位置。</li>
 </ul>
-<p>覆盖过程见代码随想录的动图，理解了双指针的定义就很直观了。</p>
+<p>覆盖过程见代码随想录的动图，理解了快慢指针的定义就很直观了。</p>
 <p><img src="https://file1.kamacoder.com/i/algo/27.%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0-%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95.gif" srcset="/img/loadingdog.gif" lazyload alt="27.移除元素-双指针法 | 代码随想录"></p>
 <h4 id="代码实现-1"><a href="#代码实现-1" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">removeElement</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums, <span class="hljs-type">int</span> val)</span> </span>&#123;<br>        <span class="hljs-type">int</span> slow = <span class="hljs-number">0</span>, fast = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">while</span> (fast != nums.<span class="hljs-built_in">size</span>()) &#123;<br>            <span class="hljs-keyword">if</span> (nums[fast] == val) fast++;      <span class="hljs-comment">// 寻找新元素</span><br>            <span class="hljs-keyword">else</span> &#123;<br>                nums[slow] = nums[fast];        <span class="hljs-comment">// 承接新元素</span><br>                fast++; slow++;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> slow;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
+<hr>
 <h3 id="977-有序数组的平方"><a href="#977-有序数组的平方" class="headerlink" title="977. 有序数组的平方"></a>977. 有序数组的平方</h3><p>参考：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/squares-of-a-sorted-array">力扣题目链接</a>、<a target="_blank" rel="noopener" href="https://programmercarl.com/0977.%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E5%B9%B3%E6%96%B9.html">977.有序数组的平方 | 代码随想录</a></p>
-<h4 id="代码实现-2"><a href="#代码实现-2" class="headerlink" title="代码实现"></a>代码实现</h4>
+<h4 id="双指针法（类归并）"><a href="#双指针法（类归并）" class="headerlink" title="双指针法（类归并）"></a>双指针法（类归并）</h4><p>暴力法很好想，平方后快排，时间复杂度O(nlogn)，但没有利用数组的有序性。</p>
+<p>数组平方后的有序性在于：绝对值小的在中间，大的在两边。因此可以定义双指针 <code>p</code> <code>q</code> 指向数组两端，辅助数组 <code>result</code> 通过指针 <code>r</code> ，从右往左逐个接收p、q指向的更大值。</p>
+<p><img src="https://file1.kamacoder.com/i/algo/977.%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E5%B9%B3%E6%96%B9.gif" srcset="/img/loadingdog.gif" lazyload alt="977.有序数组的平方 | 代码随想录"></p>
+<p>思路类似归并排序，对于传入数组，以0为界分为左右两个有序子表，通过一次“边平方边归并”，生成一个更大的有序表。</p>
+<h4 id="代码实现-2"><a href="#代码实现-2" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">sortedSquares</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span>&#123;<br>        <span class="hljs-type">int</span> p=<span class="hljs-number">0</span>, q=nums.<span class="hljs-built_in">size</span>()<span class="hljs-number">-1</span>, r=q;<br>        <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">result</span><span class="hljs-params">(nums.size(), <span class="hljs-number">0</span>)</span></span>;<br>        <span class="hljs-keyword">while</span> (p &lt;= q) &#123;                                <span class="hljs-comment">// 不落下p==q的元素</span><br>            <span class="hljs-keyword">if</span> (nums[p]*nums[p] &gt; nums[q]*nums[q]) &#123;<br>                result[r--] = nums[p]*nums[p++];        <span class="hljs-comment">// p++：使用后即更新</span><br>            &#125;<br>            <span class="hljs-keyword">else</span> &#123;<br>                result[r--] = nums[q]*nums[q--];<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> result;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="54-替换数字"><a href="#54-替换数字" class="headerlink" title="54. 替换数字"></a>54. 替换数字</h3><p>参考：<a target="_blank" rel="noopener" href="https://kamacoder.com/problempage.php?pid=1064">卡码网题目链接</a>、<a target="_blank" rel="noopener" href="https://programmercarl.com/kamacoder/0054.%E6%9B%BF%E6%8D%A2%E6%95%B0%E5%AD%97.html">替换数字 | 代码随想录</a></p>
+<h4 id=""><a href="#" class="headerlink" title=""></a></h4><h4 id="代码实现-3"><a href="#代码实现-3" class="headerlink" title="代码实现"></a>代码实现</h4>
                 
               </div>
             
