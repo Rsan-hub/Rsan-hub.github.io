@@ -21,15 +21,15 @@
   <meta name="author" content="Rsan Ding">
   <meta name="keywords" content="">
   
-    <meta name="description" content="作业一1、讲一下深度学习都有哪些组成，以及每一部分你的理解?2、为什么神经网络中必须使用激活函数，你都知道哪些激活函数?3、输出层的激活函数怎么选择?4、梯度是什么?链式求导法则?5、常见的优化器有哪些?区别?6、你了解的损失函数有哪些?它们的公式以及应用场景?7、神经网络训练中的超参数有哪些?8、你了解哪些常用的模型评估指标?9、什么是过拟合和欠拟合?解决方法有哪些?">
+    <meta name="description" content="封面为BP算法可视化，来自Understanding Backpropagation | Towards Data Science，作者Brent Scarff。 作业一1、讲一下深度学习都有哪些组成，以及每一部分你的理解?2、为什么神经网络中必须使用激活函数，你都知道哪些激活函数?3、输出层的激活函数怎么选择?4、梯度是什么?链式求导法则?5、常见的优化器有哪些?区别?6、你了解的损失函数有哪些">
 <meta property="og:type" content="article">
 <meta property="og:title" content="深度学习笔记">
 <meta property="og:url" content="https://rsanding.top/2026/01/30/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="Mancountry">
-<meta property="og:description" content="作业一1、讲一下深度学习都有哪些组成，以及每一部分你的理解?2、为什么神经网络中必须使用激活函数，你都知道哪些激活函数?3、输出层的激活函数怎么选择?4、梯度是什么?链式求导法则?5、常见的优化器有哪些?区别?6、你了解的损失函数有哪些?它们的公式以及应用场景?7、神经网络训练中的超参数有哪些?8、你了解哪些常用的模型评估指标?9、什么是过拟合和欠拟合?解决方法有哪些?">
+<meta property="og:description" content="封面为BP算法可视化，来自Understanding Backpropagation | Towards Data Science，作者Brent Scarff。 作业一1、讲一下深度学习都有哪些组成，以及每一部分你的理解?2、为什么神经网络中必须使用激活函数，你都知道哪些激活函数?3、输出层的激活函数怎么选择?4、梯度是什么?链式求导法则?5、常见的优化器有哪些?区别?6、你了解的损失函数有哪些">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-01-30T12:46:05.000Z">
-<meta property="article:modified_time" content="2026-01-30T12:50:37.357Z">
+<meta property="article:modified_time" content="2026-01-30T13:24:50.395Z">
 <meta property="article:author" content="Rsan Ding">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -224,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          162 字
+          178 字
         
       </span>
     
@@ -281,7 +281,8 @@
             
               <div class="markdown-body">
                 
-                <h1 id="作业一"><a href="#作业一" class="headerlink" title="作业一"></a>作业一</h1><h4 id="1、讲一下深度学习都有哪些组成，以及每一部分你的理解"><a href="#1、讲一下深度学习都有哪些组成，以及每一部分你的理解" class="headerlink" title="1、讲一下深度学习都有哪些组成，以及每一部分你的理解?"></a>1、讲一下深度学习都有哪些组成，以及每一部分你的理解?</h4><h4 id="2、为什么神经网络中必须使用激活函数，你都知道哪些激活函数"><a href="#2、为什么神经网络中必须使用激活函数，你都知道哪些激活函数" class="headerlink" title="2、为什么神经网络中必须使用激活函数，你都知道哪些激活函数?"></a>2、为什么神经网络中必须使用激活函数，你都知道哪些激活函数?</h4><h4 id="3、输出层的激活函数怎么选择"><a href="#3、输出层的激活函数怎么选择" class="headerlink" title="3、输出层的激活函数怎么选择?"></a>3、输出层的激活函数怎么选择?</h4><h4 id="4、梯度是什么-链式求导法则"><a href="#4、梯度是什么-链式求导法则" class="headerlink" title="4、梯度是什么?链式求导法则?"></a>4、梯度是什么?链式求导法则?</h4><h4 id="5、常见的优化器有哪些-区别"><a href="#5、常见的优化器有哪些-区别" class="headerlink" title="5、常见的优化器有哪些?区别?"></a>5、常见的优化器有哪些?区别?</h4><h4 id="6、你了解的损失函数有哪些-它们的公式以及应用场景"><a href="#6、你了解的损失函数有哪些-它们的公式以及应用场景" class="headerlink" title="6、你了解的损失函数有哪些?它们的公式以及应用场景?"></a>6、你了解的损失函数有哪些?它们的公式以及应用场景?</h4><h4 id="7、神经网络训练中的超参数有哪些"><a href="#7、神经网络训练中的超参数有哪些" class="headerlink" title="7、神经网络训练中的超参数有哪些?"></a>7、神经网络训练中的超参数有哪些?</h4><h4 id="8、你了解哪些常用的模型评估指标"><a href="#8、你了解哪些常用的模型评估指标" class="headerlink" title="8、你了解哪些常用的模型评估指标?"></a>8、你了解哪些常用的模型评估指标?</h4><h4 id="9、什么是过拟合和欠拟合-解决方法有哪些"><a href="#9、什么是过拟合和欠拟合-解决方法有哪些" class="headerlink" title="9、什么是过拟合和欠拟合?解决方法有哪些?"></a>9、什么是过拟合和欠拟合?解决方法有哪些?</h4>
+                <p>封面为BP算法可视化，来自<a target="_blank" rel="noopener" href="https://towardsdatascience.com/understanding-backpropagation-abcc509ca9d0/">Understanding Backpropagation | Towards Data Science</a>，作者<a target="_blank" rel="noopener" href="https://towardsdatascience.com/author/brent-scarff/">Brent Scarff</a>。</p>
+<h1 id="作业一"><a href="#作业一" class="headerlink" title="作业一"></a>作业一</h1><h4 id="1、讲一下深度学习都有哪些组成，以及每一部分你的理解"><a href="#1、讲一下深度学习都有哪些组成，以及每一部分你的理解" class="headerlink" title="1、讲一下深度学习都有哪些组成，以及每一部分你的理解?"></a>1、讲一下深度学习都有哪些组成，以及每一部分你的理解?</h4><h4 id="2、为什么神经网络中必须使用激活函数，你都知道哪些激活函数"><a href="#2、为什么神经网络中必须使用激活函数，你都知道哪些激活函数" class="headerlink" title="2、为什么神经网络中必须使用激活函数，你都知道哪些激活函数?"></a>2、为什么神经网络中必须使用激活函数，你都知道哪些激活函数?</h4><h4 id="3、输出层的激活函数怎么选择"><a href="#3、输出层的激活函数怎么选择" class="headerlink" title="3、输出层的激活函数怎么选择?"></a>3、输出层的激活函数怎么选择?</h4><h4 id="4、梯度是什么-链式求导法则"><a href="#4、梯度是什么-链式求导法则" class="headerlink" title="4、梯度是什么?链式求导法则?"></a>4、梯度是什么?链式求导法则?</h4><h4 id="5、常见的优化器有哪些-区别"><a href="#5、常见的优化器有哪些-区别" class="headerlink" title="5、常见的优化器有哪些?区别?"></a>5、常见的优化器有哪些?区别?</h4><h4 id="6、你了解的损失函数有哪些-它们的公式以及应用场景"><a href="#6、你了解的损失函数有哪些-它们的公式以及应用场景" class="headerlink" title="6、你了解的损失函数有哪些?它们的公式以及应用场景?"></a>6、你了解的损失函数有哪些?它们的公式以及应用场景?</h4><h4 id="7、神经网络训练中的超参数有哪些"><a href="#7、神经网络训练中的超参数有哪些" class="headerlink" title="7、神经网络训练中的超参数有哪些?"></a>7、神经网络训练中的超参数有哪些?</h4><h4 id="8、你了解哪些常用的模型评估指标"><a href="#8、你了解哪些常用的模型评估指标" class="headerlink" title="8、你了解哪些常用的模型评估指标?"></a>8、你了解哪些常用的模型评估指标?</h4><h4 id="9、什么是过拟合和欠拟合-解决方法有哪些"><a href="#9、什么是过拟合和欠拟合-解决方法有哪些" class="headerlink" title="9、什么是过拟合和欠拟合?解决方法有哪些?"></a>9、什么是过拟合和欠拟合?解决方法有哪些?</h4>
                 
               </div>
             
