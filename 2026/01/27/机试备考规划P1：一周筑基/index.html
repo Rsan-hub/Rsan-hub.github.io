@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://rsanding.top/img/covers/pointed.png">
 <meta property="article:published_time" content="2026-01-27T14:57:05.000Z">
-<meta property="article:modified_time" content="2026-01-31T18:01:18.625Z">
+<meta property="article:modified_time" content="2026-01-31T18:04:10.969Z">
 <meta property="article:author" content="Rsan Ding">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://rsanding.top/img/covers/pointed.png">
@@ -621,7 +621,7 @@
 <li>截断字符串。</li>
 </ol>
 <p>开头空格好去除，接着思考去除中间多余空格时，怎么用O(n)算法遍历数组。想到<strong>双指针法的共性：用一层 for 完成原需两层 for 的数组遍历任务</strong>。又因为要从左往右遍历，想到快慢指针法。</p>
-<p>其中，<strong>快指针要排除的指定元素是“多余空格”</strong>。难点来了：怎么定义“多余空格”？</p>
+<p>其中，<strong>快指针要排除的元素是“多余空格”</strong>。难点来了：怎么定义“多余空格”？</p>
 <p>代码随想录的算法太复杂，这里借鉴b站评论区的<strong>状态机</strong>思路：</p>
 <blockquote>
 <p>使用一个状态标志<code>need</code>，当<code>fast</code>指向字母时设<code>need = 1</code>，说明需要保留下一个空格；当<code>fast</code>指向空格时设<code>need = 0</code>，说明不要保留下一个空格。只有<code>need == 1</code>时才能更新慢指针位置。</p>
