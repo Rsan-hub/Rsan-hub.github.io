@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://rsanding.top/img/covers/pointed.png">
 <meta property="article:published_time" content="2026-01-27T14:57:05.000Z">
-<meta property="article:modified_time" content="2026-01-31T18:21:08.482Z">
+<meta property="article:modified_time" content="2026-01-31T18:44:14.410Z">
 <meta property="article:author" content="Rsan Ding">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://rsanding.top/img/covers/pointed.png">
@@ -237,7 +237,7 @@
         
         
         
-          44 分钟
+          45 分钟
         
       </span>
     
@@ -482,18 +482,18 @@
 <li><strong>为树做准备</strong>：本周为树打基础的算法有<strong>递归</strong>（反转链表等）、<strong>栈</strong>（二叉树迭代遍历）、<strong>队列</strong>（二叉树层序遍历）、<strong>双指针</strong>。练习时有意识想想这个技巧在树里怎么用。</li>
 </ol>
 <hr>
-<h1 id="模板汇总"><a href="#模板汇总" class="headerlink" title="模板汇总"></a>模板汇总</h1><p>每种主题题目的模板解法，可以全文搜索关键词。</p>
+<h1 id="模板汇总"><a href="#模板汇总" class="headerlink" title="模板汇总"></a>模板汇总</h1><p>每类题目涉及关键词如下，方便快速全文搜索。</p>
 <ul>
-<li>数组：概念定义、双指针法、后序处理、滑动窗口、前缀和、两次翻转、状态机。</li>
+<li>数组：#概念约定、#双指针法、#快慢指针、#后序处理、#滑动窗口、#前缀和、#两次翻转、#状态机。</li>
 <li>链表：</li>
 <li>哈希表：</li>
 <li>字符串：</li>
 <li>栈和队列：</li>
 </ul>
 <h1 id="Day-1-数组基础"><a href="#Day-1-数组基础" class="headerlink" title="Day 1 数组基础"></a>Day 1 数组基础</h1><h3 id="704-二分查找"><a href="#704-二分查找" class="headerlink" title="704. 二分查找"></a>704. 二分查找</h3><p>参考：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/binary-search">力扣题目链接</a>、<a target="_blank" rel="noopener" href="https://programmercarl.com/0704.%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE.html#%E6%80%9D%E8%B7%AF">704. 二分查找 | 代码随想录</a>。</p>
-<p>关键词：开闭区间，概念定义</p>
+<p>关键词：#开闭区间，#概念约定</p>
 <h4 id="搜索区间"><a href="#搜索区间" class="headerlink" title="搜索区间"></a>搜索区间</h4><p>二分法的每一步搜索，都被限制在一个由<strong>端点参数</strong> <code>left</code> 与 <code>right</code> 标定的<strong>区间</strong>里。然而，描述区间还需要一个属性：<strong>开闭规则</strong>。它无法在函数中显式给出，因此常被忽视，但直接关系到边界条件写法。</p>
-<p>一个完整的<strong>区间定义</strong>由端点参数与开闭规则组成，是二分搜索中的循环不变量。遵守循环不变量原则，就是提前定义好不变的概念，并在编写循环、边界条件时始终遵守概念。</p>
+<p>一个完整的<strong>区间定义</strong>由端点参数与开闭规则组成，是二分搜索中的循环不变量。遵守循环不变量原则，就是提前约定好不变的概念，并在编写循环、边界条件时始终遵守概念。</p>
 <h4 id="区间定义"><a href="#区间定义" class="headerlink" title="区间定义"></a>区间定义</h4><p>二分搜索区间的常见定义：<strong>左闭右闭</strong> <code>[left, right]</code> 和<strong>左闭右开</strong> <code>[left, right)</code> ，关系到两个边界条件：<code>while (left ❓ right)</code> 和 <code>if (nums[mid] &gt; target) right == ❓</code> 的写法。</p>
 <p>两个条件本质在问：是否允许左右端点相等、是否允许右端点在区间外。从区间定义出发思考，都很容易回答。</p>
 <p>两种定义一般都能解题，主要注意选一种定义就要遵守一套边界条件，不要搞混。下面列表简述。</p>
@@ -521,24 +521,25 @@
 
 <hr>
 <h3 id="27-移除元素"><a href="#27-移除元素" class="headerlink" title="27. 移除元素"></a>27. 移除元素</h3><p>参考：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/remove-element">力扣题目链接</a>、<a target="_blank" rel="noopener" href="https://programmercarl.com/0027.%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0.html">27. 移除元素 | 代码随想录</a></p>
-<p>关键词：双指针法、快慢指针</p>
+<p>关键词：#双指针法、#快慢指针</p>
 <h4 id="数组基础"><a href="#数组基础" class="headerlink" title="数组基础"></a>数组基础</h4><p>地址空间连续，是数组良好性质的前提，不能被数组操作破坏。例如，不能单独删除数组中的某个元素，只能用后续元素覆盖。覆盖结束后，即可无视最后一个元素，视数组长度为n-1。</p>
 <p>删除操作后，数组的<strong>大小</strong>(有效元素个数)改变，但<strong>容量</strong>(所占存储空间)不变。对应C++ vector容器即vec.erase()操作后，vec.size()改变，而vec.capacity()不变。</p>
 <p>一种原地实现方法是<strong>循环覆盖</strong>，因此时间复杂度最低为O(n)，这就是vec.erase()的实现方法：快慢指针法。</p>
 <h4 id="双指针法"><a href="#双指针法" class="headerlink" title="双指针法"></a>双指针法</h4><p>双指针法： <strong>通过两个指针，在一个 for 循环下遍历一次数组，完成两个 for 循环的工作。</strong></p>
 <p>双指针有各种方向：从左往右、从外到内…… 本题是从左往右型，也叫<strong>快慢指针</strong>。</p>
-<p>快慢指针更新一个新数组，<strong>由快指针排除指定元素，确保其不进入新数组</strong>。定义快慢指针为：</p>
+<p>快慢指针合作更新一个新数组。定义快慢指针为：</p>
 <ul>
 <li>快指针：<strong>寻找</strong>新数组元素的指针，指向下一个待检查元素。</li>
-<li>慢指针：<strong>承接</strong>新数组元素的指针，指向新数组后一个位置。</li>
+<li>慢指针：<strong>接收</strong>新数组元素的指针，指向新数组后一个位置。</li>
 </ul>
-<p>覆盖过程见代码随想录的动图，理解了快慢指针的定义就很直观了。</p>
+<p>也可以反过来理解，<strong>快指针负责排除指定元素，确保其不进入新数组</strong>。</p>
+<p>新数组构建过程如下，理解了快慢指针的定义就很直观了。</p>
 <p><img src="https://file1.kamacoder.com/i/algo/27.%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0-%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95.gif" srcset="/img/loadingdog.gif" lazyload alt="27.移除元素-双指针法 | 代码随想录"></p>
 <h4 id="代码实现-1"><a href="#代码实现-1" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">removeElement</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums, <span class="hljs-type">int</span> val)</span> </span>&#123;<br>        <span class="hljs-type">int</span> slow = <span class="hljs-number">0</span>, fast = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">while</span> (fast != nums.<span class="hljs-built_in">size</span>()) &#123;<br>            <span class="hljs-keyword">if</span> (nums[fast] == val) fast++;      <span class="hljs-comment">// 寻找新元素</span><br>            <span class="hljs-keyword">else</span> &#123;<br>                nums[slow] = nums[fast];        <span class="hljs-comment">// 承接新元素</span><br>                fast++; slow++;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> slow;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
 <hr>
 <h3 id="977-有序数组的平方"><a href="#977-有序数组的平方" class="headerlink" title="977. 有序数组的平方"></a>977. 有序数组的平方</h3><p>参考：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/squares-of-a-sorted-array">力扣题目链接</a>、<a target="_blank" rel="noopener" href="https://programmercarl.com/0977.%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E5%B9%B3%E6%96%B9.html">977.有序数组的平方 | 代码随想录</a></p>
-<p>关键词：双指针法、归并</p>
+<p>关键词：#双指针法、#归并</p>
 <h4 id="双指针法-1"><a href="#双指针法-1" class="headerlink" title="双指针法"></a>双指针法</h4><p>暴力法很好想，平方后快排，时间复杂度O(nlogn)，但没有利用数组的有序性。</p>
 <p>数组平方后的有序性在于：绝对值小的在中间，大的在两边。因此可以定义双指针 <code>p</code> <code>q</code> 指向数组两端，辅助数组 <code>result</code> 通过指针 <code>r</code> ，从右往左逐个接收p、q指向的更大值。</p>
 <p><img src="https://file1.kamacoder.com/i/algo/977.%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E5%B9%B3%E6%96%B9.gif" srcset="/img/loadingdog.gif" lazyload alt="977.有序数组的平方 | 代码随想录"></p>
@@ -547,7 +548,7 @@
 
 <hr>
 <h3 id="54-替换数字"><a href="#54-替换数字" class="headerlink" title="54. 替换数字"></a>54. 替换数字</h3><p>参考：<a target="_blank" rel="noopener" href="https://kamacoder.com/problempage.php?pid=1064">卡码网题目链接</a>、<a target="_blank" rel="noopener" href="https://programmercarl.com/kamacoder/0054.%E6%9B%BF%E6%8D%A2%E6%95%B0%E5%AD%97.html">替换数字 | 代码随想录</a></p>
-<p>关键词：双指针法，后序处理，概念定义</p>
+<p>关键词：#双指针法，#后序处理，#概念约定</p>
 <h4 id="后序处理"><a href="#后序处理" class="headerlink" title="后序处理"></a>后序处理</h4><p>本题主要体会：<strong>对于线性数据结构，填充或者删除，后序处理会高效的多</strong>。</p>
 <p>后序处理，即<strong>预先给数组扩容到填充后的大小，然后从后向前进行操作</strong>。以本题为例，先扫描、扩容到数字→number后的大小，然后用双指针从后往前替换数字字符。<code>p</code>指向旧串末尾，<code>q</code>指向新串末尾。</p>
 <p>高效在于：</p>
@@ -557,12 +558,13 @@
 </ul>
 <p>再次引用代码随想录的图解：</p>
 <p><img src="https://file1.kamacoder.com/i/algo/20231030173058.png" srcset="/img/loadingdog.gif" lazyload alt="54. 替换数字 | 代码随想录"></p>
-<p>注意<code>p</code>和<code>q</code>在循环初始，都是指向第一个<strong>未处理的</strong>元素。因此，每次循环开始前，<strong>指针指向下一个未处理元素的规则</strong>，是算法的循环不变量，即预先定义好的概念。</p>
+<p>注意<code>p</code>和<code>q</code>在循环初始，都是指向第一个<strong>未处理的</strong>元素。</p>
+<p>因此，<strong>每次循环开始前，指针指向下一个未处理元素</strong>，就成了算法预先约定好的概念（循环不变量）。</p>
 <h4 id="代码实现-3"><a href="#代码实现-3" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;string&gt;</span> </span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">isNumber</span><span class="hljs-params">(string s, <span class="hljs-type">int</span> i)</span> </span>&#123;<br>	<span class="hljs-comment">// 判断s[i]是否数字</span><br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> num = <span class="hljs-string">&#x27;0&#x27;</span>; num &lt; <span class="hljs-string">&#x27;0&#x27;</span> + <span class="hljs-number">10</span>; num++) &#123;<br>		<span class="hljs-keyword">if</span> (s[i] == num) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>	&#125;<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">replaceNum</span><span class="hljs-params">(string&amp; s, <span class="hljs-type">int</span> q)</span> </span>&#123;<br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">6</span>; i++) &#123;<br>		<span class="hljs-keyword">if</span> (i == <span class="hljs-number">0</span>) s[q--] = <span class="hljs-string">&#x27;r&#x27;</span>;<br>		<span class="hljs-keyword">if</span> (i == <span class="hljs-number">1</span>) s[q--] = <span class="hljs-string">&#x27;e&#x27;</span>;<br>		<span class="hljs-keyword">if</span> (i == <span class="hljs-number">2</span>) s[q--] = <span class="hljs-string">&#x27;b&#x27;</span>;<br>		<span class="hljs-keyword">if</span> (i == <span class="hljs-number">3</span>) s[q--] = <span class="hljs-string">&#x27;m&#x27;</span>;<br>		<span class="hljs-keyword">if</span> (i == <span class="hljs-number">4</span>) s[q--] = <span class="hljs-string">&#x27;u&#x27;</span>;<br>		<span class="hljs-keyword">if</span> (i == <span class="hljs-number">5</span>) s[q--] = <span class="hljs-string">&#x27;n&#x27;</span>;<br>	&#125;<br>	<span class="hljs-keyword">return</span> q;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>	string s;<br>	cin &gt;&gt; s;<br>	<span class="hljs-type">int</span> count = <span class="hljs-number">0</span>, p = s.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>;    	<span class="hljs-comment">// 保存数组原长度</span><br><br>	<span class="hljs-comment">// 统计s中数字个数，并扩容</span><br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; s.<span class="hljs-built_in">size</span>(); i++) &#123;<br>		<span class="hljs-keyword">if</span> (<span class="hljs-built_in">isNumber</span>(s, i)) count++;<br>	&#125;<br>	s.<span class="hljs-built_in">resize</span>(s.<span class="hljs-built_in">size</span>() + count * <span class="hljs-number">5</span>, <span class="hljs-string">&#x27;0&#x27;</span>);    <span class="hljs-comment">// resize扩容串</span><br><br>	<span class="hljs-comment">// 双指针法后序处理</span><br>	<span class="hljs-type">int</span> q = s.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>;    				<span class="hljs-comment">// 数组现长度</span><br>	<span class="hljs-keyword">while</span> (p != q) &#123;<br>		<span class="hljs-comment">// 每次循环后，p和q都指向下一个待处理元素</span><br>		<span class="hljs-keyword">if</span> (<span class="hljs-built_in">isNumber</span>(s, p)) &#123;<br>			q = <span class="hljs-built_in">replaceNum</span>(s, q);<br>			p--;    						<span class="hljs-comment">// 别在条件判断里p--</span><br>		&#125;<br>		<span class="hljs-keyword">else</span> s[q--] = s[p--];<br>	&#125;<br>	cout &lt;&lt; s;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <hr>
 <h1 id="Day-2-数组进阶"><a href="#Day-2-数组进阶" class="headerlink" title="Day 2 数组进阶"></a>Day 2 数组进阶</h1><h3 id="209-长度最小的子数组"><a href="#209-长度最小的子数组" class="headerlink" title="209. 长度最小的子数组"></a>209. 长度最小的子数组</h3><p>参考：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-size-subarray-sum/">力扣题目链接</a>、<a target="_blank" rel="noopener" href="https://programmercarl.com/0209.%E9%95%BF%E5%BA%A6%E6%9C%80%E5%B0%8F%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84.html">209.长度最小的子数组 | 代码随想录</a></p>
-<p>关键词：滑动窗口，概念定义</p>
+<p>关键词：#滑动窗口，#概念约定</p>
 <h4 id="滑动窗口"><a href="#滑动窗口" class="headerlink" title="滑动窗口"></a>滑动窗口</h4><p>暴力法是两层 for 循环。对于一个最小子数组，暴力法每次外层循环确定一个始址，每次内层循环确定一个终址。因此，可以将一个由始址、终址确定的最小子数组，抽象成一个<strong>滑动窗口</strong>。</p>
 <p>所谓滑动窗口，<strong>就是不断的调节子序列的起始位置和终止位置，从而得出我们想要的结果</strong>。在暴力法里，滑动窗口“每次从0开始，逐渐变长”，因此时间复杂度O(n^2)；由于只返回长度，空间复杂度O(1)。</p>
 <p>然而，滑动窗口不必用两层 for 循环表示，关键在：窗口长度不需要每次从0开始。代码随想录的图仍然最直观：</p>
@@ -582,7 +584,7 @@
 
 <hr>
 <h3 id="58-区间和"><a href="#58-区间和" class="headerlink" title="*58. 区间和"></a>*58. 区间和</h3><p>参考：<a target="_blank" rel="noopener" href="https://programmercarl.com/kamacoder/0058.%E5%8C%BA%E9%97%B4%E5%92%8C.html">58. 区间和 | 代码随想录</a></p>
-<p>关键词：前缀和，动态规划</p>
+<p>关键词：#前缀和，#动态规划</p>
 <h4 id="子问题复用"><a href="#子问题复用" class="headerlink" title="子问题复用"></a>子问题复用</h4><p>假设极端情况：查询 m 次，每次查询的范围都是从 0 到 n - 1，则时间复杂度会随 m 一飞冲天。究其原因，是算法需要<strong>频繁对子数组、子矩阵求和</strong>，而每次求和的时间复杂度都是O(n)。</p>
 <p>然而，每次循环重新求和一遍，实际做了很多重复操作。完全可以引入动态规划的思想：先计算出一个子问题结果，然后直接复用，来推导新的结果。</p>
 <p>前缀和正是利用这种<strong>子问题复用</strong>思想，抛弃重复计算，优化区间查询的效率。</p>
@@ -595,7 +597,7 @@
 
 <hr>
 <h3 id="344-反转字符串"><a href="#344-反转字符串" class="headerlink" title="344. 反转字符串"></a>344. 反转字符串</h3><p>参考：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/reverse-string/">力扣题目链接</a>、<a target="_blank" rel="noopener" href="https://programmercarl.com/0344.%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2.html">344.反转字符串 | 代码随想录</a></p>
-<p>关键词：库函数，双指针法</p>
+<p>关键词：#库函数，#双指针法</p>
 <p>字符串基础题目，自己实现库函数reverse。主要明确什么时候不用库函数。</p>
 <ul>
 <li>如果用库函数可以<strong>直接解决</strong>题目关键的部分，建议不要使用；</li>
@@ -605,8 +607,8 @@
 <h4 id="代码实现-6"><a href="#代码实现-6" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">reverseString</span><span class="hljs-params">(vector&lt;<span class="hljs-type">char</span>&gt;&amp; s)</span> </span>&#123;<br>        <span class="hljs-type">int</span> i=<span class="hljs-number">0</span>, j=s.<span class="hljs-built_in">size</span>()<span class="hljs-number">-1</span>;<br>        <span class="hljs-keyword">while</span> (i &lt; j) &#123;<br>            <span class="hljs-built_in">swap</span>(s[i], s[j]);<br>            i++; j--;<br>        &#125;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
 <hr>
-<h3 id="151-翻转字符串里的单词"><a href="#151-翻转字符串里的单词" class="headerlink" title="151. 翻转字符串里的单词"></a>151. 翻转字符串里的单词</h3><p>参考：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/reverse-words-in-a-string/">力扣题目链接</a>、<a target="_blank" rel="noopener" href="https://programmercarl.com/0151.%E7%BF%BB%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%87%8C%E7%9A%84%E5%8D%95%E8%AF%8D.html">151.翻转字符串里的单词 | 代码随想录</a></p>
-<p>关键词：两次翻转，双指针法，快慢指针，状态机</p>
+<h3 id="151-翻转字符串里的单词"><a href="#151-翻转字符串里的单词" class="headerlink" title="151. 翻转字符串里的单词"></a>151. 翻转字符串里的单词</h3><p>参考：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/reverse-words-in-a-string/">力扣题目链接</a>、<a target="_blank" rel="noopener" href="https://programmercarl.com/0151.%E7%BF%BB%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%87%8C%E7%9A%84%E5%8D%95%E8%AF%8D.html">151.翻转字符串里的单词 | 代码随想录</a>、<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1uT41177fX?comment_on=1&comment_root_id=202543294016&share_tag=s_i#reply202543294016">评论 | 誰来剪月光呢</a></p>
+<p>关键词：#两次翻转，#双指针法，#快慢指针，#状态机</p>
 <h4 id="两次翻转"><a href="#两次翻转" class="headerlink" title="两次翻转"></a>两次翻转</h4><p>字符串大型综合题。限制S(n)&#x3D;&#x3D;O(1)原地操作，因此重点在两次翻转的思路：<strong>将整个字符串翻转过来，再把各个单词翻过来</strong>。步骤如下：</p>
 <ol>
 <li><strong>去除多余空格（重难点）</strong>；</li>
