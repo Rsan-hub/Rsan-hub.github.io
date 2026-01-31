@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://rsanding.top/img/covers/pointed.png">
 <meta property="article:published_time" content="2026-01-27T14:57:05.000Z">
-<meta property="article:modified_time" content="2026-01-31T11:49:11.103Z">
+<meta property="article:modified_time" content="2026-01-31T13:06:10.771Z">
 <meta property="article:author" content="Rsan Ding">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://rsanding.top/img/covers/pointed.png">
@@ -226,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.5k 字
+          4.9k 字
         
       </span>
     
@@ -237,7 +237,7 @@
         
         
         
-          38 分钟
+          42 分钟
         
       </span>
     
@@ -525,8 +525,9 @@
 <h4 id="数组基础"><a href="#数组基础" class="headerlink" title="数组基础"></a>数组基础</h4><p>地址空间连续，是数组良好性质的前提，不能被数组操作破坏。例如，不能单独删除数组中的某个元素，只能用后续元素覆盖。覆盖结束后，即可无视最后一个元素，视数组长度为n-1。</p>
 <p>删除操作后，数组的<strong>大小</strong>(有效元素个数)改变，但<strong>容量</strong>(所占存储空间)不变。对应C++ vector容器即vec.erase()操作后，vec.size()改变，而vec.capacity()不变。</p>
 <p>一种原地实现方法是<strong>循环覆盖</strong>，因此时间复杂度最低为O(n)，这就是vec.erase()的实现方法：快慢指针法。</p>
-<h4 id="快慢指针"><a href="#快慢指针" class="headerlink" title="快慢指针"></a>快慢指针</h4><p>快慢指针法（双指针法）： <strong>通过一个快指针和慢指针，在一个 for 循环下完成两个 for 循环的工作。</strong></p>
-<p>双指针更新一个新数组，即不含有目标元素的数组。定义快慢指针为</p>
+<h4 id="双指针法"><a href="#双指针法" class="headerlink" title="双指针法"></a>双指针法</h4><p>双指针法： <strong>通过两个指针，在一个 for 循环下遍历一次数组，完成两个 for 循环的工作。</strong></p>
+<p>双指针有各种方向：从左往右、从外到内…… 本题是从左往右型，也叫<strong>快慢指针</strong>。</p>
+<p>快慢指针更新一个新数组，<strong>由快指针排除指定元素，确保其不进入新数组</strong>。定义快慢指针为：</p>
 <ul>
 <li>快指针：<strong>寻找</strong>新数组元素的指针，指向下一个待检查元素。</li>
 <li>慢指针：<strong>承接</strong>新数组元素的指针，指向新数组后一个位置。</li>
@@ -538,7 +539,7 @@
 <hr>
 <h3 id="977-有序数组的平方"><a href="#977-有序数组的平方" class="headerlink" title="977. 有序数组的平方"></a>977. 有序数组的平方</h3><p>参考：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/squares-of-a-sorted-array">力扣题目链接</a>、<a target="_blank" rel="noopener" href="https://programmercarl.com/0977.%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E5%B9%B3%E6%96%B9.html">977.有序数组的平方 | 代码随想录</a></p>
 <p>关键词：双指针法、归并</p>
-<h4 id="双指针法"><a href="#双指针法" class="headerlink" title="双指针法"></a>双指针法</h4><p>暴力法很好想，平方后快排，时间复杂度O(nlogn)，但没有利用数组的有序性。</p>
+<h4 id="双指针法-1"><a href="#双指针法-1" class="headerlink" title="双指针法"></a>双指针法</h4><p>暴力法很好想，平方后快排，时间复杂度O(nlogn)，但没有利用数组的有序性。</p>
 <p>数组平方后的有序性在于：绝对值小的在中间，大的在两边。因此可以定义双指针 <code>p</code> <code>q</code> 指向数组两端，辅助数组 <code>result</code> 通过指针 <code>r</code> ，从右往左逐个接收p、q指向的更大值。</p>
 <p><img src="https://file1.kamacoder.com/i/algo/977.%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E5%B9%B3%E6%96%B9.gif" srcset="/img/loadingdog.gif" lazyload alt="977.有序数组的平方 | 代码随想录"></p>
 <p>思路类似归并排序，对于传入数组，以0为界分为左右两个有序子表，通过一次“边平方边归并”，生成一个更大的有序表。</p>
@@ -574,8 +575,7 @@
 <li>如何移动窗口的结束位置<code>j</code>：无条件移动，结束位置就是遍历数组的指针，即单层 for 循环里的索引。</li>
 </ul>
 <blockquote>
-<p>“滑动窗口的精妙之处在于根据当前子序列和大小的情况，不断调节子序列的起始位置，从而将 O(n^2)暴力解法降为 O(n)。”</p>
-<p>—— 代码随想录</p>
+<p>“滑动窗口的精妙之处在于根据当前子序列和大小的情况，不断调节子序列的起始位置，从而将 O(n^2)暴力解法降为 O(n)。”（代码随想录）</p>
 </blockquote>
 <p>最后，注意滑动窗口的区间是左闭右闭。</p>
 <h4 id="代码实现-4"><a href="#代码实现-4" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">minSubArrayLen</span><span class="hljs-params">(<span class="hljs-type">int</span> target, vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span>&#123;<br>        <span class="hljs-type">int</span> i=<span class="hljs-number">0</span>, j, sum=<span class="hljs-number">0</span>, length=INT_MAX;<br>        <span class="hljs-keyword">for</span> (j=<span class="hljs-number">0</span>; j&lt;nums.<span class="hljs-built_in">size</span>(); j++) &#123;     <span class="hljs-comment">// 更新终址j一次</span><br>            sum += nums[j];                 <span class="hljs-comment">// nums[j]入滑动窗口</span><br>            <span class="hljs-keyword">while</span> (sum &gt;= target) &#123;   <br>                <span class="hljs-comment">// 若累加的sum超过阈值，缩小窗口直到sum小于阈值。</span><br>                <span class="hljs-comment">// 为此可能：连续更新始址i多次</span><br>                <span class="hljs-keyword">if</span> (j-i<span class="hljs-number">+1</span> &lt; length) &#123;<br>                    length = j-i<span class="hljs-number">+1</span>;         <span class="hljs-comment">// 更新最小长度</span><br>                &#125;<br>                sum -= nums[i];             <span class="hljs-comment">// nums[i]出滑动窗口</span><br>                i++;                        <span class="hljs-comment">// 更新始址i</span><br>            &#125;<br><br>        &#125;<br>        <span class="hljs-keyword">if</span> (length == INT_MAX) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">return</span> length;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
@@ -594,9 +594,6 @@
 <h4 id="代码实现-5"><a href="#代码实现-5" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">define</span> _CRT_SECURE_NO_WARNINGS    <span class="hljs-comment">// 必须在第一行</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;vector&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>	<span class="hljs-comment">// 录入数组大小和元素</span><br>	<span class="hljs-type">int</span> n;<br>	cin &gt;&gt; n;<br>	<span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">nums</span><span class="hljs-params">(n, <span class="hljs-number">0</span>)</span></span>;<br>	<span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">p</span><span class="hljs-params">(n, <span class="hljs-number">0</span>)</span></span>;<br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; nums.<span class="hljs-built_in">size</span>(); i++) &#123;<br>		cin &gt;&gt; nums[i];<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; i + <span class="hljs-number">1</span>; j++) &#123;<br>			p[i] += nums[j];<br>		&#125;<br>	&#125;<br>	<span class="hljs-comment">// 主体逻辑</span><br>	<span class="hljs-type">int</span> i, j, sum = <span class="hljs-number">0</span>;<br>	<span class="hljs-keyword">while</span> (<span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d%d&quot;</span>, &amp;i, &amp;j) != EOF) &#123;    <span class="hljs-comment">// 大量数据读写，scanf、printf效率高得多。</span><br>		<span class="hljs-keyword">if</span> (i == <span class="hljs-number">0</span>) sum = p[j];<br>		<span class="hljs-keyword">else</span> sum = p[j] - p[i - <span class="hljs-number">1</span>];<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, sum);<br>		sum = <span class="hljs-number">0</span>;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <hr>
-<h3 id="151-翻转字符串里的单词"><a href="#151-翻转字符串里的单词" class="headerlink" title="151. 翻转字符串里的单词"></a>151. 翻转字符串里的单词</h3><p>参考：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/reverse-words-in-a-string/">力扣题目链接</a>、<a target="_blank" rel="noopener" href="https://programmercarl.com/0151.%E7%BF%BB%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%87%8C%E7%9A%84%E5%8D%95%E8%AF%8D.html">151.翻转字符串里的单词 | 代码随想录</a></p>
-<p>关键词：两次翻转，双指针法</p>
-<hr>
 <h3 id="344-反转字符串"><a href="#344-反转字符串" class="headerlink" title="344. 反转字符串"></a>344. 反转字符串</h3><p>参考：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/reverse-string/">力扣题目链接</a>、<a target="_blank" rel="noopener" href="https://programmercarl.com/0344.%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2.html">344.反转字符串 | 代码随想录</a></p>
 <p>关键词：库函数，双指针法</p>
 <p>字符串基础题目，自己实现库函数reverse。主要明确什么时候不用库函数。</p>
@@ -608,7 +605,32 @@
 <h4 id="代码实现-6"><a href="#代码实现-6" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">reverseString</span><span class="hljs-params">(vector&lt;<span class="hljs-type">char</span>&gt;&amp; s)</span> </span>&#123;<br>        <span class="hljs-type">int</span> i=<span class="hljs-number">0</span>, j=s.<span class="hljs-built_in">size</span>()<span class="hljs-number">-1</span>;<br>        <span class="hljs-keyword">while</span> (i &lt; j) &#123;<br>            <span class="hljs-built_in">swap</span>(s[i], s[j]);<br>            i++; j--;<br>        &#125;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
 <hr>
+<h3 id="151-翻转字符串里的单词"><a href="#151-翻转字符串里的单词" class="headerlink" title="151. 翻转字符串里的单词"></a>151. 翻转字符串里的单词</h3><p>参考：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/reverse-words-in-a-string/">力扣题目链接</a>、<a target="_blank" rel="noopener" href="https://programmercarl.com/0151.%E7%BF%BB%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%87%8C%E7%9A%84%E5%8D%95%E8%AF%8D.html">151.翻转字符串里的单词 | 代码随想录</a></p>
+<p>关键词：两次翻转，双指针法，快慢指针，状态机</p>
+<h4 id="两次翻转"><a href="#两次翻转" class="headerlink" title="两次翻转"></a>两次翻转</h4><p>一道字符串综合题。限制S(n)&#x3D;O(1)原地操作，重点就在两次翻转的思路了：**将整个字符串翻转过来，再把各个单词翻过来。**因此步骤如下：</p>
+<ol>
+<li>去除多余空格；</li>
+<li>翻转整个字符串；</li>
+<li>翻转各个单词。</li>
+</ol>
+<p>三步串行推进，每一步时间复杂度最多O(n)，整体就是O(n)。而第2步显然是O(n)，第3步对每个单词都只处理一遍，因此也是O(n)。主要是第1步不好优化到O(n)。</p>
+<h4 id="双指针与状态机"><a href="#双指针与状态机" class="headerlink" title="双指针与状态机"></a>双指针与状态机</h4><p>第1步内部步骤如下：</p>
+<ol>
+<li>去除开头空格；</li>
+<li>去除中间多余空格；</li>
+<li>截断字符串。</li>
+</ol>
+<p>开头空格好去除，接着思考去除中间多余空格时，怎么用O(n)算法遍历数组。想到<strong>双指针法的共性：一个 for 循环完成两个的数组遍历任务</strong>。又因为要从左往右遍历，想到快慢指针法。</p>
+<p>其中，<strong>快指针要排除的指定元素是“多余空格”</strong>。难点来了：怎么定义“多余空格”？</p>
+<p>代码随想录的算法太复杂，这里借鉴b站评论区的<strong>状态机</strong>思路：</p>
+<blockquote>
+<p>使用一个状态标志<code>need</code>，当<code>fast</code>指向字母时设<code>need = 1</code>，说明需要下一个空格；当<code>fast</code>指向空格时设<code>need = 0</code>，说明不要下一个空格。只有<code>need == 1</code>时才能更新慢指针位置。</p>
+</blockquote>
+<p>快指针到头后，慢指针要么指向最后一个字母，要么指向该字母后一个空格。分情况截断即可。</p>
+<h4 id="代码实现-7"><a href="#代码实现-7" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><br></code></pre></td></tr></table></figure>
 
+<hr>
+<h1 id="Day-3-链表基础"><a href="#Day-3-链表基础" class="headerlink" title="Day 3 链表基础"></a>Day 3 链表基础</h1>
                 
               </div>
             
