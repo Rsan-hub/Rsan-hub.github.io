@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://rsanding.top/img/covers/pointed.png">
 <meta property="article:published_time" content="2026-01-27T14:57:05.000Z">
-<meta property="article:modified_time" content="2026-02-01T18:31:36.384Z">
+<meta property="article:modified_time" content="2026-02-01T18:40:43.816Z">
 <meta property="article:author" content="Rsan Ding">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://rsanding.top/img/covers/pointed.png">
@@ -226,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          6.9k 字
+          7k 字
         
       </span>
     
@@ -237,7 +237,7 @@
         
         
         
-          58 分钟
+          59 分钟
         
       </span>
     
@@ -484,8 +484,8 @@
 <hr>
 <h1 id="模板汇总"><a href="#模板汇总" class="headerlink" title="模板汇总"></a>模板汇总</h1><p>每类题目涉及关键词如下，方便快速全文搜索。</p>
 <ul>
-<li><strong>数组</strong>：#概念约定、#双指针法、#快慢指针、#后序处理、#滑动窗口、#前缀和、#两次翻转、#状态机。</li>
-<li><strong>链表</strong>：</li>
+<li><strong>数组</strong>：#概念约定，#双指针法，#快慢指针，#后序处理，#滑动窗口，#前缀和，#两次翻转，#状态机。</li>
+<li><strong>链表</strong>：#虚拟头结点，#三指针法，#双指针法，#临时指针。</li>
 <li><strong>哈希表</strong>：</li>
 <li><strong>字符串</strong>：</li>
 <li><strong>栈和队列</strong>：</li>
@@ -640,7 +640,7 @@
 <li>慢指针<code>p</code>：维护一个新链表，<strong>指向最后被并入新链表的结点&#x2F;元素</strong>；</li>
 <li>快指针<code>q</code>：判断是否选中当前结点，并借助<code>p</code>挂在新链表表尾。</li>
 </ul>
-<h4 id="虚拟头结点"><a href="#虚拟头结点" class="headerlink" title="虚拟头结点"></a>虚拟头结点</h4><p>虚拟头结点**适用场景一：统一处理逻辑。**否则头结点会因为没有前一个节点，需要单独逻辑处理。</p>
+<h4 id="虚拟头结点"><a href="#虚拟头结点" class="headerlink" title="虚拟头结点"></a>虚拟头结点</h4><p>虚拟头结点<strong>适用场景一：统一处理逻辑</strong>。否则头结点会因为没有前一个节点，需要单独逻辑处理。</p>
 <p>具体而言，链表的其他节点都是通过前一个节点来移除，而头结点没有前一个节点，不能按照普通结点逻辑处理。如果要删除头结点，就涉及链表删除操作的两种方式：</p>
 <ul>
 <li><strong>直接使用原来的链表进行删除。</strong></li>
@@ -662,22 +662,22 @@
 <p>关键词：#指针初始化，#快慢指针，#三指针法</p>
 <h4 id="指针初始化"><a href="#指针初始化" class="headerlink" title="指针初始化"></a>指针初始化</h4><p>这里其实不用虚拟头结点。直接初始化慢指针<code>p = NULL</code>，挨个反转<code>next</code>指针即可。</p>
 <p>启发：<strong>慢指针指向最后被并入新链表的结点&#x2F;元素</strong>，因此其初始化时指向的元素，天然算作链表的一部分。</p>
-<h4 id="三指针"><a href="#三指针" class="headerlink" title="三指针"></a>三指针</h4><p>注意：每次翻转要先把 cur-&gt;next 节点用 tmp 指针保存一下，否则会丢失<strong>反转后的前一个结点</strong>的信息。</p>
-<p>这就是三指针法。单链表指针的核心，就是<strong>处理后有可能变成前一个结点</strong>的结点，都要临时保存一下。</p>
+<h4 id="三指针法"><a href="#三指针法" class="headerlink" title="三指针法"></a>三指针法</h4><p>注意：每次翻转要先把 <code>cur-&gt;next</code> 节点用 <code>tmp</code> 指针保存一下，否则会丢失<strong>反转后的前一个结点</strong>的信息。</p>
+<p>这就是<strong>三指针法：处理翻转链表指针的问题</strong>。单链表操作里，对于每一个<strong>处理后有可能变成前一个结点</strong>的结点，都要临时保存一下。</p>
 <p>翻转链表示意图如下：</p>
 <p><img src="https://file1.kamacoder.com/i/algo/206.%E7%BF%BB%E8%BD%AC%E9%93%BE%E8%A1%A8.gif" srcset="/img/loadingdog.gif" lazyload alt="纠正：动画应该是先移动 pre，在移动 cur"></p>
 <h4 id="代码实现-9"><a href="#代码实现-9" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">ListNode* <span class="hljs-title">reverseList</span><span class="hljs-params">(ListNode* head)</span> </span>&#123;<br>        ListNode *p=<span class="hljs-literal">NULL</span>, *q=head;<br>        <span class="hljs-keyword">while</span> (q != <span class="hljs-literal">NULL</span>) &#123;<br>            ListNode *tmp = q-&gt;next;<br>            q-&gt;next = p;<br>            p = q;<br>            q = tmp;<br>        &#125;<br>        head = p;<br>        <span class="hljs-keyword">return</span> head;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
 <hr>
 <h3 id="19-删除链表的倒数第-N-个节点"><a href="#19-删除链表的倒数第-N-个节点" class="headerlink" title="19. 删除链表的倒数第 N 个节点"></a><strong>19. 删除链表的倒数第 N 个节点</strong></h3><p>参考：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/remove-nth-node-from-end-of-list/">力扣题目链接</a>、<a target="_blank" rel="noopener" href="https://programmercarl.com/0019.%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E7%9A%84%E5%80%92%E6%95%B0%E7%AC%ACN%E4%B8%AA%E8%8A%82%E7%82%B9.html">19.删除链表的倒数第 N 个节点 | 代码随想录</a></p>
-<p>关键词：#双指针法，#虚拟头节点</p>
-<p>双指针的经典应用。<strong>删除倒数第 n 个节点，让 fast 移动 n 步，然后让 fast 和 slow 同时移动</strong>，直到 fast 指向链表末尾。删掉 slow 所指向的节点（其实是三指针，tmp 保存 slow 前一个结点）就可以了。</p>
+<p>关键词：#双指针法，#虚拟头结点</p>
+<p>双指针的经典应用。<strong>删除倒数第 n 个节点，让 fast 移动 n 步，然后让 fast 和 slow 同时移动</strong>，直到 fast 指向链表末尾。删掉 slow 所指向的节点（通过尾随 slow 的 tmp，保存 slow 前一个结点）就可以了。</p>
 <p>虚拟头结点<strong>适用场景二：标记头结点</strong>。由于操作后，头节点可能改变，要重设 head 指针，所以用虚拟头结点的<code>next</code>域标记头结点。</p>
 <h4 id="代码实现-10"><a href="#代码实现-10" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">ListNode* <span class="hljs-title">removeNthFromEnd</span><span class="hljs-params">(ListNode* head, <span class="hljs-type">int</span> n)</span> </span>&#123;<br>        <span class="hljs-comment">// 创建虚拟头结点并链接链表</span><br>        ListNode *dummyHead = <span class="hljs-keyword">new</span> <span class="hljs-built_in">ListNode</span>(<span class="hljs-number">0</span>);<br>        dummyHead-&gt;next = head;<br>        <span class="hljs-comment">// tmp 保存慢指针前一个结点</span><br>        ListNode *slow = head, *fast = head, *tmp = dummyHead;<br>        <span class="hljs-comment">// 快指针移动 n 步，三指针共同移动</span><br>        <span class="hljs-keyword">while</span> (n-- &gt; <span class="hljs-number">0</span>) fast = fast-&gt;next;<br>        <span class="hljs-keyword">while</span> (fast != <span class="hljs-literal">NULL</span>) &#123;<br>            fast = fast-&gt;next;<br>            tmp = slow;<br>            slow = slow-&gt;next;<br>        &#125;<br>        <span class="hljs-comment">// 删除慢指针所在结点</span><br>        tmp-&gt;next = slow-&gt;next;<br>        <span class="hljs-keyword">delete</span> slow;<br>        <span class="hljs-comment">// 重设并返回头节点</span><br>        head = dummyHead-&gt;next;<br>        <span class="hljs-keyword">delete</span> dummyHead;<br>        <span class="hljs-keyword">return</span> head;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
 <hr>
 <h3 id="24-两两交换链表中的节点"><a href="#24-两两交换链表中的节点" class="headerlink" title="24. 两两交换链表中的节点"></a><strong>24. 两两交换链表中的节点</strong></h3><p>参考：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/swap-nodes-in-pairs/">力扣题目链接</a>、<a target="_blank" rel="noopener" href="https://programmercarl.com/0024.%E4%B8%A4%E4%B8%A4%E4%BA%A4%E6%8D%A2%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E8%8A%82%E7%82%B9.html">24. 两两交换链表中的节点 | 代码随想录</a></p>
-<p>关键词：#模拟，#临时指针，#三结点</p>
+<p>关键词：#模拟，#临时指针，#三指针法</p>
 <p>本题正常模拟。两个重点：一是临时指针的设置，二是循环终止条件。</p>
 <h4 id="临时指针"><a href="#临时指针" class="headerlink" title="临时指针"></a>临时指针</h4><p>修改两个结点的指针，<strong>最简充分条件：知道它们共同的前一个结点</strong>。因此，可以<strong>用一个<code>cur</code>指针标记这个共同前缀</strong>，指向待操作结点的临时指针<code>tmp</code>用<code>cur-&gt;next</code>在每次循环中当场创建。</p>
 <p>临时指针设置目的：<strong>简化复杂的模拟操作中，混乱的多指针移动逻辑。</strong></p>
