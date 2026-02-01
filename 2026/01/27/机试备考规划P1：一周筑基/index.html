@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://rsanding.top/img/covers/pointed.png">
 <meta property="article:published_time" content="2026-01-27T14:57:05.000Z">
-<meta property="article:modified_time" content="2026-02-01T18:57:12.843Z">
+<meta property="article:modified_time" content="2026-02-01T19:10:30.878Z">
 <meta property="article:author" content="Rsan Ding">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://rsanding.top/img/covers/pointed.png">
@@ -226,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          7.1k 字
+          7k 字
         
       </span>
     
@@ -679,21 +679,21 @@
 <h3 id="24-两两交换链表中的节点"><a href="#24-两两交换链表中的节点" class="headerlink" title="24. 两两交换链表中的节点"></a><strong>24. 两两交换链表中的节点</strong></h3><p>参考：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/swap-nodes-in-pairs/">力扣题目链接</a>、<a target="_blank" rel="noopener" href="https://programmercarl.com/0024.%E4%B8%A4%E4%B8%A4%E4%BA%A4%E6%8D%A2%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E8%8A%82%E7%82%B9.html">24. 两两交换链表中的节点 | 代码随想录</a></p>
 <p>关键词：#模拟，#临时指针，#三指针法</p>
 <p>本题正常模拟。两个重点：一是临时指针的设置，二是循环终止条件。</p>
-<h4 id="临时指针"><a href="#临时指针" class="headerlink" title="临时指针"></a>临时指针</h4><p>修改两个结点的指针，<strong>最简充分条件：知道它们共同的前一个结点</strong>。因此，可以<strong>用一个<code>cur</code>指针标记这个共同前缀</strong>，指向待操作结点的临时指针<code>tmp</code>用<code>cur-&gt;next</code>在每次循环中当场创建。</p>
+<h4 id="临时指针"><a href="#临时指针" class="headerlink" title="临时指针"></a>临时指针</h4><p>访问两个结点的最简充分条件：知道它们共同的前一个结点。因此，可以<strong>只用一个<code>cur</code>指针，标记这个共同前缀；同时每次循环创建多个临时指针<code>tmp</code>，指向待操作结点</strong>。如下图所示：</p>
+<p><img src="/img/blogs/Algorithm/curNextPtrs.png" srcset="/img/loadingdog.gif" lazyload alt="每次循环，当场创建绿色的临时指针（勘误：tmp2少了一个next）"></p>
 <p>临时指针设置目的：<strong>简化复杂的模拟操作中，混乱的多指针移动逻辑。</strong></p>
-<p>注意：<strong><code>cur</code>标志的共同前缀结点不参与交换</strong>，因此<code>cur</code>可以从虚拟头结点开始，每次循环指向交换完成的结点。</p>
-<p>明确了临时指针和<code>cur</code>指针设置原则，就好画图模拟了。</p>
-<p><img src="/img/blogs/Algorithm/curNextPtrs.png" srcset="/img/loadingdog.gif" lazyload alt="例：每次循环，当场创建绿色的临时指针（勘误：tmp2少了一个next）"></p>
-<h4 id="终止条件"><a href="#终止条件" class="headerlink" title="终止条件"></a>终止条件</h4><p>每次循环后，<code>cur</code>指向<strong>最后一个交换成功的结点(必不为NULL)</strong>。因此循环终止条件分两类情况：</p>
+<p>注意：<strong><code>cur</code>所在结点不参与交换</strong>，因此<code>cur</code><strong>可以从虚拟头结点开始</strong>，每次循环指向交换完成的结点。</p>
+<p>明确了临时指针和<code>cur</code>指针的设置原则，就好画图模拟了。</p>
+<h4 id="终止条件"><a href="#终止条件" class="headerlink" title="终止条件"></a>终止条件</h4><p>每次循环后，<code>cur</code>指向<strong>最后一个交换成功的结点(必非NULL)</strong>。因此循环终止条件分两种：</p>
 <ol>
 <li>偶数个结点：<code>cur-&gt;next == NULL</code></li>
 <li>奇数个结点：<code>cur-&gt;next-&gt;next == NULL</code></li>
 </ol>
 <p>每次循环前检查两者，覆盖奇偶两种情况。</p>
 <p><img src="/img/blogs/Algorithm/curOddEven.png" srcset="/img/loadingdog.gif" lazyload alt="虚线框内为交换成功的结点"></p>
-<p>模拟交换的步骤如下。<strong>建议每次循环创建三个tmp，构成标准的三指针交换</strong>：</p>
-<p><img src="https://file1.kamacoder.com/i/algo/24.%E4%B8%A4%E4%B8%A4%E4%BA%A4%E6%8D%A2%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E8%8A%82%E7%82%B91.png" srcset="/img/loadingdog.gif" lazyload alt="红线为交换后的指针指向"></p>
-<p>简化了很多，比如步骤一实际分两步。注意<code>cur</code>指向的<strong>新链表末尾结点</strong>要先连接上<strong>待处理结点</strong>。</p>
+<p>模拟交换的步骤如下。<strong>建议每次循环创建三个tmp，分别连接下图的结点1 2 3，构成标准的三指针交换</strong>：</p>
+<p><img src="https://file1.kamacoder.com/i/algo/24.%E4%B8%A4%E4%B8%A4%E4%BA%A4%E6%8D%A2%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E8%8A%82%E7%82%B91.png" srcset="/img/loadingdog.gif" lazyload alt="红线同时代表交换后的指针指向"></p>
+<p>注意<code>cur</code>指向的<strong>新链表末尾结点</strong>要先连接上<strong>待处理结点</strong>。</p>
 <h4 id="代码实现-11"><a href="#代码实现-11" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">ListNode* <span class="hljs-title">swapPairs</span><span class="hljs-params">(ListNode* head)</span> </span>&#123;<br>        <span class="hljs-comment">// 虚拟头结点</span><br>        ListNode *dummyHead = <span class="hljs-keyword">new</span> <span class="hljs-built_in">ListNode</span>(<span class="hljs-number">0</span>);<br>        dummyHead-&gt;next = head;<br>        <span class="hljs-comment">// cur 指针遍历链表</span><br>        ListNode *cur = dummyHead;<br>        <span class="hljs-keyword">while</span> (cur-&gt;next != <span class="hljs-literal">NULL</span> &amp;&amp; cur-&gt;next-&gt;next != <span class="hljs-literal">NULL</span>) &#123;    <span class="hljs-comment">// 奇偶两种情况</span><br>            <span class="hljs-comment">// 每次循环：创建临时结点</span><br>            ListNode *tmp1 = cur-&gt;next;     <span class="hljs-comment">// 保存待交换结点1</span><br>            ListNode *tmp2 = tmp1-&gt;next;    <span class="hljs-comment">// 保存待交换结点2</span><br>            ListNode *tmp3 = tmp2-&gt;next;    <span class="hljs-comment">// 保存结点2交换后的“前一结点”</span><br>            <span class="hljs-comment">// 交换结点并更新 cur 指针</span><br>            cur-&gt;next = tmp2;           <span class="hljs-comment">// cur 所在新链表 连接 待处理链表</span><br>            tmp2-&gt;next = tmp1;          <span class="hljs-comment">// 翻转 结点2指针</span><br>            tmp1-&gt;next = tmp3;          <span class="hljs-comment">// 结点1指针 指向 结点3</span><br>            cur = tmp1;                 <span class="hljs-comment">// cur 指向 交换后的尾结点</span><br>        &#125;<br>        <span class="hljs-comment">// 恢复头结点</span><br>        head = dummyHead-&gt;next;<br>        <span class="hljs-keyword">delete</span> dummyHead;<br>        <span class="hljs-keyword">return</span> head;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
 <hr>
