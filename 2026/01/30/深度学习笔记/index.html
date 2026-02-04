@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://rsanding.top/img/covers/bp.gif">
 <meta property="article:published_time" content="2026-01-30T12:46:05.000Z">
-<meta property="article:modified_time" content="2026-02-04T17:51:02.848Z">
+<meta property="article:modified_time" content="2026-02-04T18:24:56.510Z">
 <meta property="article:author" content="Rsan Ding">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://rsanding.top/img/covers/bp.gif">
@@ -226,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          898 字
+          1.1k 字
         
       </span>
     
@@ -237,7 +237,7 @@
         
         
         
-          8 分钟
+          9 分钟
         
       </span>
     
@@ -327,8 +327,20 @@
 <p>线性回归：正比例函数。</p>
 <p>多标签二分类问题：Sigmoid，输出值代表样本属于A类的概率<code>P(A)</code>，<strong>各输出神经元代表多个不互斥的标签</strong>。</p>
 <p>单标签多分类问题：Softmax，输出值同上，<strong>各输出神经元代表单个标签的多种类别，互斥且和为1</strong>。</p>
-<h3 id="4、梯度是什么-链式求导法则"><a href="#4、梯度是什么-链式求导法则" class="headerlink" title="4、梯度是什么?链式求导法则?"></a>4、梯度是什么?链式求导法则?</h3><h3 id="5、常见的优化器有哪些-区别"><a href="#5、常见的优化器有哪些-区别" class="headerlink" title="5、常见的优化器有哪些?区别?"></a>5、常见的优化器有哪些?区别?</h3><h3 id="6、你了解的损失函数有哪些-它们的公式以及应用场景"><a href="#6、你了解的损失函数有哪些-它们的公式以及应用场景" class="headerlink" title="6、你了解的损失函数有哪些?它们的公式以及应用场景?"></a>6、你了解的损失函数有哪些?它们的公式以及应用场景?</h3><p>均方差MSE</p>
-<p>交叉熵Cross Entropy</p>
+<h3 id="4、梯度是什么-链式求导法则"><a href="#4、梯度是什么-链式求导法则" class="headerlink" title="4、梯度是什么?链式求导法则?"></a>4、梯度是什么?链式求导法则?</h3><h3 id="5、常见的优化器有哪些-区别"><a href="#5、常见的优化器有哪些-区别" class="headerlink" title="5、常见的优化器有哪些?区别?"></a>5、常见的优化器有哪些?区别?</h3><h3 id="6、你了解的损失函数有哪些-它们的公式以及应用场景"><a href="#6、你了解的损失函数有哪些-它们的公式以及应用场景" class="headerlink" title="6、你了解的损失函数有哪些?它们的公式以及应用场景?"></a>6、你了解的损失函数有哪些?它们的公式以及应用场景?</h3><ul>
+<li>均方误差(MSE)<ul>
+<li>公式：$L &#x3D; \Sigma(\hat{y_i}-y_i)^2$</li>
+<li>用于<strong>回归</strong>任务。计算一系列预测值 $\hat{y_i}$ 与真实值 $y_i$ 的平方差之和。</li>
+</ul>
+</li>
+<li>交叉熵损失(Cross Entropy)<ul>
+<li>公式：$L &#x3D; -\Sigma p_i \log \hat{p_i}$</li>
+<li>用于<strong>单标签多分类</strong>任务。接收一系列<strong>预测概率值</strong> $\hat p_i $（即预测值 $\hat y_i$ 经过softmax层的输出），计算其负对数值与真实分布 $p_i$ 的乘积之和。</li>
+<li>由于真实分布只有正确类别编码为1（one-hot），因此交叉熵等效于计算<strong>最高预测概率 $\max(\hat p_i)$ 的负对数</strong>。</li>
+<li>由于对数曲线在(0,1)区间内斜率急剧减小，交叉熵损失<strong>对预测错误的惩罚非常大</strong>。</li>
+</ul>
+</li>
+</ul>
 <h3 id="7、神经网络训练中的超参数有哪些"><a href="#7、神经网络训练中的超参数有哪些" class="headerlink" title="7、神经网络训练中的超参数有哪些?"></a>7、神经网络训练中的超参数有哪些?</h3><h3 id="8、你了解哪些常用的模型评估指标"><a href="#8、你了解哪些常用的模型评估指标" class="headerlink" title="8、你了解哪些常用的模型评估指标?"></a>8、你了解哪些常用的模型评估指标?</h3><h3 id="9、什么是过拟合和欠拟合-解决方法有哪些"><a href="#9、什么是过拟合和欠拟合-解决方法有哪些" class="headerlink" title="9、什么是过拟合和欠拟合?解决方法有哪些?"></a>9、什么是过拟合和欠拟合?解决方法有哪些?</h3>
                 
               </div>
