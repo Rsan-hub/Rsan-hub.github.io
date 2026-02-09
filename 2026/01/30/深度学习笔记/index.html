@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://rsanding.top/img/covers/bp.gif">
 <meta property="article:published_time" content="2026-01-30T12:46:05.000Z">
-<meta property="article:modified_time" content="2026-02-09T09:21:59.642Z">
+<meta property="article:modified_time" content="2026-02-09T18:04:13.400Z">
 <meta property="article:author" content="Rsan Ding">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://rsanding.top/img/covers/bp.gif">
@@ -342,7 +342,7 @@ mjx-container[display="true"] + br {
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.2k 字
+          4.3k 字
         
       </span>
     
@@ -632,7 +632,7 @@ mjx-container[display="true"] + br {
 <h1 id="项目一-基于深度学习的葡萄酒质量评分实践"><a href="#项目一-基于深度学习的葡萄酒质量评分实践" class="headerlink" title="项目一 基于深度学习的葡萄酒质量评分实践"></a>项目一 基于深度学习的葡萄酒质量评分实践</h1><h2 id="一、深度学习理论"><a href="#一、深度学习理论" class="headerlink" title="一、深度学习理论"></a>一、深度学习理论</h2><h3 id="1、损失曲线"><a href="#1、损失曲线" class="headerlink" title="1、损失曲线"></a>1、损失曲线</h3><p>训练过程中，损失曲线分为<strong>训练损失</strong>和<strong>验证损失</strong>。</p>
 <ul>
 <li><strong>训练损失（Train Loss）</strong>：在训练集上计算的损失，<strong>参与反向传播</strong>，更新模型参数。</li>
-<li><strong>验证损失（Validation Loss）</strong>：在验证集上计算的损失，但<strong>不参与反向传播</strong>，<strong>通常在每个 epoch 后计算</strong>。<ul>
+<li><strong>验证损失（Validation Loss）</strong>：在验证集上计算的损失，但<strong>不参与反向传播（前向传播时也不算梯度），通常在每个 epoch 后计算</strong>。<ul>
 <li>监控模型在 <strong>未见过的数据上的表现</strong>，帮助判断模型<strong>是否过/欠拟合</strong>，用于 <strong>模型调优</strong> 和 <strong>评估泛化能力</strong> 。</li>
 </ul>
 </li>
@@ -641,7 +641,10 @@ mjx-container[display="true"] + br {
 <ul>
 <li><strong>测试集</strong>：在训练<strong>完成后</strong>用于 <strong>评估最终模型性能</strong> 的数据集，它与训练和验证集无关，用来提供模型在真实场景下的表现。</li>
 </ul>
-<h3 id="2、"><a href="#2、" class="headerlink" title="2、"></a>2、</h3><h2 id="二、PyTorch-实践"><a href="#二、PyTorch-实践" class="headerlink" title="二、PyTorch 实践"></a>二、PyTorch 实践</h2><h3 id="1、Dataset"><a href="#1、Dataset" class="headerlink" title="1、Dataset"></a>1、Dataset</h3><p>Dataset 是<strong>抽象基类</strong>，无法实例化。抽象基类的<strong>核心思想：定义接口规范，但不关心怎么实现</strong>。</p>
+<h3 id="2、激活函数"><a href="#2、激活函数" class="headerlink" title="2、激活函数"></a>2、激活函数</h3><blockquote>
+<p>[!QUESTION]<br>为什么最后一层不加activation？<br>能不能多个Activation？</p>
+</blockquote>
+<h2 id="二、PyTorch-实践"><a href="#二、PyTorch-实践" class="headerlink" title="二、PyTorch 实践"></a>二、PyTorch 实践</h2><h3 id="1、Dataset"><a href="#1、Dataset" class="headerlink" title="1、Dataset"></a>1、Dataset</h3><p>Dataset 是<strong>抽象基类</strong>，无法实例化。抽象基类的<strong>核心思想：定义接口规范，但不关心怎么实现</strong>。</p>
 <ul>
 <li>接口规范包括：<strong>接口名、传入参数名、属性名</strong>等。</li>
 <li>不关心具体实现，指接口传入什么<strong>数据结构</strong>也不关心。<ul>
@@ -652,6 +655,9 @@ mjx-container[display="true"] + br {
 <p>总之，抽象基类要求子类<strong>必须实现所有抽象方法，但数据结构与实现方法自由</strong>。</p>
 <blockquote>
 <p>延伸：<strong>类</strong>是<strong>面向对象编程</strong>（OOP）的核心概念。它不仅是数据的容器，更是实现<strong>抽象、封装、继承、多态</strong>的蓝图。类的核心作用是<strong>数学建模</strong>，将现实世界或逻辑中的“事物”或“概念”抽象成代码中的实体。</p>
+</blockquote>
+<h3 id="2、训练循环"><a href="#2、训练循环" class="headerlink" title="2、训练循环"></a>2、训练循环</h3><blockquote>
+<p>[!QUESTION]<br>遍历同一个 epoch 时，每个 batch 之前必须要清空梯度？用那些梯度累积的优化器时，还需不需要？<br>inputs = inputs.to(device) 和 labels = labels.to(device) 是把数据集装入硬件？</p>
 </blockquote>
 
                 
