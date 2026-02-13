@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://rsanding.top/img/covers/pointed.png">
 <meta property="article:published_time" content="2026-01-27T14:57:05.000Z">
-<meta property="article:modified_time" content="2026-02-01T19:27:03.827Z">
+<meta property="article:modified_time" content="2026-02-13T19:09:54.239Z">
 <meta property="article:author" content="Rsan Ding">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://rsanding.top/img/covers/pointed.png">
@@ -230,7 +230,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          7k 字
+          8.1k 字
         
       </span>
     
@@ -241,7 +241,7 @@
         
         
         
-          59 分钟
+          68 分钟
         
       </span>
     
@@ -699,16 +699,53 @@
 <h3 id="代码实现-11"><a href="#代码实现-11" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">ListNode* <span class="hljs-title">swapPairs</span><span class="hljs-params">(ListNode* head)</span> </span>&#123;<br>        <span class="hljs-comment">// 虚拟头结点</span><br>        ListNode *dummyHead = <span class="hljs-keyword">new</span> <span class="hljs-built_in">ListNode</span>(<span class="hljs-number">0</span>);<br>        dummyHead-&gt;next = head;<br>        <span class="hljs-comment">// cur 指针遍历链表</span><br>        ListNode *cur = dummyHead;<br>        <span class="hljs-keyword">while</span> (cur-&gt;next != <span class="hljs-literal">NULL</span> &amp;&amp; cur-&gt;next-&gt;next != <span class="hljs-literal">NULL</span>) &#123;    <span class="hljs-comment">// 奇偶两种情况</span><br>            <span class="hljs-comment">// 每次循环：创建临时结点</span><br>            ListNode *tmp1 = cur-&gt;next;     <span class="hljs-comment">// 保存待交换结点1</span><br>            ListNode *tmp2 = tmp1-&gt;next;    <span class="hljs-comment">// 保存待交换结点2</span><br>            ListNode *tmp3 = tmp2-&gt;next;    <span class="hljs-comment">// 保存结点2交换后的“前一结点”</span><br>            <span class="hljs-comment">// 交换结点并更新 cur 指针</span><br>            cur-&gt;next = tmp2;               <span class="hljs-comment">// cur 所在新链表 连接 待处理链表</span><br>            tmp2-&gt;next = tmp1;              <span class="hljs-comment">// 翻转 结点2指针</span><br>            tmp1-&gt;next = tmp3;              <span class="hljs-comment">// 结点1指针 指向 结点3</span><br>            cur = tmp1;                     <span class="hljs-comment">// cur 指向 交换后的尾结点</span><br>        &#125;<br>        <span class="hljs-comment">// 恢复头结点</span><br>        head = dummyHead-&gt;next;<br>        <span class="hljs-keyword">delete</span> dummyHead;<br>        <span class="hljs-keyword">return</span> head;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
 <hr>
-<h1 id="Day-4-哈希表"><a href="#Day-4-哈希表" class="headerlink" title="Day 4 哈希表"></a>Day 4 哈希表</h1><h2 id="242-有效的字母异位词"><a href="#242-有效的字母异位词" class="headerlink" title="242. 有效的字母异位词"></a>242. 有效的字母异位词</h2><p><strong>参考</strong>：、</p>
+<h1 id="Day-4-哈希表"><a href="#Day-4-哈希表" class="headerlink" title="Day 4 哈希表"></a>Day 4 哈希表</h1><p><a target="_blank" rel="noopener" href="https://programmercarl.com/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80.html">哈希表理论基础 | 代码随想录</a></p>
+<h2 id="242-有效的字母异位词"><a href="#242-有效的字母异位词" class="headerlink" title="242. 有效的字母异位词"></a>242. 有效的字母异位词</h2><p><strong>参考</strong>：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/valid-anagram/">力扣题目链接</a>、<a target="_blank" rel="noopener" href="https://programmercarl.com/0242.%E6%9C%89%E6%95%88%E7%9A%84%E5%AD%97%E6%AF%8D%E5%BC%82%E4%BD%8D%E8%AF%8D.html">242.有效的字母异位词 | 代码随想录</a></p>
+<p><strong>关键词</strong>：#数组哈希，#统计个数</p>
+<h3 id="集合思想"><a href="#集合思想" class="headerlink" title="集合思想"></a>集合思想</h3><p>哈希法使用场景：<strong>快速判断一个元素是否出现集合里</strong>。</p>
+<p><strong>数组就是一个简单哈希表</strong>。本题可以定义一个数组，统计字符串 s 的<strong>字符出现的次数</strong>。</p>
+<p>哈希函数 <code>s[i]-&#39;a&#39;</code> 将字符映射为数组下标，进而通过地址转换函数，映射为数组内容(即字符出现字数)。比较两个字符串的字符出现次数即可。</p>
+<p>注意，<strong>使用数组来做哈希，前提是题目限制了数值的大小。</strong></p>
+<h3 id="代码实现-12"><a href="#代码实现-12" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">isAnagram</span><span class="hljs-params">(string s, string t)</span> </span>&#123;<br>        <span class="hljs-type">int</span> A[<span class="hljs-number">26</span>] = &#123;<span class="hljs-number">0</span>&#125;;<br>        <span class="hljs-comment">// 简单判断长度</span><br>        <span class="hljs-keyword">if</span> (s.<span class="hljs-built_in">size</span>() != t.<span class="hljs-built_in">size</span>()) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        <span class="hljs-comment">// 统计串s各字母个数，构建集合A</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>; i&lt;s.<span class="hljs-built_in">size</span>(); i++) &#123;<br>            A[s[i]-<span class="hljs-string">&#x27;a&#x27;</span>]++;<br>        &#125;<br>        <span class="hljs-comment">// 判断串t字母是否属于集合A</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j=<span class="hljs-number">0</span>; j&lt;t.<span class="hljs-built_in">size</span>(); j++) &#123;<br>            A[t[j]-<span class="hljs-string">&#x27;a&#x27;</span>]--;<br>            <span class="hljs-comment">// 如果不够减，则字母必不属于集合A</span><br>            <span class="hljs-keyword">if</span> (A[t[j]-<span class="hljs-string">&#x27;a&#x27;</span>] &lt; <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="349-两个数组的交集（拓展）"><a href="#349-两个数组的交集（拓展）" class="headerlink" title="349.两个数组的交集（拓展）"></a>349.两个数组的交集（拓展）</h2><p><strong>参考</strong>：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/intersection-of-two-arrays/">力扣题目链接</a>、<a target="_blank" rel="noopener" href="https://programmercarl.com/0349.%E4%B8%A4%E4%B8%AA%E6%95%B0%E7%BB%84%E7%9A%84%E4%BA%A4%E9%9B%86.html">349. 两个数组的交集 | 代码随想录</a></p>
+<p><strong>关键词</strong>：#set，#迭代器</p>
+<h3 id="数据结构选择"><a href="#数据结构选择" class="headerlink" title="数据结构选择"></a>数据结构选择</h3><p>直接使用 set 不仅占用空间比数组大，而且速度要比数组慢，set 把数值映射到 key 上都要做 hash 计算。因此，只要<strong>数据范围给了限制</strong>，尽量用<strong>数组</strong>做哈希表。</p>
+<p>用 unordered_set 的场景：<strong>哈希值比较少、特别分散、跨度非常大</strong>。此时使用数组会造成空间的极大浪费。</p>
+<p>因此本题将一个 nums 转换为 set，再判断另一个 nums 的元素在不在 set 中。</p>
+<h3 id="迭代器用法"><a href="#迭代器用法" class="headerlink" title="迭代器用法"></a>迭代器用法</h3><p>1994 年，Stepanov 设计的 STL 被纳入 C++ 标准库。STL 的核心思想是将<strong>容器（containers）</strong>、**算法（algorithms）<strong>和</strong>迭代器（iterators）**三者分离：</p>
+<ul>
+<li>容器负责存储数据（如 <code>vector</code>、<code>list</code>、<code>set</code>）。</li>
+<li>算法负责处理数据（如 <code>sort</code>、<code>find</code>、<code>accumulate</code>）。</li>
+<li>迭代器作为桥梁，为算法提供统一访问容器元素的接口。</li>
+</ul>
+<p>迭代器是一个对象，它可以指向容器中的某个元素，并能够通过一组标准化操作来遍历容器。</p>
+<p>对于可迭代的容器，<strong>迭代器对象</strong>可以作为容器成员函数的<strong>返回值</strong>。两个典例：</p>
+<ul>
+<li><p><code>vessel.begin()</code> 的含义</p>
+<ul>
+<li>返回一个迭代器，指向容器的<strong>第一个元素</strong>（索引为 0 的位置）。</li>
+<li>如果容器为空，则 <code>begin()</code> 返回的迭代器与 <code>end()</code> 相等。</li>
+</ul>
+</li>
+<li><p><code>vessel.end()</code> 的含义</p>
+<ul>
+<li>返回一个迭代器，指向容器的<strong>尾后位置</strong>（past-the-end），即最后一个元素的下一个位置。</li>
+<li>这个位置不指向任何实际元素，通常用作遍历的结束标志。因为 C++ 标准库中，所有容器都采用<strong>左闭右开区间</strong>表示范围。</li>
+</ul>
+</li>
+</ul>
+<h3 id="代码实现-13"><a href="#代码实现-13" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">intersection</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums1, vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums2)</span> </span>&#123;<br>        <span class="hljs-comment">// 输出交集，要求不重复，因此仍然用 set 存储</span><br>        unordered_set&lt;<span class="hljs-type">int</span>&gt; result_set;<br>        <span class="hljs-comment">// 将 nums1 转为 set 存储</span><br>        <span class="hljs-function">unordered_set&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">nums1_set</span><span class="hljs-params">(nums<span class="hljs-number">1.</span>begin(), nums<span class="hljs-number">1.</span>end())</span></span>;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> num : nums2) &#123;     <span class="hljs-comment">// 迭代器遍历写法</span><br>            <span class="hljs-comment">// num 存在于 nums1_set 中</span><br>            <span class="hljs-keyword">if</span> (nums1_set.<span class="hljs-built_in">find</span>(num) != nums1_set.<span class="hljs-built_in">end</span>()) &#123;<br>                result_set.<span class="hljs-built_in">insert</span>(num);     <span class="hljs-comment">// 插入结果集合</span><br>            &#125;<br>        &#125;<br>        <span class="hljs-comment">// 转换为 vector</span><br>        <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">result</span><span class="hljs-params">(result_set.begin(), result_set.end())</span></span>;<br>        <span class="hljs-keyword">return</span> result;<br>    &#125;<br>&#125;;<br><span class="hljs-string">&quot;&quot;</span><span class="hljs-string">&quot;</span><br><span class="hljs-string">迭代器相关语句解释如下：</span><br><span class="hljs-string">&quot;</span><span class="hljs-string">&quot;&quot;</span><br><span class="hljs-number">1.</span> <span class="hljs-function">unordered_set&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">nums_set</span><span class="hljs-params">(nums<span class="hljs-number">1.</span>begin(), nums<span class="hljs-number">1.</span>end())</span></span>;<br>   <span class="hljs-comment">// unordered_set：构造函数接受两个迭代器参数，表示将[first, last)范围内的元素插入到集合中。</span><br><br><span class="hljs-number">2.</span> <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> num : nums2) &#123; ... &#125;<br>   <span class="hljs-comment">// C++ 11 引入的基于范围的for循环，相当于 Python 的 for num in nums2</span><br>   <span class="hljs-comment">// 依次将nums2中的每个元素赋值给num，并执行循环体。</span><br><br><span class="hljs-number">3.</span> <span class="hljs-keyword">if</span> (nums_set.<span class="hljs-built_in">find</span>(num) != nums_set.<span class="hljs-built_in">end</span>()) &#123; ... &#125;<br>   <span class="hljs-comment">// nums_set.find(num)：在哈希集合中查找键值为num的元素。</span><br>   <span class="hljs-comment">// 如果找到，返回指向该元素的迭代器；否则返回nums_set.end()（即尾后迭代器）。</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="1-两数之和"><a href="#1-两数之和" class="headerlink" title="1. 两数之和"></a>1. 两数之和</h2><p><strong>参考</strong>：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/two-sum/">力扣题目链接</a>、<a target="_blank" rel="noopener" href="https://programmercarl.com/0001.%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C.html">两数之和 | 代码随想录</a></p>
+<p><strong>关键词</strong>：，#</p>
+<hr>
+<h2 id="454-四数相加-II"><a href="#454-四数相加-II" class="headerlink" title="454. 四数相加 II"></a>454. 四数相加 II</h2><p><strong>参考</strong>：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/4sum-ii/">力扣题目链接</a>、<a target="_blank" rel="noopener" href="https://programmercarl.com/0454.%E5%9B%9B%E6%95%B0%E7%9B%B8%E5%8A%A0II.html">第 454 题.四数相加 II | 代码随想录</a></p>
 <p><strong>关键词</strong>：，</p>
 <hr>
-<h2 id="1-两数之和"><a href="#1-两数之和" class="headerlink" title="1. 两数之和"></a>1. 两数之和</h2><p><strong>参考</strong>：、</p>
-<p><strong>关键词</strong>：，</p>
-<hr>
-<h2 id="454-四数相加-II"><a href="#454-四数相加-II" class="headerlink" title="454. 四数相加 II"></a>454. 四数相加 II</h2><p><strong>参考</strong>：、</p>
-<p><strong>关键词</strong>：，</p>
-<hr>
-<h2 id="15-三数之和（重点学双指针法）"><a href="#15-三数之和（重点学双指针法）" class="headerlink" title="15. 三数之和（重点学双指针法）"></a>15. 三数之和（重点学双指针法）</h2><p><strong>参考</strong>：、</p>
+<h2 id="15-三数之和（重点学双指针法）"><a href="#15-三数之和（重点学双指针法）" class="headerlink" title="15. 三数之和（重点学双指针法）"></a>15. 三数之和（重点学双指针法）</h2><p><strong>参考</strong>：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/3sum/">力扣题目链接</a>、<a target="_blank" rel="noopener" href="https://programmercarl.com/0015.%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C.html">第 15 题. 三数之和 | 代码随想录</a></p>
 <p><strong>关键词</strong>：，</p>
 <hr>
 <h1 id="Day-5-栈与队列"><a href="#Day-5-栈与队列" class="headerlink" title="Day 5 栈与队列"></a>Day 5 栈与队列</h1><hr>
