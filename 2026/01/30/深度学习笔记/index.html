@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://rsanding.top/img/covers/bp.gif">
 <meta property="article:published_time" content="2026-01-30T12:46:05.000Z">
-<meta property="article:modified_time" content="2026-02-09T18:04:13.400Z">
+<meta property="article:modified_time" content="2026-02-14T16:57:59.345Z">
 <meta property="article:author" content="Rsan Ding">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://rsanding.top/img/covers/bp.gif">
@@ -342,7 +342,7 @@ mjx-container[display="true"] + br {
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.3k 字
+          4.4k 字
         
       </span>
     
@@ -353,7 +353,7 @@ mjx-container[display="true"] + br {
         
         
         
-          36 分钟
+          37 分钟
         
       </span>
     
@@ -612,7 +612,11 @@ mjx-container[display="true"] + br {
 </li>
 </ul>
 </li>
-<li><strong>Dropout</strong>：随机屏蔽部分神经元，迫使<strong>剩下的神经元激活值放大</strong>，促使网络<strong>不依赖某些特强神经元</strong>，更加健壮和鲁棒。</li>
+<li><strong>Dropout</strong>：在<strong>每个 batch 的训练</strong> 中，通过随机屏蔽部分神经元(复合激活函数后)的输出，强迫网络在每个训练步骤中 <strong>不要依赖某些特定的神经元</strong>，而是鼓励网络中尽可能多的神经元同时做出决策。<ul>
+<li>可以减少过拟合，增强模型泛化能力。</li>
+<li>在<strong>测试集</strong>和<strong>验证集</strong>上，网络禁用 Dropout 层，仍然使用所有神经元进行预测。这两个阶段通常会 <strong>缩放</strong> <strong>神经元的输出</strong>值（例如，乘以一个概率因子），以此补偿训练时的随机屏蔽，使得模型在评估时的输出与训练阶段的<strong>尺度一致</strong>。</li>
+</ul>
+</li>
 </ul>
 </li>
 <li><strong>提前停止</strong>：监控验证集性能，若 Loss 下降不明显，要及时停止。</li>
