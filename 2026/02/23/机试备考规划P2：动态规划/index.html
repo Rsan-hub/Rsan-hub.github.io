@@ -1,0 +1,769 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/Man_overworld_tree.gif">
+  <link rel="icon" href="/img/Man_overworld_tree.gif">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Rsan Ding">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="前言参考：关于动态规划，你该了解这些！ dp 是重中之重，必须刷完。开始赶工。  DP 五部曲 数组+下标 含义：dp[i] 递推公式：dp[i] &#x3D; func(dp[i-1], ...) 初始化：dp[0]&#x3D;?, dp[1]&#x3D;?, ... 遍历顺序：&#x2F;&#x2F; 从前往后？从后往前？ 草稿&#x2F;打印前 n 项对比。  Day 1 DP基础1509. 斐波那契数参考：509. 斐波那契数 | 代码随">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机试备考规划P2：动态规划">
+<meta property="og:url" content="https://rsanding.top/2026/02/23/%E6%9C%BA%E8%AF%95%E5%A4%87%E8%80%83%E8%A7%84%E5%88%92P2%EF%BC%9A%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/index.html">
+<meta property="og:site_name" content="Mancountry">
+<meta property="og:description" content="前言参考：关于动态规划，你该了解这些！ dp 是重中之重，必须刷完。开始赶工。  DP 五部曲 数组+下标 含义：dp[i] 递推公式：dp[i] &#x3D; func(dp[i-1], ...) 初始化：dp[0]&#x3D;?, dp[1]&#x3D;?, ... 遍历顺序：&#x2F;&#x2F; 从前往后？从后往前？ 草稿&#x2F;打印前 n 项对比。  Day 1 DP基础1509. 斐波那契数参考：509. 斐波那契数 | 代码随">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://rsanding.top/img/covers/DP.jpg">
+<meta property="article:published_time" content="2026-02-23T14:00:51.000Z">
+<meta property="article:modified_time" content="2026-02-23T17:35:45.302Z">
+<meta property="article:author" content="Rsan Ding">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://rsanding.top/img/covers/DP.jpg">
+  
+  
+  
+  <title>机试备考规划P2：动态规划 - Mancountry</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"rsanding.top","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loadingdog.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 80vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Mancountry</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/CTOWN.gif') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="机试备考规划P2：动态规划"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-02-23 22:00" pubdate>
+          2026年2月23日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          9 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">机试备考规划P2：动态规划</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>参考：<a target="_blank" rel="noopener" href="https://programmercarl.com/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80.html">关于动态规划，你该了解这些！</a></p>
+<p>dp 是重中之重，必须刷完。开始赶工。</p>
+<p><img src="https://file1.kamacoder.com/i/algo/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92-%E6%80%BB%E7%BB%93%E5%A4%A7%E7%BA%B21.jpg" srcset="/img/loadingdog.gif" lazyload alt="动态规划-总结大纲"></p>
+<h1 id="DP-五部曲"><a href="#DP-五部曲" class="headerlink" title="DP 五部曲"></a>DP 五部曲</h1><ol>
+<li>数组+下标 含义：<code>dp[i]</code></li>
+<li>递推公式：<code>dp[i] = func(dp[i-1], ...)</code></li>
+<li>初始化：<code>dp[0]=?, dp[1]=?, ...</code></li>
+<li>遍历顺序：<code>// 从前往后？从后往前？</code></li>
+<li>草稿&#x2F;打印前 n 项对比。</li>
+</ol>
+<h1 id="Day-1-DP基础1"><a href="#Day-1-DP基础1" class="headerlink" title="Day 1 DP基础1"></a>Day 1 DP基础1</h1><h2 id="509-斐波那契数"><a href="#509-斐波那契数" class="headerlink" title="509. 斐波那契数"></a>509. 斐波那契数</h2><p>参考：<a target="_blank" rel="noopener" href="https://programmercarl.com/0509.%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0.html">509. 斐波那契数 | 代码随想录</a>、<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/fibonacci-number/">力扣题目链接</a></p>
+<h3 id="思路：S-n-优化"><a href="#思路：S-n-优化" class="headerlink" title="思路：S(n) 优化"></a>思路：S(n) 优化</h3><p>前 3 步题目给了。唯一注意的是什么时候优化 S(n)。</p>
+<ul>
+<li>当前状态依赖前两个，或者前三个状态，都可以做空间上的优化。</li>
+</ul>
+<h3 id="填表"><a href="#填表" class="headerlink" title="填表"></a>填表</h3><table>
+<thead>
+<tr>
+<th align="center">步骤</th>
+<th align="center">值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">数组+下标</td>
+<td align="center">dp[i]：第 i 个斐波那契数</td>
+</tr>
+<tr>
+<td align="center">递推公式</td>
+<td align="center">dp[i] &#x3D; dp[i-1] + dp[i-2]</td>
+</tr>
+<tr>
+<td align="center">初始值</td>
+<td align="center">dp[0] &#x3D; 0, dp[1] &#x3D; 1</td>
+</tr>
+<tr>
+<td align="center">遍历方向</td>
+<td align="center">从前往后</td>
+</tr>
+<tr>
+<td align="center">草稿&#x2F;打印前 n 项对比</td>
+<td align="center">—</td>
+</tr>
+</tbody></table>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">fib</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span> </span>&#123;<br>        <span class="hljs-keyword">if</span> (n &lt; <span class="hljs-number">2</span>) <span class="hljs-keyword">return</span> n;    <span class="hljs-comment">// 边界情况</span><br>        <span class="hljs-type">int</span> sum, dp[<span class="hljs-number">2</span>] = &#123;<span class="hljs-number">0</span>, <span class="hljs-number">1</span>&#125;;    <span class="hljs-comment">// 只需要保存最后两数</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i=<span class="hljs-number">2</span>; i&lt;=n; i++) &#123;<br>            sum = dp[<span class="hljs-number">0</span>] + dp[<span class="hljs-number">1</span>];<br>            dp[<span class="hljs-number">0</span>] = dp[<span class="hljs-number">1</span>];<br>            dp[<span class="hljs-number">1</span>] = sum;<br>        &#125;<br>        <span class="hljs-keyword">return</span> sum;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="70-爬楼梯"><a href="#70-爬楼梯" class="headerlink" title="70. 爬楼梯"></a>70. 爬楼梯</h2><p>参考：<a target="_blank" rel="noopener" href="https://programmercarl.com/0070.%E7%88%AC%E6%A5%BC%E6%A2%AF.html">70. 爬楼梯 | 代码随想录</a>、<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/climbing-stairs/">力扣题目链接</a></p>
+<h3 id="思路：假设-dp-i-1-已知"><a href="#思路：假设-dp-i-1-已知" class="headerlink" title="思路：假设 dp[i-1] 已知"></a>思路：假设 dp[i-1] 已知</h3><p>推公式的关键:</p>
+<ol>
+<li>紧扣 dp[i] 定义。</li>
+<li>假设先前的 dp[i-1] dp[i-2] 已知。</li>
+</ol>
+<p>dp[i] 定义：爬到第 i 层有 dp[i] 种方法。</p>
+<blockquote>
+<p>从定义可以看出，dp[i] 可以有两个方向推出来。</p>
+<p>首先是 dp[i - 1]，上 i-1 层楼梯，有 dp[i - 1]种方法，那么再一步跳一个台阶，不就是 dp[i]了么。</p>
+<p>还有就是 dp[i - 2]，上 i-2 层楼梯，有 dp[i - 2]种方法，那么再一步跳两个台阶，不就是 dp[i]了么。</p>
+<p>那么 dp[i]就是 dp[i - 1]与 dp[i - 2]之和！</p>
+<p>所以 dp[i] &#x3D; dp[i - 1] + dp[i - 2] 。</p>
+</blockquote>
+<p>其实就是斐波那契数列。</p>
+<h3 id="填表-1"><a href="#填表-1" class="headerlink" title="填表"></a>填表</h3><table>
+<thead>
+<tr>
+<th align="center">步骤</th>
+<th align="center">值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">数组+下标</td>
+<td align="center">dp[i]：爬到第 i 层有 dp[i] 种方法</td>
+</tr>
+<tr>
+<td align="center">递推公式</td>
+<td align="center">dp[i] &#x3D; dp[i-1] + dp[i-2]</td>
+</tr>
+<tr>
+<td align="center">初始值</td>
+<td align="center">dp[1] &#x3D; 1, dp[2] &#x3D; 2</td>
+</tr>
+<tr>
+<td align="center">遍历方向</td>
+<td align="center">从前往后（从下往上）</td>
+</tr>
+<tr>
+<td align="center">草稿&#x2F;打印前 n 项对比</td>
+<td align="center">—</td>
+</tr>
+</tbody></table>
+<h3 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">ClimbStairs</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span> </span>&#123;<br>        <span class="hljs-keyword">if</span> (n &lt; <span class="hljs-number">3</span>) <span class="hljs-keyword">return</span> n;    <span class="hljs-comment">// 边界情况</span><br>        <span class="hljs-type">int</span> sum, dp[<span class="hljs-number">3</span>] = &#123;<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>&#125;;    <span class="hljs-comment">// 只需要保存最后两数</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i=<span class="hljs-number">3</span>; i&lt;=n; i++) &#123;<br>            sum = dp[<span class="hljs-number">1</span>] + dp[<span class="hljs-number">2</span>];<br>            dp[<span class="hljs-number">1</span>] = dp[<span class="hljs-number">2</span>];<br>            dp[<span class="hljs-number">2</span>] = sum;<br>        &#125;<br>        <span class="hljs-keyword">return</span> sum;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="746-使用最小花费爬楼梯"><a href="#746-使用最小花费爬楼梯" class="headerlink" title="746. 使用最小花费爬楼梯"></a>746. 使用最小花费爬楼梯</h2><p>参考：<a target="_blank" rel="noopener" href="https://programmercarl.com/0746.%E4%BD%BF%E7%94%A8%E6%9C%80%E5%B0%8F%E8%8A%B1%E8%B4%B9%E7%88%AC%E6%A5%BC%E6%A2%AF.html">746. 使用最小花费爬楼梯 | 代码随想录</a>、<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/min-cost-climbing-stairs/">力扣题目链接</a></p>
+<h3 id="思路：紧扣定义推初值"><a href="#思路：紧扣定义推初值" class="headerlink" title="思路：紧扣定义推初值"></a>思路：紧扣定义推初值</h3><ul>
+<li>dp[i]：跳到 i 号楼梯的总花费。</li>
+<li>和上题一样，可以跳一步或两步。<ul>
+<li>即：dp[i] 可以由 dp[i-1] 或 dp[i-2] 推出来，具体取决于谁的价格更小。</li>
+</ul>
+</li>
+<li>初始可以直接站在 dp[0] 或 dp[1] 上，<strong>不需要体力</strong>。因此<strong>根据定义</strong>，dp[0]&#x3D;dp[1]&#x3D;0。</li>
+</ul>
+<p><strong>严格按步骤分析</strong>！本题如果先分析遍历方向，从后往前遍历，会掉到坑里，非常繁琐。</p>
+<p>本题也可以 S(n) 优化，这里用不优化写法。</p>
+<h3 id="填表-2"><a href="#填表-2" class="headerlink" title="填表"></a>填表</h3><table>
+<thead>
+<tr>
+<th align="center">步骤</th>
+<th align="center">值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">数组+下标</td>
+<td align="center">dp[i]：跳到下标为 i 的楼梯总的花费。</td>
+</tr>
+<tr>
+<td align="center">递推公式</td>
+<td align="center"><code>min{f(i-1), f(i-2)}</code>，其中  <code>f(i) = dp[i]+cost[i]</code></td>
+</tr>
+<tr>
+<td align="center">初始值</td>
+<td align="center">dp[0] &#x3D; dp[1] &#x3D; 0</td>
+</tr>
+<tr>
+<td align="center">遍历方向</td>
+<td align="center">从前往后</td>
+</tr>
+<tr>
+<td align="center">草稿&#x2F;打印前 n 项对比</td>
+<td align="center">—</td>
+</tr>
+</tbody></table>
+<h3 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">minCostClimbingStairs</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; cost)</span> </span>&#123;<br>        <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">dp</span><span class="hljs-params">(cost.size()<span class="hljs-number">+1</span>)</span></span>;    <span class="hljs-comment">// 楼顶比cost多一个下标</span><br>        dp[<span class="hljs-number">0</span>] = dp[<span class="hljs-number">1</span>] = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i=<span class="hljs-number">2</span>; i&lt;=cost.<span class="hljs-built_in">size</span>(); i++) &#123;    <span class="hljs-comment">// 最终要爬到楼顶，因此是&lt;=</span><br>            dp[i] = <span class="hljs-built_in">min</span>(<br>                dp[i<span class="hljs-number">-1</span>] + cost[i<span class="hljs-number">-1</span>], <br>                dp[i<span class="hljs-number">-2</span>] + cost[i<span class="hljs-number">-2</span>]<br>            );<br>        &#125;<br>        <span class="hljs-keyword">return</span> dp[cost.<span class="hljs-built_in">size</span>()];     <span class="hljs-comment">// 返回楼顶的总花费</span><br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="阶段总结"><a href="#阶段总结" class="headerlink" title="阶段总结"></a>阶段总结</h2><p>参考：<a target="_blank" rel="noopener" href="https://programmercarl.com/%E5%91%A8%E6%80%BB%E7%BB%93/20210107%E5%8A%A8%E8%A7%84%E5%91%A8%E6%9C%AB%E6%80%BB%E7%BB%93.html">本周小结！（动态规划系列一） | 代码随想录</a></p>
+<ul>
+<li>严格按步骤分析。</li>
+<li>推公式、定初值，都要紧扣 dp[i] 定义。</li>
+<li>推公式时，假设已知 i 号 dp 之前的所有 dp。<ul>
+<li>可见 dp 本质是数学归纳法。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h1 id="Day-2-DP基础2"><a href="#Day-2-DP基础2" class="headerlink" title="Day 2 DP基础2"></a>Day 2 DP基础2</h1><h2 id="62-不同路径"><a href="#62-不同路径" class="headerlink" title="62. 不同路径"></a>62. 不同路径</h2><p>参考：<a target="_blank" rel="noopener" href="https://programmercarl.com/0062.%E4%B8%8D%E5%90%8C%E8%B7%AF%E5%BE%84.html">62.不同路径 | 代码随想录</a>、<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/unique-paths/">力扣题目链接</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>机试备考规划P2：动态规划</div>
+      <div>https://rsanding.top/2026/02/23/机试备考规划P2：动态规划/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Rsan Ding</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年2月23日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/01/30/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="深度学习笔记">
+                        <span class="hidden-mobile">深度学习笔记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
