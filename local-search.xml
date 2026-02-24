@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title>基于高分辨率遥感影像微调SAM进行绿地提取</title>
+    <link href="/2026/02/24/%E5%9F%BA%E4%BA%8E%E9%AB%98%E5%88%86%E8%BE%A8%E7%8E%87%E9%81%A5%E6%84%9F%E5%BD%B1%E5%83%8F%E5%BE%AE%E8%B0%83SAM%E8%BF%9B%E8%A1%8C%E7%BB%BF%E5%9C%B0%E6%8F%90%E5%8F%96/"/>
+    <url>/2026/02/24/%E5%9F%BA%E4%BA%8E%E9%AB%98%E5%88%86%E8%BE%A8%E7%8E%87%E9%81%A5%E6%84%9F%E5%BD%B1%E5%83%8F%E5%BE%AE%E8%B0%83SAM%E8%BF%9B%E8%A1%8C%E7%BB%BF%E5%9C%B0%E6%8F%90%E5%8F%96/</url>
+    
+    <content type="html"><![CDATA[<h1 id="基于高分辨率遥感影像微调-SAM-进行绿地提取-实验设计"><a href="#基于高分辨率遥感影像微调-SAM-进行绿地提取-实验设计" class="headerlink" title="基于高分辨率遥感影像微调 SAM 进行绿地提取 实验设计"></a>基于高分辨率遥感影像微调 SAM 进行绿地提取 实验设计</h1><h2 id="零、难点挑战"><a href="#零、难点挑战" class="headerlink" title="零、难点挑战"></a>零、难点挑战</h2><ul><li>标签太少（OSM + LoRA微调 解决）</li><li>高分辨率遥感影像尺寸太大</li><li>SAM不微调直接分割，效果不好，且不能同时输入【文本】和【坐标】Prompt</li><li>定义绿地，尤其与耕地区分</li><li>绿地各季节颜色不一样</li></ul><h2 id="一、数据工程✅"><a href="#一、数据工程✅" class="headerlink" title="一、数据工程✅"></a>一、数据工程✅</h2><ul><li>遥感影像<ul><li>去云、季节特征</li></ul></li><li>众包数据标签</li><li><strong>osm 做遥感影像分割，哪些 trick 方法</strong><ul><li>耕地、绿地</li><li>定义典型绿地&#x2F;随便选绿地</li></ul></li></ul><h2 id="二、Prompt层修改🌟"><a href="#二、Prompt层修改🌟" class="headerlink" title="二、Prompt层修改🌟"></a>二、Prompt层修改🌟</h2><ul><li>坐标和文本Prompt一起输入，提升 Few-shot 能力<ul><li>坐标</li></ul></li></ul><h2 id="三、LoRA微调🌟"><a href="#三、LoRA微调🌟" class="headerlink" title="三、LoRA微调🌟"></a>三、LoRA微调🌟</h2><ul><li>绿地做正样本，耕地做负样本</li></ul><h2 id="四、评价体系设计✅"><a href="#四、评价体系设计✅" class="headerlink" title="四、评价体系设计✅"></a>四、评价体系设计✅</h2><p>本来四是模型对比，但是估计没时间了</p><ul><li>遥感领域常用指标：OA F1 FP等</li></ul><hr><h1 id="小华的问题"><a href="#小华的问题" class="headerlink" title="小华的问题"></a>小华的问题</h1><h2 id="一、毕设："><a href="#一、毕设：" class="headerlink" title="一、毕设："></a>一、毕设：</h2><p>1、问题定义是什么？ 为什么这么定义？ 为什么要做这件事情？ 要做成什么样子？<br>2、openstreetmap 哪些东西可以利用；众包；<br>3、针对你这个任务、和数据集（或者类似的），他们怎么做的？ 看他们的paper（背景、问题、why、how)，包装成自己的？</p><p><a href="https://huggingface.co/papers/trending">https://huggingface.co/papers/trending</a></p><p>遥感 分割 openstreetmap sam</p><h2 id="二、遥感、信息地理里是否有类似的问题；"><a href="#二、遥感、信息地理里是否有类似的问题；" class="headerlink" title="二、遥感、信息地理里是否有类似的问题；"></a>二、遥感、信息地理里是否有类似的问题；</h2><p>视频或图片到多标签的任务，如街景影像，无人机视频<br>MLLM lora</p><p>urbanpipeline</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>机试备考规划P2：动态规划</title>
     <link href="/2026/02/23/%E6%9C%BA%E8%AF%95%E5%A4%87%E8%80%83%E8%A7%84%E5%88%92P2%EF%BC%9A%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"/>
     <url>/2026/02/23/%E6%9C%BA%E8%AF%95%E5%A4%87%E8%80%83%E8%A7%84%E5%88%92P2%EF%BC%9A%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</url>
