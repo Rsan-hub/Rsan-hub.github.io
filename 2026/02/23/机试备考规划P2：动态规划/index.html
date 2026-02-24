@@ -21,16 +21,16 @@
   <meta name="author" content="Rsan Ding">
   <meta name="keywords" content="">
   
-    <meta name="description" content="前言参考：关于动态规划，你该了解这些！ dp 的两种理解：  当前状态是由前一个状态推导出来的。 数学归纳法。  dp 是重中之重，必须刷完。开始赶工。  DP 五部曲   步骤 值    数组+下标的含义 dp[i] 中，dp 和 i 分别代表什么   递推公式 dp[i] 与之前的 dp[i-1]、dp[i-2] 的关系   初始值 dp[0]、dp[1] 等初值分别是多少   遍历方向 从前">
+    <meta name="description" content="前言参考：关于动态规划，你该了解这些！ dp 的两种理解：  当前状态是由前一个状态推导出来的。 数学归纳法。  dp 是重中之重，必须刷完。开始赶工。 后面打✅的题目都是不太好想，往往要回扣 dp 数组定义。  DP 五部曲   步骤 值    数组+下标的含义 dp[i] 中，dp 和 i 分别代表什么   递推公式 dp[i] 与之前的 dp[i-1]、dp[i-2] 的关系   初始值 d">
 <meta property="og:type" content="article">
 <meta property="og:title" content="机试备考规划P2：动态规划">
 <meta property="og:url" content="https://rsanding.top/2026/02/23/%E6%9C%BA%E8%AF%95%E5%A4%87%E8%80%83%E8%A7%84%E5%88%92P2%EF%BC%9A%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/index.html">
 <meta property="og:site_name" content="Mancountry">
-<meta property="og:description" content="前言参考：关于动态规划，你该了解这些！ dp 的两种理解：  当前状态是由前一个状态推导出来的。 数学归纳法。  dp 是重中之重，必须刷完。开始赶工。  DP 五部曲   步骤 值    数组+下标的含义 dp[i] 中，dp 和 i 分别代表什么   递推公式 dp[i] 与之前的 dp[i-1]、dp[i-2] 的关系   初始值 dp[0]、dp[1] 等初值分别是多少   遍历方向 从前">
+<meta property="og:description" content="前言参考：关于动态规划，你该了解这些！ dp 的两种理解：  当前状态是由前一个状态推导出来的。 数学归纳法。  dp 是重中之重，必须刷完。开始赶工。 后面打✅的题目都是不太好想，往往要回扣 dp 数组定义。  DP 五部曲   步骤 值    数组+下标的含义 dp[i] 中，dp 和 i 分别代表什么   递推公式 dp[i] 与之前的 dp[i-1]、dp[i-2] 的关系   初始值 d">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://rsanding.top/img/covers/DP.jpg">
 <meta property="article:published_time" content="2026-02-23T14:00:51.000Z">
-<meta property="article:modified_time" content="2026-02-24T05:05:32.313Z">
+<meta property="article:modified_time" content="2026-02-24T06:17:25.269Z">
 <meta property="article:author" content="Rsan Ding">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://rsanding.top/img/covers/DP.jpg">
@@ -230,7 +230,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2k 字
+          2.1k 字
         
       </span>
     
@@ -241,7 +241,7 @@
         
         
         
-          17 分钟
+          18 分钟
         
       </span>
     
@@ -294,6 +294,7 @@
 <li>数学归纳法。</li>
 </ul>
 <p>dp 是重中之重，必须刷完。开始赶工。</p>
+<p>后面打✅的题目都是不太好想，往往要<strong>回扣 dp 数组定义</strong>。</p>
 <p><img src="https://file1.kamacoder.com/i/algo/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92-%E6%80%BB%E7%BB%93%E5%A4%A7%E7%BA%B21.jpg" srcset="/img/loadingdog.gif" lazyload alt="动态规划-总结大纲"></p>
 <h1 id="DP-五部曲"><a href="#DP-五部曲" class="headerlink" title="DP 五部曲"></a>DP 五部曲</h1><table>
 <thead>
@@ -405,7 +406,7 @@
 <h3 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">ClimbStairs</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span> </span>&#123;<br>        <span class="hljs-keyword">if</span> (n &lt; <span class="hljs-number">3</span>) <span class="hljs-keyword">return</span> n;    <span class="hljs-comment">// 边界情况</span><br>        <span class="hljs-type">int</span> sum, dp[<span class="hljs-number">3</span>] = &#123;<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>&#125;;    <span class="hljs-comment">// 只需要保存最后两数</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i=<span class="hljs-number">3</span>; i&lt;=n; i++) &#123;<br>            sum = dp[<span class="hljs-number">1</span>] + dp[<span class="hljs-number">2</span>];<br>            dp[<span class="hljs-number">1</span>] = dp[<span class="hljs-number">2</span>];<br>            dp[<span class="hljs-number">2</span>] = sum;<br>        &#125;<br>        <span class="hljs-keyword">return</span> sum;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
 <hr>
-<h2 id="746-使用最小花费爬楼梯"><a href="#746-使用最小花费爬楼梯" class="headerlink" title="746. 使用最小花费爬楼梯"></a>746. 使用最小花费爬楼梯</h2><p>参考：<a target="_blank" rel="noopener" href="https://programmercarl.com/0746.%E4%BD%BF%E7%94%A8%E6%9C%80%E5%B0%8F%E8%8A%B1%E8%B4%B9%E7%88%AC%E6%A5%BC%E6%A2%AF.html">746. 使用最小花费爬楼梯 | 代码随想录</a>、<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/min-cost-climbing-stairs/">力扣题目链接</a></p>
+<h2 id="746-使用最小花费爬楼梯-✅"><a href="#746-使用最小花费爬楼梯-✅" class="headerlink" title="746. 使用最小花费爬楼梯 ✅"></a>746. 使用最小花费爬楼梯 ✅</h2><p>参考：<a target="_blank" rel="noopener" href="https://programmercarl.com/0746.%E4%BD%BF%E7%94%A8%E6%9C%80%E5%B0%8F%E8%8A%B1%E8%B4%B9%E7%88%AC%E6%A5%BC%E6%A2%AF.html">746. 使用最小花费爬楼梯 | 代码随想录</a>、<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/min-cost-climbing-stairs/">力扣题目链接</a></p>
 <h3 id="思路：紧扣定义推初值"><a href="#思路：紧扣定义推初值" class="headerlink" title="思路：紧扣定义推初值"></a>思路：紧扣定义推初值</h3><ul>
 <li>dp[i]：跳到 i 号楼梯的总花费。</li>
 <li>和上题一样，可以跳一步或两步。<ul>
@@ -458,11 +459,11 @@
 </ul>
 <hr>
 <h1 id="Day-2-DP基础2"><a href="#Day-2-DP基础2" class="headerlink" title="Day 2 DP基础2"></a>Day 2 DP基础2</h1><h2 id="62-不同路径"><a href="#62-不同路径" class="headerlink" title="62. 不同路径"></a>62. 不同路径</h2><p>参考：<a target="_blank" rel="noopener" href="https://programmercarl.com/0062.%E4%B8%8D%E5%90%8C%E8%B7%AF%E5%BE%84.html">62.不同路径 | 代码随想录</a>、<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/unique-paths/">力扣题目链接</a></p>
-<h3 id="思路：二维数组"><a href="#思路：二维数组" class="headerlink" title="思路：二维数组"></a>思路：二维数组</h3><p>dp[i][j]：从起点出发，到达第[i][j]格的路径数。</p>
-<p>两种情况，要么从左，要么从上。递推公式：dp[i][j] &#x3D; dp[i-1][j] + dp[i][j-1]。</p>
-<p>第 0 行和第 0 列都只有 1 种情况，初始化为全 1。</p>
+<h3 id="思路：二维数组"><a href="#思路：二维数组" class="headerlink" title="思路：二维数组"></a>思路：二维数组</h3><p>定义：dp[i][j] 是从起点出发，到达第[i][j]格的路径数。</p>
+<p>递推：两种情况，要么从左边来，要么从上面来。递推公式：dp[i][j] &#x3D; dp[i-1][j] + dp[i][j-1]。</p>
+<p>初始化：第 0 行和第 0 列都只有 1 种情况，初始化为全 1。</p>
 <p>特别注意变长二维数组初始化，在堆上分配内存，只能用 vector。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">/* </span><br><span class="hljs-comment">* 变长数组必须用vector初始化</span><br><span class="hljs-comment">* 两层都用了 vector&lt;type&gt;(len,val) 的初始化。不指定 val 则默认全 0 初始化。</span><br><span class="hljs-comment">* 内层 vector&lt;int&gt;(n,0) 长为 len=n，值全部为 val=0。是临时对象，可以不取名。</span><br><span class="hljs-comment">* 外层 vector&lt;vector&lt;int&gt;&gt; 长为 len=m，值全部为 val=vector&lt;int&gt;(n,0) 即临时对象。</span><br><span class="hljs-comment">*/</span><br>vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(m, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt;(n,<span class="hljs-number">0</span>));<br></code></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">/* </span><br><span class="hljs-comment">- 变长数组必须用vector初始化</span><br><span class="hljs-comment">- 两层都用了 vector&lt;type&gt;(len,val) 的初始化。</span><br><span class="hljs-comment">  - 不指定 val 则默认全 0 初始化。</span><br><span class="hljs-comment">- 内层 vector&lt;int&gt;(n,0) 长为 len=n，值全部为 val=0。</span><br><span class="hljs-comment">  - 内层是临时对象，可以不取名。</span><br><span class="hljs-comment">- 外层 vector&lt;vector&lt;int&gt;&gt; 长为 len=m，值全部为 val=vector&lt;int&gt;(n,0)。</span><br><span class="hljs-comment">*/</span><br>vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(m, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt;(n,<span class="hljs-number">0</span>));<br></code></pre></td></tr></table></figure>
 
 <h3 id="填表-3"><a href="#填表-3" class="headerlink" title="填表"></a>填表</h3><table>
 <thead>
@@ -495,8 +496,8 @@
 <h3 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">uniquePaths</span><span class="hljs-params">(<span class="hljs-type">int</span> m, <span class="hljs-type">int</span> n)</span> </span>&#123;<br>        <span class="hljs-comment">// 变长数组必须用vector初始化</span><br>        vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(m, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt;(n,<span class="hljs-number">0</span>));<br>        <span class="hljs-comment">// 初始化</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>; i&lt;m; i++) dp[i][<span class="hljs-number">0</span>]=<span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j=<span class="hljs-number">0</span>; j&lt;n; j++) dp[<span class="hljs-number">0</span>][j]=<span class="hljs-number">1</span>;<br>        <span class="hljs-comment">// 递推dp数组</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>; i&lt;m; i++) &#123;<br>            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j=<span class="hljs-number">1</span>; j&lt;n; j++) &#123;<br>                dp[i][j] = dp[i<span class="hljs-number">-1</span>][j] + dp[i][j<span class="hljs-number">-1</span>];<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> dp[m<span class="hljs-number">-1</span>][n<span class="hljs-number">-1</span>];<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
 <hr>
-<h2 id="63-不同路径-II"><a href="#63-不同路径-II" class="headerlink" title="63. 不同路径 II"></a>63. 不同路径 II</h2><p>参考：<a target="_blank" rel="noopener" href="https://programmercarl.com/0063.%E4%B8%8D%E5%90%8C%E8%B7%AF%E5%BE%84II.html">63. 不同路径 II | 代码随想录</a>、<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/unique-paths-ii/">力扣题目链接</a></p>
-<h3 id="思路：紧扣定义推特值"><a href="#思路：紧扣定义推特值" class="headerlink" title="思路：紧扣定义推特值"></a>思路：紧扣定义推特值</h3><p>和上题一样，只是多了障碍物。要考虑障碍物代表什么特值。</p>
+<h2 id="63-不同路径-II-✅"><a href="#63-不同路径-II-✅" class="headerlink" title="63. 不同路径 II ✅"></a>63. 不同路径 II ✅</h2><p>参考：<a target="_blank" rel="noopener" href="https://programmercarl.com/0063.%E4%B8%8D%E5%90%8C%E8%B7%AF%E5%BE%84II.html">63. 不同路径 II | 代码随想录</a>、<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/unique-paths-ii/">力扣题目链接</a></p>
+<h3 id="思路：紧扣定义推特值"><a href="#思路：紧扣定义推特值" class="headerlink" title="思路：紧扣定义推特值"></a>思路：紧扣定义推特值</h3><p>比上题多一个障碍物。要考虑障碍物代表什么特值。</p>
 <p>dp[i][j] 是从起点出发，到达第[i][j]格的路径数。</p>
 <p>而<strong>根据定义</strong>，起点出发<strong>无法到达</strong>障碍物，所以障碍物格子的路径数为 0。</p>
 <h3 id="特值细节：两种阻断情景"><a href="#特值细节：两种阻断情景" class="headerlink" title="特值细节：两种阻断情景"></a>特值细节：两种阻断情景</h3><p>另外，本题的细节，就是两种阻断情景，有不同的代码表达。</p>
@@ -513,7 +514,14 @@
 
 <hr>
 <h2 id="343-整数拆分"><a href="#343-整数拆分" class="headerlink" title="343. 整数拆分"></a>343. 整数拆分</h2><p>参考：<a target="_blank" rel="noopener" href="https://programmercarl.com/0343.%E6%95%B4%E6%95%B0%E6%8B%86%E5%88%86.html">343. 整数拆分 | 代码随想录</a>、<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/integer-break/">力扣题目链接</a></p>
-<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><h3 id="代码-5"><a href="#代码-5" class="headerlink" title="代码"></a>代码</h3><hr>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>有点难，战术撤退！</p>
+<h3 id="代码-5"><a href="#代码-5" class="headerlink" title="代码"></a>代码</h3><hr>
+<h2 id="96-不同的二叉搜索树"><a href="#96-不同的二叉搜索树" class="headerlink" title="96. 不同的二叉搜索树"></a>96. 不同的二叉搜索树</h2><p>参考：<a target="_blank" rel="noopener" href="https://programmercarl.com/0096.%E4%B8%8D%E5%90%8C%E7%9A%84%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91.html">96.不同的二叉搜索树 | 代码随想录</a>、<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/unique-binary-search-trees/">力扣题目链接</a></p>
+<h3 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h3><p>看似王道书上的题，其实不是！</p>
+<p>有点难，战术撤退！</p>
+<h3 id="代码-6"><a href="#代码-6" class="headerlink" title="代码"></a>代码</h3><hr>
+<h2 id="阶段总结-1"><a href="#阶段总结-1" class="headerlink" title="阶段总结"></a>阶段总结</h2><hr>
+<h1 id="Day-3-01背包问题1"><a href="#Day-3-01背包问题1" class="headerlink" title="Day 3 01背包问题1"></a>Day 3 01背包问题1</h1><h2 id="卡码网-T46-携带研究材料"><a href="#卡码网-T46-携带研究材料" class="headerlink" title="卡码网 T46. 携带研究材料"></a>卡码网 T46. 携带研究材料</h2><p>参考：、</p>
 
                 
               </div>
