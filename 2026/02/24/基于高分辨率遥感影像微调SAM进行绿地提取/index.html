@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://rsanding.top/img/covers/SAM.png">
 <meta property="article:published_time" content="2026-02-24T14:27:28.000Z">
-<meta property="article:modified_time" content="2026-02-27T17:17:38.160Z">
+<meta property="article:modified_time" content="2026-02-28T14:58:18.676Z">
 <meta property="article:author" content="Rsan Ding">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://rsanding.top/img/covers/SAM.png">
@@ -230,7 +230,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.2k 字
+          1.7k 字
         
       </span>
     
@@ -241,7 +241,7 @@
         
         
         
-          11 分钟
+          14 分钟
         
       </span>
     
@@ -320,34 +320,53 @@
 <li>遥感领域常用指标：OA F1 FP等</li>
 </ul>
 <hr>
-<h1 id="小华的问题"><a href="#小华的问题" class="headerlink" title="小华的问题"></a>小华的问题</h1><h2 id="一、毕设："><a href="#一、毕设：" class="headerlink" title="一、毕设："></a>一、毕设：</h2><h3 id="1、问题定义是什么？-为什么这么定义？-为什么要做这件事情？-要做成什么样子？"><a href="#1、问题定义是什么？-为什么这么定义？-为什么要做这件事情？-要做成什么样子？" class="headerlink" title="1、问题定义是什么？ 为什么这么定义？ 为什么要做这件事情？ 要做成什么样子？"></a>1、问题定义是什么？ 为什么这么定义？ 为什么要做这件事情？ 要做成什么样子？</h3><p>定义：单模态城市绿地(UGS)语义分割。</p>
-<ul>
-<li>语义分割：遥感影像预处理手段，重要的上游任务。据说引入多模态数据（光学+prompt&#x3D;多模态？）效果更好。</li>
-<li></li>
-</ul>
-<h4 id="综述："><a href="#综述：" class="headerlink" title="综述："></a>综述：</h4><p>1<a target="_blank" rel="noopener" href="https://www.tandfonline.com/doi/full/10.1080/01431161.2024.2424511">遥感中城市绿地提取中的深度学习：一项全面的系统综述</a></p>
+<h1 id="小华的问题"><a href="#小华的问题" class="headerlink" title="小华的问题"></a>小华的问题</h1><h2 id="一、毕设："><a href="#一、毕设：" class="headerlink" title="一、毕设："></a>一、毕设：</h2><h3 id="1、问题定义是什么？-为什么这么定义？-为什么要做这件事情？-要做成什么样子？"><a href="#1、问题定义是什么？-为什么这么定义？-为什么要做这件事情？-要做成什么样子？" class="headerlink" title="1、问题定义是什么？ 为什么这么定义？ 为什么要做这件事情？ 要做成什么样子？"></a>1、问题定义是什么？ 为什么这么定义？ 为什么要做这件事情？ 要做成什么样子？</h3><h4 id="综述："><a href="#综述：" class="headerlink" title="综述："></a>综述：</h4><p>1<a target="_blank" rel="noopener" href="https://www.tandfonline.com/doi/full/10.1080/01431161.2024.2424511">遥感中城市绿地提取中的深度学习：一项全面的系统综述</a></p>
 <p>2<a target="_blank" rel="noopener" href="https://www.mdpi.com/2072-4292/15/5/1261">从各种分辨率数据中提取城市绿地的差异与影响因素：街区视角</a></p>
 <p>3<a target="_blank" rel="noopener" href="https://www.mdpi.com/2072-4292/16/2/414">评估 SAM 在多分辨率航拍和遥感图像中，划定农业和城市绿地的有效性 - 2024</a></p>
 <p>4<a target="_blank" rel="noopener" href="https://www.wispaper.ai/app/search/4ZoxvmAyAhrZQZjZhAkrdH/sam-high-resolution-remote-sensing-image-segmentation-micro-tuning-urban-green-areas">WisPaper - 使用SAM进行高分辨率遥感影像分割或提取的研究，最好用有微调过程，且分割或提取的对象最好是城市绿地</a></p>
-<h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><h4 id="定义原因"><a href="#定义原因" class="headerlink" title="定义原因"></a>定义原因</h4><h4 id="意义"><a href="#意义" class="headerlink" title="意义"></a>意义</h4><p>有力竞争对手：NDVI、CNN。NDVI 限制在于不能区分农田。CNN 限制在于：</p>
+<h4 id="问题定义"><a href="#问题定义" class="headerlink" title="问题定义"></a>问题定义</h4><p><strong>文本提示的遥感图像语义分割(semantic segmentation</strong>)，以城市绿地(UGS)为例。</p>
 <ul>
-<li>边界精细度：CNN 输出的分割图是栅格化的，边缘呈锯齿状；而 SAM 有矢量化级别的输出，在城市绿地这种碎片化、边界复杂的场景中价值巨大。<ul>
-<li>对于不同尺度影像，SAM 输出边界的泛化能力同样更好？</li>
+<li>单模态：图像(RGB等)<ul>
+<li>视觉模态影像由电磁波传感器提供。</li>
+<li>数据源丰富，时间空间跨度大，快速提取地物位置。、</li>
+<li>具有红外等其他波段，对植被响应大。</li>
 </ul>
 </li>
-<li>分辨率鸿沟：遥感领域长期存在的一个问题，即在一个分辨率上训练的CNN，很难低成本迁移到另一个分辨率。<ul>
-<li>CNN 的尺度依赖是架构性的——卷积核在训练时锁定了特定的尺度范围。除非经过专门的多尺度训练，否则 CNN 对未见过尺度的泛化能力非常有限。</li>
+<li>城市绿地：城市绿地是指以自然植被和人工植被为主要特征的城市用地。一般可分为<strong>公园绿地、绿地缓冲带、广场绿地、附属绿地和其他</strong>( Q. Shi , et al , 2023)五种类型。</li>
+<li>语义分割：遥感影像预处理手段，重要的上游任务。<ul>
+<li>据说引入多模态数据（光学+prompt&#x3D;多模态？）效果更好。</li>
+<li>分为有监督、无监督和半监督三种学习方法。</li>
 </ul>
 </li>
-<li>复杂场景：城市环境特有：高楼阴影、树木遮挡、草坪与步道的混合边界。<ul>
-<li>综述 3 指出，SAM 结合提示机制在恶劣天气等条件下比传统模型提升 <strong>16% 以上</strong>的精度</li>
-<li>你可以通过点提示告诉模型“这片阴影下的也是绿地”，这种交互能力是 CNN 无法提供的。</li>
-<li>❌但其实这也是对SAM的挑战</li>
+<li>文本提示：SAM3特有。【分割图中所有绿地】。</li>
+</ul>
+<h4 id="定义原因：见意义"><a href="#定义原因：见意义" class="headerlink" title="定义原因：见意义"></a>定义原因：见意义</h4><h4 id="意义"><a href="#意义" class="headerlink" title="意义"></a>意义</h4><h5 id="课题意义："><a href="#课题意义：" class="headerlink" title="课题意义："></a>课题意义：</h5><p>为各个地理学领域的研究提供上游数据。</p>
+<ul>
+<li>自然地理学：土壤重金属积累研究。</li>
+<li>城市地理学：城市热岛效应、极端地表温度、城市规划与评估。</li>
+<li>人文地理学：文化、经济和生态服务研究。</li>
+</ul>
+<h5 id="技术意义："><a href="#技术意义：" class="headerlink" title="技术意义："></a>技术意义：</h5><p>一、传统机器学习 &amp; 因子分析（NDVI等）：难以应对该任务<strong>空间分辨率高、分布零散、形状多样、易受高大建筑物和阴影干扰</strong>等特点，经常错分漏分。</p>
+<p>二、有力竞争对手：CNN。<strong>核心优势一句话：能通过多专家架构提升可扩展性和推理精度</strong>。</p>
+<ol>
+<li>多专家可拓展性</li>
+<li>推理精度</li>
+</ol>
+<ul>
+<li>相关论文：混合多尺度 LoRA 专家（MMSLE）模块。<ul>
+<li><strong>单独存储多组轻量级 LoRA 权重</strong>，推理时通过路由机制，自动加权激活需要的 LoRA 权重，组合出一个最合适的尺度，判断该尺度下的地物特征。<a target="_blank" rel="noopener" href="https://www.sciencedirect.com/science/article/abs/pii/S1566253525011169">SaSAM: Scale-aware SAM</a></li>
+<li>尺度蕴含于图像分辨率，因此需要 MoE 自动匹配。</li>
+<li>但【根据Prompt + 图像，选中所有地类】的任务和Prompt高度相关。一句【分割水体、绿地、农田】没用。而且 MoE 不能热插拔。</li>
 </ul>
 </li>
 </ul>
-<p>SAM vs DeepLab V3+</p>
-<h4 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h4><h3 id="2、openstreetmap-哪些东西可以利用；众包；"><a href="#2、openstreetmap-哪些东西可以利用；众包；" class="headerlink" title="2、openstreetmap 哪些东西可以利用；众包；"></a>2、openstreetmap 哪些东西可以利用；众包；</h3><h4 id="哪些"><a href="#哪些" class="headerlink" title="哪些"></a>哪些</h4><h3 id="3、针对你这个任务、和数据集（或者类似的），他们怎么做的？-看他们的paper（背景、问题、why、how-，包装成自己的？"><a href="#3、针对你这个任务、和数据集（或者类似的），他们怎么做的？-看他们的paper（背景、问题、why、how-，包装成自己的？" class="headerlink" title="3、针对你这个任务、和数据集（或者类似的），他们怎么做的？ 看他们的paper（背景、问题、why、how)，包装成自己的？"></a>3、针对你这个任务、和数据集（或者类似的），他们怎么做的？ 看他们的paper（背景、问题、why、how)，包装成自己的？</h3><p>遥感 分割 openstreetmap sam</p>
+<h4 id="效果："><a href="#效果：" class="headerlink" title="效果："></a>效果：</h4><p>✅【分割图中所有绿地】→生成绿地掩码；</p>
+<p>✅【分割图中所有水体】→生成水体掩码；</p>
+<p>❌【分割图中所有绿地、水体】→不能同时生成两种掩膜。</p>
+<h3 id="2、openstreetmap-哪些东西可以利用；众包；"><a href="#2、openstreetmap-哪些东西可以利用；众包；" class="headerlink" title="2、openstreetmap 哪些东西可以利用；众包；"></a>2、openstreetmap 哪些东西可以利用；众包；</h3><h4 id="数据集"><a href="#数据集" class="headerlink" title="数据集"></a>数据集</h4><p><strong>特征</strong>：Sentinel-2 高分辨率遥感卫星像素级数据，包含RGB、红外等多个波段。时间分辨率逐月。</p>
+<p><strong>标签</strong>：OSM 矢量数据，可以转换成像素级。包含绿地、水体、农田。时间分辨率逐年。</p>
+<p>数据集&#x3D;（图像、prompt&#x3D;文字、掩膜真值），prompt&#x3D;（坐标，文字）</p>
+<h3 id="3、针对你这个任务、和数据集（或者类似的），他们怎么做的？-看他们的paper（背景、问题、why、how-，包装成自己的？"><a href="#3、针对你这个任务、和数据集（或者类似的），他们怎么做的？-看他们的paper（背景、问题、why、how-，包装成自己的？" class="headerlink" title="3、针对你这个任务、和数据集（或者类似的），他们怎么做的？ 看他们的paper（背景、问题、why、how)，包装成自己的？"></a>3、针对你这个任务、和数据集（或者类似的），他们怎么做的？ 看他们的paper（背景、问题、why、how)，包装成自己的？</h3><p>遥感 分割 openstreetmap sam</p>
 <h4 id="类似研究："><a href="#类似研究：" class="headerlink" title="类似研究："></a>类似研究：</h4><p><strong>提取绿地</strong>：</p>
 <p><a target="_blank" rel="noopener" href="http://geoscien.iga.ac.cn/EN/abstract/abstract9412.shtml">从 IKONOS 遥感图像中提取城市绿地的研究研究 - 2004</a></p>
 <p><a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/abstract/document/5567526">基于决策树的 QUICKBIRD 图像中城市绿地提取研究 | IEEE Conference Publication - 2010</a></p>
@@ -366,6 +385,13 @@
 <p>PEFT：<a target="_blank" rel="noopener" href="https://ar5iv.labs.arxiv.org/html/2401.17868?_immersive_translate_auto_translate=1">卷积遇上 LoRA</a>+<a target="_blank" rel="noopener" href="https://github.com/aleemsidra/ConvLoRA">github-ConvLoRA</a> 替代LoRA方法、</p>
 <h2 id="二、遥感、信息地理里是否有类似的问题；"><a href="#二、遥感、信息地理里是否有类似的问题；" class="headerlink" title="二、遥感、信息地理里是否有类似的问题；"></a>二、遥感、信息地理里是否有类似的问题；</h2><p>视频或图片到多标签的任务，如街景影像，无人机视频<br>MLLM lora</p>
 <p>urbanpipeline</p>
+<hr>
+<h1 id="二月的最后一天"><a href="#二月的最后一天" class="headerlink" title="二月的最后一天"></a>二月的最后一天</h1><h3 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h3><p><strong>各个季节</strong>：数据多样化，数据层面</p>
+<p><strong>多模态利用</strong>：近红外波段，融入数据</p>
+<p><strong>正负样本</strong>：SAM 训练机制，构建正负样本</p>
+<p>模型最后一层输出，多模态（近红外）通过卷积处理一下，和lora一块调卷积核</p>
+<h3 id="任务"><a href="#任务" class="headerlink" title="任务"></a>任务</h3><p>大概看一两篇论文，看别人怎么讲的故事；然后跟 AI 聊，把我上面这个框架完善了，给小华看。</p>
+<p>优先保证每天的机试刷题量。现在项目的代码实现是最次要的。</p>
 
                 
               </div>
