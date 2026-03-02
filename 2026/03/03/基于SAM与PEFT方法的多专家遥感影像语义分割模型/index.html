@@ -29,7 +29,7 @@
 <meta property="og:description" content="基于SAM3与PEFT方法的多专家遥感影像语义分割模型研究框架：按照”背景→问题→目标→方法→实验→贡献“分板块组织。  暂定不做的内容有点多。请学长选一下：哪些丢弃、哪些放到未来展望、哪些纳入研究方案❓   一、研究背景1.1 视觉基座模型与”预训练+微调”范式的兴起大规模预训练视觉模型（Vision Foundation Models）正在重塑计算机视觉的研究范式。Meta发布的Segment">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-03-02T17:03:05.000Z">
-<meta property="article:modified_time" content="2026-03-02T18:55:34.500Z">
+<meta property="article:modified_time" content="2026-03-02T19:01:45.513Z">
 <meta property="article:author" content="Rsan Ding">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -573,21 +573,21 @@
 <li><strong>效率</strong>：可训练参数量、训练时间、单专家存储开销</li>
 </ul>
 <hr>
-<h2 id="六、技术难点与解决方案"><a href="#六、技术难点与解决方案" class="headerlink" title="六、技术难点与解决方案"></a>六、技术难点与解决方案</h2><h3 id="难点1：光谱相似地物的混淆"><a href="#难点1：光谱相似地物的混淆" class="headerlink" title="难点1：光谱相似地物的混淆"></a>难点1：光谱相似地物的混淆</h3><p>绿地、农田在RGB和近红外波段高度相似。</p>
+<h2 id="六、技术难点与解决方案"><a href="#六、技术难点与解决方案" class="headerlink" title="六、技术难点与解决方案"></a>六、技术难点与解决方案</h2><h3 id="难点1：去云算法等预处理？对齐OSM与Sentinel-2格式？评估OSM质量？"><a href="#难点1：去云算法等预处理？对齐OSM与Sentinel-2格式？评估OSM质量？" class="headerlink" title="难点1：去云算法等预处理？对齐OSM与Sentinel-2格式？评估OSM质量？"></a>难点1：去云算法等预处理？对齐OSM与Sentinel-2格式？评估OSM质量？</h3><blockquote>
+<p>🌟用领域知识做数据工程，也写几点，参考UrbanPipe。最好说一下适配torch的优化难点。</p>
+</blockquote>
+<h3 id="难点2：光谱相似地物的混淆"><a href="#难点2：光谱相似地物的混淆" class="headerlink" title="难点2：光谱相似地物的混淆"></a>难点2：光谱相似地物的混淆</h3><p>绿地、农田在RGB和近红外波段高度相似。</p>
 <p><strong>解决方案</strong>：（a）利用SAM的prompt机制（正&#x2F;负样本点）在训练时显式区分易混淆地物；</p>
 <p>（b）通过波段融合Adapter引入NDVI、NDWI等植被&#x2F;水体指数作为辅助特征；</p>
 <blockquote>
-<p>❗️这个和难点2，都是波段融合Adapter，会不会重复❓</p>
+<p>❗️这个和难点3，都是波段融合Adapter，会不会重复❓</p>
 </blockquote>
 <p>（c）每类专家独立，天然避免了多类联合训练时的梯度冲突。</p>
-<h3 id="难点2：植被光谱的季节性变化"><a href="#难点2：植被光谱的季节性变化" class="headerlink" title="难点2：植被光谱的季节性变化"></a>难点2：植被光谱的季节性变化</h3><p>绿地、农田的光谱特征随物候期显著变化。</p>
+<h3 id="难点3：植被光谱的季节性变化"><a href="#难点3：植被光谱的季节性变化" class="headerlink" title="难点3：植被光谱的季节性变化"></a>难点3：植被光谱的季节性变化</h3><p>绿地、农田的光谱特征随物候期显著变化。</p>
 <p><strong>解决方案</strong>：（a）在训练数据中纳入多季节影像增强鲁棒性；</p>
 <p>（b）在波段融合Adapter中引入时序特征（如多时相NDVI差异），端到端微调使模型学习季节不变特征。</p>
-<h3 id="难点3：去云算法等预处理？对齐OSM与Sentinel-2格式？评估OSM质量？"><a href="#难点3：去云算法等预处理？对齐OSM与Sentinel-2格式？评估OSM质量？" class="headerlink" title="难点3：去云算法等预处理？对齐OSM与Sentinel-2格式？评估OSM质量？"></a>难点3：去云算法等预处理？对齐OSM与Sentinel-2格式？评估OSM质量？</h3><blockquote>
-<p>❗️这些是领域知识难点，和深度学习无关，可以写吗❓</p>
-</blockquote>
 <h3 id="难点4-暂定不做-：分割结果的制图学可用性评价"><a href="#难点4-暂定不做-：分割结果的制图学可用性评价" class="headerlink" title="难点4(暂定不做)：分割结果的制图学可用性评价"></a>难点4(暂定不做)：分割结果的制图学可用性评价</h3><blockquote>
-<p>❗️难点4仅限实例分割，因此暂定不做它的内容！<strong>详见第八章“次要建议</strong>”。</p>
+<p>❗️难点4仅限实例分割，因此暂定不做。<strong>详见第八章“次要建议</strong>”。</p>
 </blockquote>
 <p>传统IoU无法反映矢量化后的边界质量。</p>
 <p><strong>解决方案</strong>：利用SAM3实例头的矢量输出结果，使用Hausdorff距离、Boundary IoU等几何指标与OSM参考矢量进行比较，建立”像素精度(对比U-Net)+边界质量(对比无微调SAM3)”的双维度评价体系。</p>
@@ -598,7 +598,9 @@
 <li><strong>评价层面(暂定不做)</strong>：建立面向制图学需求的矢量化分割评价体系，弥合深度学习分割指标与遥感制图质量标准之间的差距。</li>
 </ol>
 <hr>
-<h2 id="八、框架薄弱环节与建议"><a href="#八、框架薄弱环节与建议" class="headerlink" title="八、框架薄弱环节与建议"></a>八、框架薄弱环节与建议</h2><h3 id="🔴-需要补充文献支撑或澄清逻辑的关键问题"><a href="#🔴-需要补充文献支撑或澄清逻辑的关键问题" class="headerlink" title="🔴 需要补充文献支撑或澄清逻辑的关键问题"></a>🔴 需要补充文献支撑或澄清逻辑的关键问题</h3><p>🌟<strong>第2点（专家选择机制）和第3点（结果融合策略）是最关键的逻辑缺环</strong>，建议优先补充。</p>
+<h2 id="八、框架薄弱环节与建议"><a href="#八、框架薄弱环节与建议" class="headerlink" title="八、框架薄弱环节与建议"></a>八、框架薄弱环节与建议</h2><h3 id="🔴-需要补充文献支撑或澄清逻辑的关键问题"><a href="#🔴-需要补充文献支撑或澄清逻辑的关键问题" class="headerlink" title="🔴 需要补充文献支撑或澄清逻辑的关键问题"></a>🔴 需要补充文献支撑或澄清逻辑的关键问题</h3><blockquote>
+<p>🌟<strong>第2点（专家选择机制）和第3点（结果融合策略）是最关键的逻辑缺环</strong>，建议优先补充。</p>
+</blockquote>
 <table>
 <thead>
 <tr>
