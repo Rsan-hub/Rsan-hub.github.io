@@ -29,7 +29,7 @@
 <meta property="og:description" content="基于SAM3与PEFT方法的多专家遥感影像语义分割模型研究框架：按照”背景→问题→目标→方法→实验→贡献“分板块组织。  一、研究背景1.1 视觉基座模型与”预训练+微调”范式的兴起大规模预训练视觉模型（Vision Foundation Models）正在重塑计算机视觉的研究范式。Meta发布的Segment Anything Model（SAM）在超过11亿个掩膜上进行训练，展现了强大的零样本">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-03-02T17:03:05.000Z">
-<meta property="article:modified_time" content="2026-03-02T18:09:32.773Z">
+<meta property="article:modified_time" content="2026-03-02T18:11:21.567Z">
 <meta property="article:author" content="Rsan Ding">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -239,7 +239,7 @@
         
         
         
-          33 分钟
+          34 分钟
         
       </span>
     
@@ -417,7 +417,7 @@
 <p><strong>技术优势</strong>：</p>
 <ul>
 <li>各专家独立训练，避免多类联合训练的性能干扰；</li>
-<li>新增地物仅需训练新专家（\x7e1-5%参数量），无需重训基座；</li>
+<li>新增地物仅需训练新专家（\\x7e1-5%参数量），无需重训基座；</li>
 <li>专家可独立存储、版本管理和部署。</li>
 </ul>
 <table>
@@ -574,8 +574,11 @@
 <p><strong>解决方案</strong>：（a）利用SAM的prompt机制（正&#x2F;负样本点）在训练时显式区分易混淆地物；（b）通过波段融合Adapter引入NDVI、NDWI等植被&#x2F;水体指数作为辅助特征；（c）每类独立专家天然避免了多类联合训练时的梯度冲突。</p>
 <h3 id="难点2：植被光谱的季节性变化"><a href="#难点2：植被光谱的季节性变化" class="headerlink" title="难点2：植被光谱的季节性变化"></a>难点2：植被光谱的季节性变化</h3><p>绿地、农田的光谱特征随物候期显著变化。</p>
 <p><strong>解决方案</strong>：（a）在训练数据中纳入多季节影像增强鲁棒性；（b）在波段融合Adapter中引入时序特征（如多时相NDVI差异），端到端微调使模型学习季节不变特征。</p>
-<h3 id="难点3：分割结果的制图学可用性评价❗️"><a href="#难点3：分割结果的制图学可用性评价❗️" class="headerlink" title="难点3：分割结果的制图学可用性评价❗️"></a>难点3：分割结果的制图学可用性评价❗️</h3><p>传统IoU无法反映矢量化后的边界质量。</p>
+<h3 id="难点3：去云等预处理？对齐OSM与Sentinel-2格式？"><a href="#难点3：去云等预处理？对齐OSM与Sentinel-2格式？" class="headerlink" title="难点3：去云等预处理？对齐OSM与Sentinel-2格式？"></a>难点3：去云等预处理？对齐OSM与Sentinel-2格式？</h3><blockquote>
+<p>❗️难点3：分割结果的制图学可用性评价</p>
+<p>传统IoU无法反映矢量化后的边界质量。</p>
 <p><strong>解决方案</strong>：将栅格分割结果矢量化后，使用Hausdorff距离、Boundary IoU等几何指标与OSM参考矢量进行比较，建立”像素精度+边界质量”的双维度评价体系。</p>
+</blockquote>
 <hr>
 <h2 id="七、预期贡献"><a href="#七、预期贡献" class="headerlink" title="七、预期贡献"></a>七、预期贡献</h2><ol>
 <li><strong>架构层面</strong>：提出面向遥感的SAM多专家热插拔框架，实现地物类型的模块化扩展，为”一个基座+N个专家”的遥感应用范式提供实证；</li>
