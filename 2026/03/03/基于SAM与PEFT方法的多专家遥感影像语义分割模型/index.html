@@ -29,7 +29,7 @@
 <meta property="og:description" content="基于SAM3与PEFT方法的多专家遥感影像语义分割模型研究框架：按照”背景→问题→目标→方法→实验→贡献“分板块组织。  暂定不做的内容有点多。请学长选一下：哪些丢弃、哪些放到未来展望、哪些纳入研究方案❓   一、研究背景1.1 视觉基座模型与”预训练+微调”范式的兴起大规模预训练视觉模型（Vision Foundation Models）正在重塑计算机视觉的研究范式。Meta发布的Segment">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-03-02T17:03:05.000Z">
-<meta property="article:modified_time" content="2026-03-02T19:01:45.513Z">
+<meta property="article:modified_time" content="2026-03-03T03:57:08.572Z">
 <meta property="article:author" content="Rsan Ding">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -302,6 +302,7 @@
 <th>来源</th>
 <th>核心贡献</th>
 <th>与本研究关联</th>
+<th>题目</th>
 </tr>
 </thead>
 <tbody><tr>
@@ -310,6 +311,7 @@
 <td>ICCV</td>
 <td>提出SAM模型及SA-1B数据集，实现prompt-driven的通用分割</td>
 <td>本研究的基座模型来源，验证了SAM作为foundation model的泛化能力</td>
+<td>Segment Anything</td>
 </tr>
 <tr>
 <td>Bommasani et al.</td>
@@ -317,13 +319,15 @@
 <td>arXiv (Stanford)</td>
 <td>系统定义Foundation Models概念，分析其涌现能力与适配机制</td>
 <td>为本研究”基座模型+任务适配”的技术路线提供理论框架</td>
+<td>On the Opportunities and Risks of Foundation Models</td>
 </tr>
 <tr>
-<td>Ravi et al.</td>
-<td>2024</td>
+<td>Nicolas et al.</td>
+<td>2025</td>
 <td>arXiv (Meta)</td>
-<td>提出SAM 2，将SAM扩展至视频分割，引入流式架构与记忆机制</td>
-<td>本研究计划使用的SAM新版本（课题中的”SAM3”应对应SAM 2或后续迭代）</td>
+<td>提出SAM 3，将SAM扩展至概念分割</td>
+<td>本研究计划使用2025年发布的SAM3</td>
+<td>SAM 3: Segment Anything with Concepts</td>
 </tr>
 </tbody></table>
 <h3 id="1-2-参数高效微调（PEFT）降低适配成本"><a href="#1-2-参数高效微调（PEFT）降低适配成本" class="headerlink" title="1.2 参数高效微调（PEFT）降低适配成本"></a>1.2 参数高效微调（PEFT）降低适配成本</h3><p>全量微调大模型参数量巨大（SAM-H约636M参数），在数据有限的下游场景中容易过拟合且计算成本高昂。PEFT方法（LoRA、Adapter等）通过仅更新少量参数（通常&lt;5%），在保持基座模型通用表征的同时实现高效任务适配，已在NLP和CV领域被广泛验证。</p>
@@ -333,6 +337,7 @@
 <th>作者</th>
 <th>年份</th>
 <th>来源</th>
+<th>题目</th>
 <th>核心贡献</th>
 <th>与本研究关联</th>
 </tr>
@@ -341,6 +346,7 @@
 <td>Hu et al.</td>
 <td>2022</td>
 <td>ICLR</td>
+<td></td>
 <td>提出LoRA，通过低秩分解实现大模型的参数高效微调</td>
 <td>本研究的核心微调方法之一</td>
 </tr>
@@ -348,6 +354,7 @@
 <td>Houlsby et al.</td>
 <td>2019</td>
 <td>ICML</td>
+<td></td>
 <td>提出Adapter模块，在Transformer层间插入轻量瓶颈结构</td>
 <td>本研究Adapter模块（含波段融合）的方法基础</td>
 </tr>
@@ -355,6 +362,7 @@
 <td>Chen et al.</td>
 <td>2024</td>
 <td>IEEE TGRS</td>
+<td></td>
 <td>提出SAM-Adapter，通过Adapter将领域特定信息注入SAM用于遥感场景</td>
 <td>直接支撑”将遥感光谱特征通过Adapter注入SAM”的技术方案</td>
 </tr>
@@ -362,6 +370,7 @@
 <td>Ding et al.</td>
 <td>2023</td>
 <td>NeurIPS</td>
+<td></td>
 <td>系统综述视觉模型的参数高效迁移学习方法</td>
 <td>为PEFT方法选型提供理论依据</td>
 </tr>
@@ -420,7 +429,7 @@
 <p><strong>技术优势</strong>：</p>
 <ul>
 <li>各专家独立训练，避免多类联合训练的性能干扰；</li>
-<li>新增地物仅需训练新专家（\\\\x7e1-5%参数量），无需重训基座；</li>
+<li>新增地物仅需训练新专家（\\\\\x7e1-5%参数量），无需重训基座；</li>
 <li>专家可独立存储、版本管理和部署。</li>
 </ul>
 <table>
@@ -670,7 +679,7 @@
 </tr>
 <tr>
 <td align="center">5</td>
-<td>目前倾向于<strong>输入端做early fusion（有文章支撑）</strong>，但<strong>不同方案效果差异大</strong>，<br />如中间层feature injection、输出层conv merge。<br />如何选型？要做消融实验吗❓</td>
+<td>目前倾向于<strong>输入端做early fusion（有文章支撑）</strong>，但<strong>不同方案效果差异大</strong>，如中间层feature injection、输出层conv merge。如何选型？要做消融实验吗❓</td>
 </tr>
 <tr>
 <td align="center">6</td>
