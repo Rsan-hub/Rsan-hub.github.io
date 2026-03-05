@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://rsanding.top/img/covers/whl.png">
 <meta property="article:published_time" content="2026-02-25T12:26:55.000Z">
-<meta property="article:modified_time" content="2026-03-04T18:30:26.762Z">
+<meta property="article:modified_time" content="2026-03-05T17:09:14.478Z">
 <meta property="article:author" content="Rsan Ding">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://rsanding.top/img/covers/whl.png">
@@ -241,7 +241,7 @@
         
         
         
-          107 分钟
+          110 分钟
         
       </span>
     
@@ -634,16 +634,16 @@
 <td>注意定义</td>
 </tr>
 <tr>
-<td>47<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-complete-tree-nodes/description/">完全二叉树的节点个数</a></td>
+<td>✅47<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-complete-tree-nodes/description/">完全二叉树的节点个数</a></td>
 <td>中等</td>
-<td></td>
-<td>二分 + 位运算</td>
+<td>🌶🌶🌶</td>
+<td>二分+位运算</td>
 </tr>
 <tr>
-<td>48<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/balanced-binary-tree/description/">平衡二叉树</a></td>
+<td>✅48<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/balanced-binary-tree/description/">平衡二叉树</a></td>
 <td>简单</td>
-<td></td>
-<td>递归求高度</td>
+<td>🌶</td>
+<td>递归+返回值</td>
 </tr>
 </tbody></table>
 <h2 id="第二周：二叉树进阶-回溯-贪心"><a href="#第二周：二叉树进阶-回溯-贪心" class="headerlink" title="第二周：二叉树进阶 + 回溯 + 贪心"></a>第二周：二叉树进阶 + 回溯 + 贪心</h2><p><strong>目标</strong>：完成剩余二叉树、回溯、贪心算法，开始动态规划入门。</p>
@@ -1487,7 +1487,6 @@ nullE2[&quot;nullptr&quot;]
 <p>正好本题 <code>val</code> 数据范围小于 int 类型数据范围，赋值 65536。</p>
 <h3 id="代码-8"><a href="#代码-8" class="headerlink" title="代码"></a>代码</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt; <span class="hljs-built_in">levelOrder</span>(TreeNode* root) &#123;<br>        vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt; ans;<br>        <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">NULL</span>) <span class="hljs-keyword">return</span> ans;<br>        <span class="hljs-comment">// 单队列层序</span><br>        queue&lt;TreeNode*&gt; q;<br>        q.<span class="hljs-built_in">push</span>(root);<br>        <span class="hljs-keyword">while</span> (!q.<span class="hljs-built_in">empty</span>()) &#123;<br>            <span class="hljs-comment">// 打包一层结点</span><br>            vector&lt;<span class="hljs-type">int</span>&gt; pack;<br>            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = q.<span class="hljs-built_in">size</span>(); i &gt; <span class="hljs-number">0</span>; i--) &#123;<br>                <span class="hljs-comment">// 队头结点孩子入队，但是添加假叶子结点</span><br>                TreeNode* root = q.<span class="hljs-built_in">front</span>();<br>                <span class="hljs-keyword">if</span> (root-&gt;left != <span class="hljs-literal">NULL</span>) q.<span class="hljs-built_in">push</span>(root-&gt;left);<br>                <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (root-&gt;val != <span class="hljs-number">65535</span>) q.<span class="hljs-built_in">push</span>(<span class="hljs-keyword">new</span> <span class="hljs-built_in">TreeNode</span>(<span class="hljs-number">65535</span>));    <span class="hljs-comment">// 添加假叶子结点</span><br>                <span class="hljs-keyword">if</span> (root-&gt;right != <span class="hljs-literal">NULL</span>) q.<span class="hljs-built_in">push</span>(root-&gt;right);<br>                <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (root-&gt;val != <span class="hljs-number">65535</span>) q.<span class="hljs-built_in">push</span>(<span class="hljs-keyword">new</span> <span class="hljs-built_in">TreeNode</span>(<span class="hljs-number">65535</span>));<br>                <span class="hljs-comment">// 队头打包，出队</span><br>                pack.<span class="hljs-built_in">push_back</span>(root-&gt;val);<br>                q.<span class="hljs-built_in">pop</span>();<br>            &#125;<br>            <span class="hljs-comment">// 打包结点入答案</span><br>            ans.<span class="hljs-built_in">push_back</span>(pack);<br>        &#125;<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">isSymmetric</span><span class="hljs-params">(TreeNode* root)</span> </span>&#123;<br>        <span class="hljs-type">bool</span> ans = <span class="hljs-literal">true</span>;<br>        vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt; levels = <span class="hljs-built_in">levelOrder</span>(root);<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> level : levels) &#123;<br>            <span class="hljs-comment">// 对比翻转前后的各层</span><br>            vector&lt;<span class="hljs-type">int</span>&gt; copy = level;<br>            <span class="hljs-built_in">reverse</span>(level.<span class="hljs-built_in">begin</span>(), level.<span class="hljs-built_in">end</span>());<br>            <span class="hljs-keyword">if</span> (copy != level) ans = <span class="hljs-literal">false</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
-
 <h2 id="46-二叉树的最小深度"><a href="#46-二叉树的最小深度" class="headerlink" title="46. 二叉树的最小深度"></a>46. <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-depth-of-binary-tree/description/">二叉树的最小深度</a></h2><p><strong>方法</strong>：递归+全局数组</p>
 <p><strong>难点</strong>：最小值比较逻辑</p>
 <p>递归法记录每一个叶节点的深度，取最小值，比较好想。</p>
@@ -1499,10 +1498,25 @@ nullE2[&quot;nullptr&quot;]
 
 <h2 id="47-完全二叉树的节点个数"><a href="#47-完全二叉树的节点个数" class="headerlink" title="47. 完全二叉树的节点个数"></a>47. <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-complete-tree-nodes/description/">完全二叉树的节点个数</a></h2><p><strong>方法</strong>：分治 + 位运算</p>
 <p><strong>难点</strong>：完全二叉树性质</p>
-<p>可以当普通二叉树，也可以利用完全二叉树的性质。</p>
+<h3 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h3><p>可以当普通二叉树，也可以利用完全二叉树的性质。</p>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-complete-tree-nodes/solutions/2076036/labuladong-ru-he-ji-suan-wan-quan-er-cha-f55d/">222. 完全二叉树的节点个数 - 力扣（LeetCode） - labuladong的解法</a></p>
-<h2 id="48-平衡二叉树"><a href="#48-平衡二叉树" class="headerlink" title="48. 平衡二叉树"></a>48. <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/balanced-binary-tree/description/">平衡二叉树</a></h2><p><strong>方法</strong>：</p>
-<p><strong>难点</strong>：</p>
+<p>核心性质就一个，<strong>一棵完全二叉树的两棵子树，至少有一棵是满二叉树</strong>。</p>
+<p><img src="https://pic.leetcode.cn/1674645241-wmZknl-1.jpg" srcset="/img/loadingdog.gif" lazyload alt="labuladong的题解"></p>
+<p><strong>核心逻辑</strong>：</p>
+<ol>
+<li>指针从 <code>root</code> 开始，兵分两路，一只不断向左，一只不断向右，求出左右子树高度。</li>
+<li>若高度相等，则是满二叉树，直接用公式 ${2}^{h}-1$ 算出来高度（用移位运算实现）。</li>
+<li>若高度不等，分别从 <code>root-&gt;left</code> 和 <code>root-&gt;right</code> 开始，重复一遍这个过程。<strong>注意要加 1，是为算上 <code>root</code> 自身占的一个节点数</strong>。</li>
+</ol>
+<p>多看题解和代码吧。</p>
+<h3 id="代码-9"><a href="#代码-9" class="headerlink" title="代码"></a>代码</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">countNodes</span><span class="hljs-params">(TreeNode* root)</span> </span>&#123;<br>        <span class="hljs-comment">// if (root == nullptr) return 0;  </span><br>        <span class="hljs-comment">// 实际上到null前，就从移位运算分支返回了，不会出现访问null-&gt;left的情况</span><br>        <span class="hljs-comment">// 完全二叉树性质优化</span><br>        TreeNode *l = root; <span class="hljs-type">int</span> hl = <span class="hljs-number">0</span>;<br>        TreeNode *r = root; <span class="hljs-type">int</span> hr = <span class="hljs-number">0</span>;<br>        <span class="hljs-comment">// 沿着最左最右延伸两条支线</span><br>        <span class="hljs-keyword">while</span> (l != <span class="hljs-literal">nullptr</span>) &#123;<br>            l = l-&gt;left;<br>            hl++;<br>        &#125;<br>        <span class="hljs-keyword">while</span> (r != <span class="hljs-literal">nullptr</span>) &#123;<br>            r = r-&gt;right;<br>            hr++;<br>        &#125;<br>        <span class="hljs-comment">// 判断是否满二叉树</span><br>        <span class="hljs-keyword">if</span> (hl == hr) <span class="hljs-keyword">return</span> ((<span class="hljs-number">1</span> &lt;&lt; hl) - <span class="hljs-number">1</span>);    <span class="hljs-comment">// 移位运算代替2^n指数。-1看图手推公式推出来</span><br>        <span class="hljs-comment">// 本体 + 左 + 右</span><br>        <span class="hljs-keyword">else</span> <span class="hljs-built_in">return</span> (<span class="hljs-number">1</span> + <span class="hljs-built_in">countNodes</span>(root-&gt;left) + <span class="hljs-built_in">countNodes</span>(root-&gt;right));<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h2 id="48-平衡二叉树"><a href="#48-平衡二叉树" class="headerlink" title="48. 平衡二叉树"></a>48. <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/balanced-binary-tree/description/">平衡二叉树</a></h2><p><strong>方法</strong>：递归 + 返回值</p>
+<p><strong>难点</strong>：返回值逻辑</p>
+<p>首先，收集左右子树的返回值，+1 后取最大值，即为自己的返回值。</p>
+<p>其次，计算左右子树高度之差，判断是否平衡。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-type">bool</span> balanced = <span class="hljs-number">1</span>;<br><br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">postOrder</span><span class="hljs-params">(TreeNode* root)</span> </span>&#123;<br>        <span class="hljs-comment">// 用返回值传递信息</span><br>        <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">nullptr</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>        <span class="hljs-type">int</span> l = <span class="hljs-built_in">postOrder</span>(root-&gt;left) + <span class="hljs-number">1</span>;<br>        <span class="hljs-type">int</span> r = <span class="hljs-built_in">postOrder</span>(root-&gt;right) + <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">abs</span>(l - r) &gt; <span class="hljs-number">1</span>) balanced = <span class="hljs-number">0</span>;<br>        <span class="hljs-comment">// 按最大值算子树高</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">max</span>(l, r);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">isBalanced</span><span class="hljs-params">(TreeNode* root)</span> </span>&#123;<br>        <span class="hljs-built_in">postOrder</span>(root);<br>        <span class="hljs-keyword">return</span> balanced;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
 <h2 id="49-二叉树的所有路径"><a href="#49-二叉树的所有路径" class="headerlink" title="49. 二叉树的所有路径"></a>49. <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/binary-tree-paths/description/">二叉树的所有路径</a></h2><p><strong>方法</strong>：</p>
 <p><strong>难点</strong>：</p>
 <h2 id="50-路径总和"><a href="#50-路径总和" class="headerlink" title="50. 路径总和"></a>50. <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/path-sum/">路径总和</a></h2><p><strong>方法</strong>：</p>
