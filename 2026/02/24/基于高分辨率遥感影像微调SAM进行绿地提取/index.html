@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://rsanding.top/img/covers/SAM.png">
 <meta property="article:published_time" content="2026-02-24T14:27:28.000Z">
-<meta property="article:modified_time" content="2026-03-02T15:41:47.548Z">
+<meta property="article:modified_time" content="2026-03-06T20:50:23.658Z">
 <meta property="article:author" content="Rsan Ding">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://rsanding.top/img/covers/SAM.png">
@@ -230,7 +230,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.9k 字
+          1.7k 字
         
       </span>
     
@@ -241,7 +241,7 @@
         
         
         
-          24 分钟
+          15 分钟
         
       </span>
     
@@ -393,16 +393,6 @@
 <h3 id="任务"><a href="#任务" class="headerlink" title="任务"></a>任务</h3><p>大概看一两篇论文，看别人怎么讲的故事；然后跟 AI 聊，把我上面这个框架完善了，给小华看。</p>
 <p>优先保证每天的机试刷题量。现在项目的代码实现是最次要的。</p>
 <h3 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h3><p>Open WebUI 现成前端 + OpenScholar 本地推理引擎 + 外部文献 API。</p>
-<hr>
-<h1 id="Prompt："><a href="#Prompt：" class="headerlink" title="Prompt："></a>Prompt：</h1><p>我是一名学习遥感与计算机视觉的研究生，要做一个课题。框架如下：</p>
-<p>【<br>动机：Meta 发布的 SAM 作为视觉基座模型，有潜力为预训练 + 微调范式在 CV 领域的应用降本增效。核心原因在于，它比起传统的 CNN ，容易通过多专家架构等方式，方便地提升模型的可扩展性和推理精度。具体解释如下：</p>
-<p>一、多专家架构：可以通过 LoRA 等 PEFT 微调方法，为每个任务训练一个独立的轻量级专家（Adapter 网络、LoRA 权重等）并加以存储，推理时激活需要的专家，完成特定任务。</p>
-<p>二、推理精度：LoRA 等 PEFT 方法比 CNN 的全量参数微调开销更小，而且很容易为每个任务独立存储一个专家。这样能够很方便地在一个统一的基座模型上，最大化各种任务的精度。相比之下，CNN 因为其全量参数微调的特性，如果想要一个模型完成多任务，就只能在各任务性能之间做权衡，造成每个任务的推理精度下降。<br>】<br>【<br>验证：我想在遥感影像分割领域验证这个猜测。<br>背景：对于遥感影像分割任务而言，绿地、水体、农田等地物非常容易混淆。如果微调 ImageNet 数据集预训练的 CNN 基座，以区分这三种地物，那么优化器会在这三种任务效果之间做取舍，导致三类任务效果下降。 并且这种方法并不兼容新地物，必须独立训练新的 CNN。<br>方法：采用 SAM + PEFT 方式，微调三个专家，分别用于最大化模型对三种地物的识别效果。推理时根据指令，选择对应的专家解决问题。<br>】<br>【为此，定义课题为：基于SAM与PEFT方法的多专家遥感影像语义分割(semantic segmentation)模型】</p>
-<p>【<br>任务创新点框架：</p>
-<p>一、SAM + 多专家的多地类热插拔结构。使用 Adapter + LoRA 微调方法，支持为不同地类（绿地、水体、农田）独立训练专家，互不干扰，且可随时新增地类而不影响已有模型。这契合地理学中多类别、多任务的制图需求，同时体现了模块化、可扩展的系统设计优势。</p>
-<p>二、融合特征波段的Adapter。对于数据充足、精度要求高的场景，利用Adapter模块将地理学关键波段嵌入模型输入，让该场景专家能够利用地物（如绿地）特有的光谱信息作为科学依据，提升分割效果。这是将领域知识（光谱特征） 直接注入深度学习模型的有效方式。</p>
-<p>三、矢量输出的制图学评价标准。用Hausdorff距离等几何指标评估精度，符合制图学对边界质量的要求。比单纯依赖像素级IoU更贴近地理信息产品的实际应用。<br>】<br>【<br>研究计划：<br>数据：Sentinel-2 高分辨率影像作为特征、Openstreetmap 作为标签。<br>方法：先以绿地与农田两类地物为例。使用 PEFT 方法（包括 LoRA、Adapter）微调 SAM3，得到两个专家；再使用全量参数方法微调 U-Net，得到一个专家。对比 SAM3 两个专家与 U-Net 在两个分割任务上的精度指标（IoU 与 Hausdorff距离）<br>任务难点与解决方法：<br>（1）绿地、水体、农田等光学特征相近的地物容易混淆： 利用 SAM3 训练时的正负样本点机制，区分易混淆地类，提升推理精度。例如，训练绿地专家时，将农田和水体标记为负样本点。<br>（2）绿地、农田等植被的光学特征随季节变化：在任务专家中引入Adapter模块，用于数据预处理，将近红外等地理学关键波段嵌入模型输入的三波段。利用植被特有的光谱信息，提升特定任务分割效果。在训练专家时，端到端微调 Adapter。<br>（3）遥感任务分割效果需符合制图学要求，难以用传统指标评价：用Hausdorff距离等几何指标评估精度，符合制图学对边界质量的要求。比单纯依赖像素级IoU更贴近地理信息产品的实际应用。<br>】</p>
-<p>现在我希望完善这个框架。请你按照学术研究的规范整理框架，并为每一部分精确引用适量的关键文献，列个表放在对应的部分之后，用于佐证这个研究的合理性。</p>
 
                 
               </div>
