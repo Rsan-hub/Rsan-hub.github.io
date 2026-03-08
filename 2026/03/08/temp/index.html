@@ -1,0 +1,781 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/Man_overworld_tree.gif">
+  <link rel="icon" href="/img/Man_overworld_tree.gif">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Rsan Ding">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="基线实验（回顾）   项目 内容    数据 哨兵二号 10 米多光谱（N 通道）   编码器 随机初始化的特征提取网络（轻量卷积层，N→3）   分割模型 SAM3 + LoRA   训练 端到端（编码器与 LoRA 一起优化）   方案 C 概览   维度 内容    启用条件 基线植被类型混淆、阴影绿地漏提；继续使用哨兵二号（不引入外部数据源）   核心贡献 通过自监督预训练，解决随机初始化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="temp">
+<meta property="og:url" content="https://rsanding.top/2026/03/08/temp/index.html">
+<meta property="og:site_name" content="Mancountry">
+<meta property="og:description" content="基线实验（回顾）   项目 内容    数据 哨兵二号 10 米多光谱（N 通道）   编码器 随机初始化的特征提取网络（轻量卷积层，N→3）   分割模型 SAM3 + LoRA   训练 端到端（编码器与 LoRA 一起优化）   方案 C 概览   维度 内容    启用条件 基线植被类型混淆、阴影绿地漏提；继续使用哨兵二号（不引入外部数据源）   核心贡献 通过自监督预训练，解决随机初始化">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-03-08T06:23:47.000Z">
+<meta property="article:modified_time" content="2026-03-08T06:24:25.390Z">
+<meta property="article:author" content="Rsan Ding">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>temp - Mancountry</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"rsanding.top","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loadingdog.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 80vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Mancountry</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/CTOWN.gif') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="temp"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-03-08 14:23" pubdate>
+          2026年3月8日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          34 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">temp</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="基线实验（回顾）"><a href="#基线实验（回顾）" class="headerlink" title="基线实验（回顾）"></a>基线实验（回顾）</h3><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>数据</strong></td>
+<td>哨兵二号 10 米多光谱（N 通道）</td>
+</tr>
+<tr>
+<td><strong>编码器</strong></td>
+<td>随机初始化的特征提取网络（轻量卷积层，N→3）</td>
+</tr>
+<tr>
+<td><strong>分割模型</strong></td>
+<td>SAM3 + LoRA</td>
+</tr>
+<tr>
+<td><strong>训练</strong></td>
+<td>端到端（编码器与 LoRA 一起优化）</td>
+</tr>
+</tbody></table>
+<h3 id="方案-C-概览"><a href="#方案-C-概览" class="headerlink" title="方案 C 概览"></a>方案 C 概览</h3><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>启用条件</strong></td>
+<td>基线植被类型混淆、阴影绿地漏提；继续使用哨兵二号（不引入外部数据源）</td>
+</tr>
+<tr>
+<td><strong>核心贡献</strong></td>
+<td>通过自监督预训练，解决随机初始化编码器导致的光谱语义特征丢失问题</td>
+</tr>
+<tr>
+<td><strong>技术手段</strong></td>
+<td>① 自监督预训练自编码器（N→3→N），以<strong>语义增强重建</strong>为目标；② 丢弃解码器，编码器联合 LoRA 端到端微调</td>
+</tr>
+<tr>
+<td><strong>插入位置</strong></td>
+<td>整个编码器作为 SAM3 前置模块</td>
+</tr>
+<tr>
+<td><strong>核心文献</strong></td>
+<td>MAE (He et al., 2022)；MR-MAE (Gao et al., 2023)；FG-MAE (Wang et al., 2024)</td>
+</tr>
+<tr>
+<td><strong>训练成本</strong></td>
+<td>低。预训练仅涉及轻量编码器，不触碰 SAM3 权重；一张 V100 可跑 batch size 8~16</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="⚠️-核心隐患：仅用重建损失的编码器学不到语义特征"><a href="#⚠️-核心隐患：仅用重建损失的编码器学不到语义特征" class="headerlink" title="⚠️ 核心隐患：仅用重建损失的编码器学不到语义特征"></a>⚠️ 核心隐患：仅用重建损失的编码器学不到语义特征</h3><p>这是方案 C 最关键的设计决策，必须正视。</p>
+<p><strong>问题的本质</strong>：如果预训练目标只是像素级重建（<code>L_recon = L1/MSE(重建值, 原始值)</code>），编码器面对的任务是”把 N 通道信号压缩到 3 通道再还原”，它只需要学会保留光谱统计特征（近似 PCA），而完全不需要理解地物语义。这样的 3 通道表示和随机初始化后端到端训练的差距可能微乎其微。</p>
+<p><strong>学术界的三条主流解法</strong>：</p>
+<h4 id="解法一：替换重建目标（FG-MAE-方向）"><a href="#解法一：替换重建目标（FG-MAE-方向）" class="headerlink" title="解法一：替换重建目标（FG-MAE 方向）"></a>解法一：替换重建目标（FG-MAE 方向）</h4><p>针对遥感多光谱影像，直接替换掉”重建原始像素值”这一目标，改为重建<strong>语义更丰富的特征</strong>：</p>
+<ul>
+<li><strong>HOG（梯度方向直方图）</strong>：捕捉空间结构与边缘语义，对地物形状（建筑、道路、植被边界）有区分能力</li>
+<li><strong>NDI（归一化差异指数，如 NDVI、NDWI）</strong>：显式编码植被&#x2F;水体光谱差异，与绿地分割任务直接对齐</li>
+</ul>
+<blockquote>
+<p><strong>文献支撑（FG-MAE，Wang et al., IEEE JSTARS 2024）</strong>：<br><br>针对哨兵二号多光谱影像，FG-MAE 将 MAE 的重建目标替换为 HOG+NDI 的组合。实验证明，在多光谱影像上，重建 HOG 的线性探测精度甚至高于重建原始像素，且 NDI 的引入使编码器直接学到植被&#x2F;水体的光谱差异，在下游分类任务中取得显著提升。这一方法与哨兵二号绿地分割任务高度吻合，<strong>是方案 C 的首选预训练目标设计</strong>。</p>
+</blockquote>
+<h4 id="解法二：在编码器端增加语义模仿损失（MR-MAE-方向）"><a href="#解法二：在编码器端增加语义模仿损失（MR-MAE-方向）" class="headerlink" title="解法二：在编码器端增加语义模仿损失（MR-MAE 方向）"></a>解法二：在编码器端增加语义模仿损失（MR-MAE 方向）</h4><p>保留像素重建作为低层约束，同时在编码器的中间表示层增加”模仿损失”，让编码器输出对齐到 DINO&#x2F;CLIP 等预训练模型的语义特征。</p>
+<blockquote>
+<p><strong>文献支撑（MR-MAE，Gao et al., IJCV 2023）</strong>：<br><br>MAE 在解码器端只有低层像素重建的监督，缺少对编码器语义特征的直接约束，导致表示质量不足且预训练收敛慢。 MR-MAE 提出将高层监督（DINO&#x2F;CLIP 模仿损失）施加在编码器的可见 token 上，将低层重建施加在解码器的 masked token 上，两类目标作用于不同的 token 分区，避免了语义冲突，在 ImageNet-1K 上仅用 400 epoch 就超越了 1600 epoch 的原始 MAE。</p>
+</blockquote>
+<blockquote>
+<p>⚠️ <strong>对本实验的适用性说明</strong>：MR-MAE 中的”教师模型”（DINO&#x2F;CLIP）是通用视觉模型，其语义特征不一定对齐遥感绿地分类的类别体系。若使用此方向，建议用遥感预训练模型（如 SatMAE、GFM）替代 DINO 作为教师，或用有标签数据训练一个轻量分类头作为弱监督代理。</p>
+</blockquote>
+<h4 id="解法三：多任务预训练（Semantic-Genesis-方向）"><a href="#解法三：多任务预训练（Semantic-Genesis-方向）" class="headerlink" title="解法三：多任务预训练（Semantic Genesis 方向）"></a>解法三：多任务预训练（Semantic Genesis 方向）</h4><p>在重建损失基础上，叠加一个辅助分类任务（如在潜在空间中预测 patch 所属的语义类簇），迫使编码器的瓶颈特征具备语义区分能力。</p>
+<blockquote>
+<p><strong>文献支撑（Semantic Genesis，Zhou et al.）</strong>：<br><br>Semantic Genesis 在重建损失之上增加分类损失，分类任务为预测子区域所属的类别（类别由预训练自编码器潜在空间的聚类结果构造），作者认为这些类别蕴含丰富的语义特征。 该方法的优势在于<strong>无需外部教师模型</strong>，只需在自监督阶段额外运行一次 k-means 聚类。</p>
+</blockquote>
+<hr>
+<h3 id="推荐方案：FG-MAE-方向（解法一）"><a href="#推荐方案：FG-MAE-方向（解法一）" class="headerlink" title="推荐方案：FG-MAE 方向（解法一）"></a>推荐方案：FG-MAE 方向（解法一）</h3><p>结合你的实验约束（单张 V100、实验重点是 LoRA 微调 SAM3、仅用哨兵二号），<strong>解法一（替换重建目标为 HOG+NDI）最优</strong>：</p>
+<ul>
+<li>无需教师模型，无额外推理开销</li>
+<li>NDI 与绿地分割任务的类别体系（乔木&#x2F;灌草&#x2F;水面&#x2F;裸土）直接对应</li>
+<li>实现简单，可复用 MAE 框架，仅修改 target 计算逻辑</li>
+</ul>
+<hr>
+<h3 id="两阶段流程"><a href="#两阶段流程" class="headerlink" title="两阶段流程"></a>两阶段流程</h3><p>阶段一：自监督预训练（无标签哨兵二号影像）<br>输入：哨兵多光谱 [B, N, H, W]<br>目标：编码器学会压缩多光谱为语义 3 通道表示<br>损失：L_recon(HOG) + λ * L_recon(NDI)<br>输出：保存编码器权重 pretrained_encoder.pth</p>
+<p>阶段二：端到端微调（有标签哨兵二号 + OSM 标签）<br>操作：丢弃解码器，加载预训练编码器，接 SAM3+LoRA<br>损失：分割交叉熵<br>输出：最终分割模型</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br></pre></td><td class="code"><pre><code class="hljs python">---<br><br><span class="hljs-comment">### 伪代码</span><br><br>```python<br><span class="hljs-keyword">import</span> torch<br><span class="hljs-keyword">import</span> torch.nn <span class="hljs-keyword">as</span> nn<br><span class="hljs-keyword">import</span> torch.nn.functional <span class="hljs-keyword">as</span> F<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><br><span class="hljs-comment"># ==================== 工具函数：计算预训练目标特征 ====================</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">compute_hog_batch</span>(<span class="hljs-params">imgs: torch.Tensor, cell_size: <span class="hljs-built_in">int</span> = <span class="hljs-number">8</span></span>) -&gt; torch.Tensor:<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    计算一批图像的 HOG 特征（简化版，逐通道梯度后取平均）。</span><br><span class="hljs-string">    输入：imgs [B, C, H, W]（这里 C 可以是任意多光谱通道数）</span><br><span class="hljs-string">    输出：hog_feat [B, 1, H, W]（所有通道梯度幅值的均值，可作为重建目标）</span><br><span class="hljs-string"></span><br><span class="hljs-string">    说明：</span><br><span class="hljs-string">    - 完整 HOG 会输出多通道（方向 bin 数 × 单元格数），这里为保持解码器输出通道</span><br><span class="hljs-string">      统一，简化为单通道梯度幅值图。</span><br><span class="hljs-string">    - 实际使用时可替换为 skimage.feature.hog 的逐 patch 版本。</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <span class="hljs-comment"># Sobel 算子（不可训练，固定权重）</span><br>    sobel_x = torch.tensor([[[-<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>], [-<span class="hljs-number">2</span>, <span class="hljs-number">0</span>, <span class="hljs-number">2</span>], [-<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>]]],<br>                            dtype=imgs.dtype, device=imgs.device).unsqueeze(<span class="hljs-number">0</span>)  <span class="hljs-comment"># [1,1,3,3]</span><br>    sobel_y = torch.tensor([[[-<span class="hljs-number">1</span>, -<span class="hljs-number">2</span>, -<span class="hljs-number">1</span>], [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>], [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>]]],<br>                            dtype=imgs.dtype, device=imgs.device).unsqueeze(<span class="hljs-number">0</span>)<br><br>    <span class="hljs-comment"># 对所有通道分别计算梯度后取均值</span><br>    grads = []<br>    <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(imgs.shape[<span class="hljs-number">1</span>]):<br>        ch = imgs[:, c:c+<span class="hljs-number">1</span>, :, :]                      <span class="hljs-comment"># [B, 1, H, W]</span><br>        gx = F.conv2d(ch, sobel_x, padding=<span class="hljs-number">1</span>)<br>        gy = F.conv2d(ch, sobel_y, padding=<span class="hljs-number">1</span>)<br>        mag = torch.sqrt(gx ** <span class="hljs-number">2</span> + gy ** <span class="hljs-number">2</span> + <span class="hljs-number">1e-6</span>)    <span class="hljs-comment"># [B, 1, H, W]</span><br>        grads.append(mag)<br>    hog_feat = torch.mean(torch.cat(grads, dim=<span class="hljs-number">1</span>), dim=<span class="hljs-number">1</span>, keepdim=<span class="hljs-literal">True</span>)  <span class="hljs-comment"># [B, 1, H, W]</span><br>    <span class="hljs-keyword">return</span> hog_feat<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">compute_ndi_batch</span>(<span class="hljs-params">imgs: torch.Tensor,</span><br><span class="hljs-params">                      band_a: <span class="hljs-built_in">int</span> = <span class="hljs-number">3</span>,   <span class="hljs-comment"># 哨兵2号: band_a=3 (NIR, B8)</span></span><br><span class="hljs-params">                      band_b: <span class="hljs-built_in">int</span> = <span class="hljs-number">2</span>    <span class="hljs-comment"># 哨兵2号: band_b=2 (Red, B4)</span></span><br><span class="hljs-params">                      </span>) -&gt; torch.Tensor:<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    计算归一化差异指数 NDI = (band_a - band_b) / (band_a + band_b + 1e-6)</span><br><span class="hljs-string">    默认计算 NDVI（NIR=B8, Red=B4），可根据任务调整为 NDWI 等。</span><br><span class="hljs-string"></span><br><span class="hljs-string">    输入：imgs [B, N, H, W]</span><br><span class="hljs-string">    输出：ndi [B, 1, H, W]，值域 [-1, 1]</span><br><span class="hljs-string"></span><br><span class="hljs-string">    说明：</span><br><span class="hljs-string">    - 对于哨兵二号 13 通道，波段顺序（0-indexed）参考 ESA 标准：</span><br><span class="hljs-string">        B2=0(Blue), B3=1(Green), B4=2(Red), B8=7(NIR)</span><br><span class="hljs-string">    - 若同时引入多个 NDI（如 NDVI+NDWI），可将 compute_ndi_batch 调用多次后 cat。</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    a = imgs[:, band_a:band_a+<span class="hljs-number">1</span>, :, :]<br>    b = imgs[:, band_b:band_b+<span class="hljs-number">1</span>, :, :]<br>    ndi = (a - b) / (a + b + <span class="hljs-number">1e-6</span>)<br>    <span class="hljs-keyword">return</span> ndi<br><br><br><span class="hljs-comment"># ==================== 编码器：N 通道 → 3 通道瓶颈 ====================</span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">SpectralEncoder</span>(nn.Module):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    轻量卷积编码器，将 N 通道多光谱压缩为 3 通道语义表示。</span><br><span class="hljs-string">    预训练阶段 + 微调阶段均使用此编码器。</span><br><span class="hljs-string"></span><br><span class="hljs-string">    结构：N → hidden_dim → hidden_dim → 3</span><br><span class="hljs-string">    参数量约 200K（hidden_dim=64），远小于 SAM3 的 Image Encoder。</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, in_channels: <span class="hljs-built_in">int</span>, hidden_dim: <span class="hljs-built_in">int</span> = <span class="hljs-number">64</span></span>):<br>        <span class="hljs-built_in">super</span>().__init__()<br>        <span class="hljs-variable language_">self</span>.conv1 = nn.Conv2d(in_channels, hidden_dim, kernel_size=<span class="hljs-number">3</span>, padding=<span class="hljs-number">1</span>)<br>        <span class="hljs-variable language_">self</span>.bn1   = nn.BatchNorm2d(hidden_dim)<br>        <span class="hljs-variable language_">self</span>.conv2 = nn.Conv2d(hidden_dim, hidden_dim, kernel_size=<span class="hljs-number">3</span>, padding=<span class="hljs-number">1</span>)<br>        <span class="hljs-variable language_">self</span>.bn2   = nn.BatchNorm2d(hidden_dim)<br>        <span class="hljs-variable language_">self</span>.compress = nn.Conv2d(hidden_dim, <span class="hljs-number">3</span>, kernel_size=<span class="hljs-number">1</span>)  <span class="hljs-comment"># 1×1 压缩到 3 通道</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, x: torch.Tensor</span>) -&gt; torch.Tensor:<br>        <span class="hljs-string">&quot;&quot;&quot;输入 [B, N, H, W]，输出 [B, 3, H, W]&quot;&quot;&quot;</span><br>        x = F.relu(<span class="hljs-variable language_">self</span>.bn1(<span class="hljs-variable language_">self</span>.conv1(x)))<br>        x = F.relu(<span class="hljs-variable language_">self</span>.bn2(<span class="hljs-variable language_">self</span>.conv2(x)))<br>        x = <span class="hljs-variable language_">self</span>.compress(x)<br>        <span class="hljs-keyword">return</span> x<br><br><br><span class="hljs-comment"># ==================== 解码器：3 通道 → 重建目标（仅预训练使用） ====================</span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">SpectralDecoder</span>(nn.Module):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    轻量解码器，将 3 通道瓶颈特征重建为预训练目标。</span><br><span class="hljs-string">    预训练结束后直接丢弃，不参与微调。</span><br><span class="hljs-string"></span><br><span class="hljs-string">    注意：</span><br><span class="hljs-string">    - out_channels 与重建目标的通道数对应，而非原始 N 通道：</span><br><span class="hljs-string">        · 若目标为 HOG（单通道幅值图）：out_channels=1</span><br><span class="hljs-string">        · 若目标为 NDVI（单通道）：out_channels=1</span><br><span class="hljs-string">        · 若目标为 HOG+NDVI（分开预测）：可使用两个独立解码器头</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, out_channels: <span class="hljs-built_in">int</span>, hidden_dim: <span class="hljs-built_in">int</span> = <span class="hljs-number">64</span></span>):<br>        <span class="hljs-built_in">super</span>().__init__()<br>        <span class="hljs-variable language_">self</span>.net = nn.Sequential(<br>            nn.Conv2d(<span class="hljs-number">3</span>, hidden_dim, kernel_size=<span class="hljs-number">3</span>, padding=<span class="hljs-number">1</span>),<br>            nn.ReLU(),<br>            nn.Conv2d(hidden_dim, hidden_dim, kernel_size=<span class="hljs-number">3</span>, padding=<span class="hljs-number">1</span>),<br>            nn.ReLU(),<br>            nn.Conv2d(hidden_dim, out_channels, kernel_size=<span class="hljs-number">1</span>)<br>        )<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, bottleneck: torch.Tensor</span>) -&gt; torch.Tensor:<br>        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span>.net(bottleneck)<br><br><br><span class="hljs-comment"># ==================== 预训练自编码器（FG-MAE 风格） ====================</span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">PretrainAutoEncoder</span>(nn.Module):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    FG-MAE 风格的预训练自编码器：</span><br><span class="hljs-string">    - 编码器：N → 3（学习语义压缩）</span><br><span class="hljs-string">    - HOG 解码器头：3 → 1（预测梯度幅值）</span><br><span class="hljs-string">    - NDI 解码器头：3 → 1（预测 NDVI 等指数）</span><br><span class="hljs-string">    - 总损失：L_total = L_hog + λ_ndi * L_ndi</span><br><span class="hljs-string"></span><br><span class="hljs-string">    🌟关键设计思路（来自 FG-MAE，Wang et al. 2024）：</span><br><span class="hljs-string">        - HOG 捕捉空间结构，引导编码器学习地物边界与形状语义</span><br><span class="hljs-string">        - NDI 捕捉光谱差异，引导编码器区分植被/水体/裸土</span><br><span class="hljs-string">        - 两者目标互补，在编码器 3 通道瓶颈处形成&quot;空间+光谱&quot;双重约束</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, in_channels: <span class="hljs-built_in">int</span>, hidden_dim: <span class="hljs-built_in">int</span> = <span class="hljs-number">64</span>,</span><br><span class="hljs-params">                 nir_band: <span class="hljs-built_in">int</span> = <span class="hljs-number">7</span>, red_band: <span class="hljs-built_in">int</span> = <span class="hljs-number">3</span></span>):<br>        <span class="hljs-built_in">super</span>().__init__()<br>        <span class="hljs-variable language_">self</span>.encoder     = SpectralEncoder(in_channels, hidden_dim)<br>        <span class="hljs-variable language_">self</span>.hog_decoder = SpectralDecoder(out_channels=<span class="hljs-number">1</span>, hidden_dim=hidden_dim)<br>        <span class="hljs-variable language_">self</span>.ndi_decoder = SpectralDecoder(out_channels=<span class="hljs-number">1</span>, hidden_dim=hidden_dim)<br><br>        <span class="hljs-comment"># 波段索引：根据实际哨兵二号通道顺序设置</span><br>        <span class="hljs-variable language_">self</span>.nir_band = nir_band<br>        <span class="hljs-variable language_">self</span>.red_band = red_band<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, s2_img: torch.Tensor</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        输入：s2_img [B, N, H, W]</span><br><span class="hljs-string">        输出：bottleneck [B, 3, H, W]，hog_pred [B, 1, H, W]，ndi_pred [B, 1, H, W]</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        bottleneck = <span class="hljs-variable language_">self</span>.encoder(s2_img)           <span class="hljs-comment"># [B, 3, H, W]</span><br>        hog_pred   = <span class="hljs-variable language_">self</span>.hog_decoder(bottleneck)   <span class="hljs-comment"># [B, 1, H, W]</span><br>        ndi_pred   = <span class="hljs-variable language_">self</span>.ndi_decoder(bottleneck)   <span class="hljs-comment"># [B, 1, H, W]</span><br>        <span class="hljs-keyword">return</span> bottleneck, hog_pred, ndi_pred<br><br><br><span class="hljs-comment"># ==================== 预训练损失函数 ====================</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">pretrain_loss</span>(<span class="hljs-params">model: PretrainAutoEncoder,</span><br><span class="hljs-params">                  s2_img: torch.Tensor,</span><br><span class="hljs-params">                  lambda_ndi: <span class="hljs-built_in">float</span> = <span class="hljs-number">0.5</span></span>):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    L_total = L_hog + lambda_ndi * L_ndi</span><br><span class="hljs-string"></span><br><span class="hljs-string">    参数选择建议：</span><br><span class="hljs-string">    - lambda_ndi：0.3~0.7 之间，需消融。较小值侧重空间结构（HOG），</span><br><span class="hljs-string">      较大值侧重光谱差异（NDI）。对绿地分割任务，建议从 0.5 起调。</span><br><span class="hljs-string"></span><br><span class="hljs-string">    🌟为何不用像素重建损失（L_recon）？</span><br><span class="hljs-string">        仅重建像素值时，编码器只需学会光谱统计特征（近似 PCA），</span><br><span class="hljs-string">        对植被语义区分无额外约束。HOG+NDI 目标直接对齐下游任务所需的</span><br><span class="hljs-string">        空间结构和光谱差异信息，避免编码器停留在低层信号层面。</span><br><span class="hljs-string">        （参考：FG-MAE 实验表明 HOG 目标线性探测精度优于原始像素重建，</span><br><span class="hljs-string">        Wang et al., IEEE JSTARS 2024）</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <span class="hljs-comment"># 计算目标特征（不参与梯度）</span><br>    <span class="hljs-keyword">with</span> torch.no_grad():<br>        hog_target = compute_hog_batch(s2_img)                              <span class="hljs-comment"># [B, 1, H, W]</span><br>        ndi_target = compute_ndi_batch(s2_img,<br>                                       band_a=model.nir_band,<br>                                       band_b=model.red_band)               <span class="hljs-comment"># [B, 1, H, W]</span><br><br>    <span class="hljs-comment"># 前向</span><br>    _, hog_pred, ndi_pred = model(s2_img)<br><br>    <span class="hljs-comment"># 损失计算</span><br>    loss_hog = F.l1_loss(hog_pred, hog_target)<br>    loss_ndi = F.mse_loss(ndi_pred, ndi_target)   <span class="hljs-comment"># NDI 值域 [-1,1]，MSE 更稳定</span><br>    total    = loss_hog + lambda_ndi * loss_ndi<br><br>    <span class="hljs-keyword">return</span> total, &#123;<span class="hljs-string">&quot;hog&quot;</span>: loss_hog.item(), <span class="hljs-string">&quot;ndi&quot;</span>: loss_ndi.item()&#125;<br><br><br><span class="hljs-comment"># ==================== 预训练循环 ====================</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">pretrain</span>(<span class="hljs-params">in_channels: <span class="hljs-built_in">int</span> = <span class="hljs-number">13</span>,</span><br><span class="hljs-params">             nir_band: <span class="hljs-built_in">int</span> = <span class="hljs-number">7</span>,</span><br><span class="hljs-params">             red_band: <span class="hljs-built_in">int</span> = <span class="hljs-number">3</span>,</span><br><span class="hljs-params">             lambda_ndi: <span class="hljs-built_in">float</span> = <span class="hljs-number">0.5</span>,</span><br><span class="hljs-params">             epochs: <span class="hljs-built_in">int</span> = <span class="hljs-number">100</span>,</span><br><span class="hljs-params">             lr: <span class="hljs-built_in">float</span> = <span class="hljs-number">1e-4</span></span>):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    阶段一：自监督预训练（用无标签哨兵二号影像）</span><br><span class="hljs-string"></span><br><span class="hljs-string">    数据要求：</span><br><span class="hljs-string">    - 几百到几千张无标签哨兵二号切片（256×256 或 512×512）</span><br><span class="hljs-string">    - 无需任何分割标签</span><br><span class="hljs-string">    - 可复用微调阶段的训练集（去掉标签后使用）</span><br><span class="hljs-string"></span><br><span class="hljs-string">    V100 显存估算（in_channels=13, hidden_dim=64, img=256×256）：</span><br><span class="hljs-string">    - batch_size=16 时约占 3~4 GB，远低于 V100 16 GB 上限</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    model = PretrainAutoEncoder(in_channels=in_channels,<br>                                nir_band=nir_band,<br>                                red_band=red_band).cuda()<br>    optimizer = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=<span class="hljs-number">1e-4</span>)<br>    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=epochs)<br><br>    dataloader = ...  <span class="hljs-comment"># 加载无标签哨兵二号影像 [B, N, H, W]</span><br><br>    <span class="hljs-keyword">for</span> epoch <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(epochs):<br>        <span class="hljs-keyword">for</span> batch <span class="hljs-keyword">in</span> dataloader:<br>            s2_img = batch.cuda()<br>            optimizer.zero_grad()<br>            loss, losses_dict = pretrain_loss(model, s2_img, lambda_ndi=lambda_ndi)<br>            loss.backward()<br>            optimizer.step()<br>        scheduler.step()<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Epoch <span class="hljs-subst">&#123;epoch&#125;</span>: <span class="hljs-subst">&#123;losses_dict&#125;</span>&quot;</span>)<br><br>    <span class="hljs-comment"># 只保存编码器权重，解码器直接丢弃</span><br>    torch.save(model.encoder.state_dict(), <span class="hljs-string">&quot;pretrained_encoder.pth&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;预训练完成，编码器权重已保存。&quot;</span>)<br><br><br><span class="hljs-comment"># ==================== 微调阶段（SAM3 + LoRA） ====================</span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">FineTuneModel</span>(nn.Module):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    阶段二：端到端微调（用有标签哨兵二号 + OSM 分割标签）</span><br><span class="hljs-string"></span><br><span class="hljs-string">    操作流程：</span><br><span class="hljs-string">    1. 加载预训练编码器权重（pretrained_encoder.pth）</span><br><span class="hljs-string">    2. 编码器输出 3 通道特征，直接送入 SAM3 Image Encoder</span><br><span class="hljs-string">    3. SAM3 主干冻结，仅 LoRA 参与更新；编码器也参与微调（可选冻结浅层）</span><br><span class="hljs-string">    4. 端到端优化分割交叉熵</span><br><span class="hljs-string"></span><br><span class="hljs-string">    🌟为何丢弃解码器后编码器特征质量仍保留？</span><br><span class="hljs-string">        MAE 系列研究（He et al., 2022）已证明：解码器的作用是在预训练中</span><br><span class="hljs-string">        迫使编码器学习有用的特征，微调时丢弃解码器是标准做法，编码器</span><br><span class="hljs-string">        的特征质量不依赖解码器的保留。本方案直接继承这一范式。</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, pretrained_encoder_path: <span class="hljs-built_in">str</span>,</span><br><span class="hljs-params">                 sam3_model,                    <span class="hljs-comment"># 已注入 LoRA 的 SAM3 实例</span></span><br><span class="hljs-params">                 in_channels: <span class="hljs-built_in">int</span> = <span class="hljs-number">13</span>,</span><br><span class="hljs-params">                 freeze_encoder_shallow: <span class="hljs-built_in">bool</span> = <span class="hljs-literal">True</span></span>):<br>        <span class="hljs-built_in">super</span>().__init__()<br><br>        <span class="hljs-comment"># 加载预训练编码器</span><br>        <span class="hljs-variable language_">self</span>.encoder = SpectralEncoder(in_channels=in_channels)<br>        <span class="hljs-variable language_">self</span>.encoder.load_state_dict(torch.load(pretrained_encoder_path))<br><br>        <span class="hljs-comment"># 可选：冻结编码器浅层（conv1），仅微调深层（conv2, compress）</span><br>        <span class="hljs-keyword">if</span> freeze_encoder_shallow:<br>            <span class="hljs-keyword">for</span> param <span class="hljs-keyword">in</span> <span class="hljs-variable language_">self</span>.encoder.conv1.parameters():<br>                param.requires_grad = <span class="hljs-literal">False</span><br>            <span class="hljs-keyword">for</span> param <span class="hljs-keyword">in</span> <span class="hljs-variable language_">self</span>.encoder.bn1.parameters():<br>                param.requires_grad = <span class="hljs-literal">False</span><br><br>        <span class="hljs-comment"># SAM3（主干冻结，仅 LoRA 可训练，此处略去 LoRA 注入细节）</span><br>        <span class="hljs-variable language_">self</span>.sam3 = sam3_model<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, s2_img: torch.Tensor</span>) -&gt; torch.Tensor:<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        输入：s2_img [B, N, H, W]</span><br><span class="hljs-string">        输出：seg_logits [B, num_classes, H, W]</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        feat_3ch = <span class="hljs-variable language_">self</span>.encoder(s2_img)          <span class="hljs-comment"># [B, 3, H, W]</span><br>        seg_logits = <span class="hljs-variable language_">self</span>.sam3(feat_3ch)          <span class="hljs-comment"># SAM3 语义分割输出（含 LoRA）</span><br>        <span class="hljs-keyword">return</span> seg_logits<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">finetune</span>(<span class="hljs-params">pretrained_encoder_path: <span class="hljs-built_in">str</span> = <span class="hljs-string">&quot;pretrained_encoder.pth&quot;</span>,</span><br><span class="hljs-params">             num_classes: <span class="hljs-built_in">int</span> = <span class="hljs-number">5</span>,</span><br><span class="hljs-params">             in_channels: <span class="hljs-built_in">int</span> = <span class="hljs-number">13</span>,</span><br><span class="hljs-params">             epochs: <span class="hljs-built_in">int</span> = <span class="hljs-number">50</span>,</span><br><span class="hljs-params">             lr: <span class="hljs-built_in">float</span> = <span class="hljs-number">1e-5</span></span>):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    阶段二：微调循环</span><br><span class="hljs-string"></span><br><span class="hljs-string">    可训练参数：</span><br><span class="hljs-string">    - encoder.conv2, encoder.bn2, encoder.compress（编码器深层）</span><br><span class="hljs-string">    - SAM3 中注入的所有 LoRA 矩阵</span><br><span class="hljs-string"></span><br><span class="hljs-string">    V100 显存估算（SAM3-Base + LoRA r=16, img=1024×1024）：</span><br><span class="hljs-string">    - batch_size=2 约占 12~14 GB，接近 V100 上限；建议使用梯度累积</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <span class="hljs-comment"># 初始化 SAM3 并注入 LoRA（此处为占位符）</span><br>    sam3_model = ...  <span class="hljs-comment"># load_sam3_with_lora(num_classes=num_classes)</span><br><br>    model = FineTuneModel(<br>        pretrained_encoder_path=pretrained_encoder_path,<br>        sam3_model=sam3_model,<br>        in_channels=in_channels,<br>        freeze_encoder_shallow=<span class="hljs-literal">True</span><br>    ).cuda()<br><br>    <span class="hljs-comment"># 只优化可训练参数</span><br>    trainable_params = <span class="hljs-built_in">filter</span>(<span class="hljs-keyword">lambda</span> p: p.requires_grad, model.parameters())<br>    optimizer = torch.optim.AdamW(trainable_params, lr=lr, weight_decay=<span class="hljs-number">1e-4</span>)<br>    criterion = nn.CrossEntropyLoss(ignore_index=<span class="hljs-number">255</span>)  <span class="hljs-comment"># 255 为无效标签</span><br><br>    train_loader = ...  <span class="hljs-comment"># 加载 (哨兵多光谱影像, 分割标签) 数据集</span><br><br>    <span class="hljs-keyword">for</span> epoch <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(epochs):<br>        <span class="hljs-keyword">for</span> batch <span class="hljs-keyword">in</span> train_loader:<br>            s2_img, labels = batch                  <span class="hljs-comment"># [B, N, H, W], [B, H, W]</span><br>            s2_img, labels = s2_img.cuda(), labels.cuda()<br><br>            optimizer.zero_grad()<br>            logits = model(s2_img)                  <span class="hljs-comment"># [B, num_classes, H, W]</span><br>            loss = criterion(logits, labels)<br>            loss.backward()<br>            optimizer.step()<br><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Epoch <span class="hljs-subst">&#123;epoch&#125;</span>: loss=<span class="hljs-subst">&#123;loss.item():<span class="hljs-number">.4</span>f&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="关键问题-Q-A"><a href="#关键问题-Q-A" class="headerlink" title="关键问题 Q&amp;A"></a>关键问题 Q&amp;A</h3><p><strong>Q1：预训练数据集需要多大？</strong></p>
+<ul>
+<li>自监督预训练对数据量要求低，几百到几千张无标签切片即可。</li>
+<li><strong>可直接复用微调阶段的训练集</strong>（去掉标签），无需额外采集数据。</li>
+</ul>
+<p><strong>Q2：lambda_ndi 如何调？</strong></p>
+<ul>
+<li>建议消融：λ ∈ {0.3, 0.5, 0.7}，以微调后的 mIoU 为准则。</li>
+<li>经验上对绿地&#x2F;植被为主的任务，λ&#x3D;0.5 是合理起点（HOG 与 NDI 各占一半）。</li>
+</ul>
+<p><strong>Q3：编码器深层是否应该在微调阶段全程可训练？</strong></p>
+<ul>
+<li>推荐：冻结浅层（conv1），解冻深层（conv2 + compress）+ LoRA。</li>
+<li>理由：浅层已学到通用低层特征（梯度&#x2F;纹理），过拟合风险低；深层与 SAM3 接口直接相关，需要适配下游任务。</li>
+<li>若标注数据量极少（&lt;100 张），可冻结整个编码器只训练 LoRA。</li>
+</ul>
+<p><strong>Q4：HOG 目标在 CNN 编码器上有效吗？</strong></p>
+<blockquote>
+<p><strong>文献支撑（FG-MAE，Wang et al. 2024）</strong>：<br><br>FG-MAE 在多光谱影像上的实验表明，重建 HOG 的线性探测精度高于重建原始像素，证明 HOG 作为重建目标可以有效引导编码器学习更具判别性的空间结构特征，即使是轻量 CNN 编码器。</p>
+</blockquote>
+<p><strong>Q5：只用重建损失能不能用于消融基线？</strong></p>
+<ul>
+<li>可以，且<strong>强烈建议</strong>将”仅重建像素（L_recon&#x3D;L1）”作为消融对照组。</li>
+<li>预期结论：纯重建损失 ≈ 随机初始化端到端训练，从而反向证明 HOG+NDI 目标设计的有效性，这本身就是方案 C 的一个有价值的消融实验结论。</li>
+</ul>
+<hr>
+<h3 id="与基线实验的关系"><a href="#与基线实验的关系" class="headerlink" title="与基线实验的关系"></a>与基线实验的关系</h3><table>
+<thead>
+<tr>
+<th>对比维度</th>
+<th>基线（随机初始化）</th>
+<th>方案 C（HOG+NDI 预训练）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>编码器初始化</td>
+<td>随机</td>
+<td>预训练权重</td>
+</tr>
+<tr>
+<td>光谱特征质量</td>
+<td>完全依赖端到端优化</td>
+<td>预训练阶段已注入语义约束</td>
+</tr>
+<tr>
+<td>训练成本（预训练）</td>
+<td>—</td>
+<td>低（轻量编码器，V100 可跑）</td>
+</tr>
+<tr>
+<td>训练成本（微调）</td>
+<td>与基线相同</td>
+<td>与基线相同</td>
+</tr>
+<tr>
+<td>额外数据依赖</td>
+<td>无</td>
+<td>无（复用训练集）</td>
+</tr>
+<tr>
+<td>实验主线契合度</td>
+<td>—</td>
+<td>✅ 不偏离 LoRA 微调 SAM3 主线</td>
+</tr>
+</tbody></table>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs"><br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>temp</div>
+      <div>https://rsanding.top/2026/03/08/temp/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Rsan Ding</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年3月8日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/03/07/%E6%9C%BA%E8%AF%95%E5%A4%87%E8%80%83%E8%A7%84%E5%88%92P4%EF%BC%9AACM%E6%A0%BC%E5%BC%8F/" title="机试备考规划P4：ACM格式">
+                        <span class="hidden-mobile">机试备考规划P4：ACM格式</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
