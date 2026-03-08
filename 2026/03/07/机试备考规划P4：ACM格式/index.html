@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://rsanding.top/img/covers/ACM.jpg">
 <meta property="article:published_time" content="2026-03-07T15:55:14.000Z">
-<meta property="article:modified_time" content="2026-03-08T18:59:16.655Z">
+<meta property="article:modified_time" content="2026-03-08T19:03:43.639Z">
 <meta property="article:author" content="Rsan Ding">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://rsanding.top/img/covers/ACM.jpg">
@@ -313,7 +313,7 @@
 <p><strong>耗时</strong>：-</p>
 <h3 id="暴力法"><a href="#暴力法" class="headerlink" title="暴力法"></a>暴力法</h3><p>最优解前缀和太难想，考场上一般<strong>先暴力，再优化</strong>。拿到题思路如下：</p>
 <p>首先，既然中位数必须是 b，那子序列一定包含 b，直接以 b 为中心向两端扩展。枚举双指针，复杂度 O(n^2)。</p>
-<p>其次，要统计<strong>滑动窗口</strong> <code>[l, r)</code> 的中位数。两种方法：</p>
+<p>其次，要统计区间 <code>[l, r)</code> 的中位数。两种方法：</p>
 <ol>
 <li>统计<strong>大于小于b的个数</strong>，O(n)；</li>
 <li>排序后找中位数，O(nlogn)。</li>
@@ -326,8 +326,8 @@
 <p>场景：枚举上一个状态维护的值，被下一个状态重复计算了。</p>
 </blockquote>
 <p>本题上一个状态是 <code>[l, r)</code>，下一个状态是 <code>[l, r+1)</code>。</p>
-<p>显然，重复算了 <code>greater</code> 和 <code>smaller</code> 两个变量。因为重新扫描了整个窗口，但其实可以利用上一个<strong>滑动窗口维护的值</strong>，加一个 <code>nums[r]</code> 的新值即可。</p>
-<p>据此优化代码，耗时 $O(n^2)$，可以过 80%。</p>
+<p>显然，重复算了 <code>greater</code> 和 <code>smaller</code> 两个变量。因为重新扫描了整个区间，但其实可以利用<strong>上一个区间维护值</strong>，加一个 <code>nums[r]</code> 的新值即可。</p>
+<p>优化掉一个幂次，耗时 O(n^2)，可以过 80%。</p>
 <blockquote>
 <p>⚠️ 有两个易错点需要注意：</p>
 <ul>
