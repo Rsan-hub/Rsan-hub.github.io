@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://rsanding.top/img/covers/ACM.jpg">
 <meta property="article:published_time" content="2026-03-07T15:55:14.000Z">
-<meta property="article:modified_time" content="2026-03-08T19:03:43.639Z">
+<meta property="article:modified_time" content="2026-03-08T19:07:09.644Z">
 <meta property="article:author" content="Rsan Ding">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://rsanding.top/img/covers/ACM.jpg">
@@ -230,7 +230,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.4k 字
+          1.3k 字
         
       </span>
     
@@ -326,7 +326,7 @@
 <p>场景：枚举上一个状态维护的值，被下一个状态重复计算了。</p>
 </blockquote>
 <p>本题上一个状态是 <code>[l, r)</code>，下一个状态是 <code>[l, r+1)</code>。</p>
-<p>显然，重复算了 <code>greater</code> 和 <code>smaller</code> 两个变量。因为重新扫描了整个区间，但其实可以利用<strong>上一个区间维护值</strong>，加一个 <code>nums[r]</code> 的新值即可。</p>
+<p>显然， <code>greater</code> 和 <code>smaller</code> 被重复算了。因为重新扫描了整个区间，但其实可以利用<strong>上一个区间维护值</strong>，加一个 <code>nums[r]</code> 的新值即可。</p>
 <p>优化掉一个幂次，耗时 O(n^2)，可以过 80%。</p>
 <blockquote>
 <p>⚠️ 有两个易错点需要注意：</p>
