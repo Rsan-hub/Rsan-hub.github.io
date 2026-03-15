@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://rsanding.top/img/covers/whl.png">
 <meta property="article:published_time" content="2026-02-25T12:26:55.000Z">
-<meta property="article:modified_time" content="2026-03-15T12:57:36.025Z">
+<meta property="article:modified_time" content="2026-03-15T18:18:30.791Z">
 <meta property="article:author" content="Rsan Ding">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://rsanding.top/img/covers/whl.png">
@@ -241,7 +241,7 @@
         
         
         
-          164 分钟
+          171 分钟
         
       </span>
     
@@ -807,10 +807,10 @@
 <td>贪心</td>
 </tr>
 <tr>
-<td>70<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/maximize-sum-of-array-after-k-negations/description/">K 次取反后最大化的数组和</a></td>
+<td>✅70<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/maximize-sum-of-array-after-k-negations/description/">K 次取反后最大化的数组和</a></td>
 <td>简单</td>
-<td></td>
-<td>排序贪心</td>
+<td>🌶🌶</td>
+<td>贪心+两次排序</td>
 </tr>
 <tr>
 <td>71<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/gas-station/description/">加油站</a></td>
@@ -835,10 +835,10 @@
 </tr>
 </thead>
 <tbody><tr>
-<td>73<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/lemonade-change/">柠檬水找零</a></td>
+<td>✅73<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/lemonade-change/">柠檬水找零</a></td>
 <td>简单</td>
-<td></td>
-<td>模拟</td>
+<td>🌶</td>
+<td>模拟+贪心原则</td>
 </tr>
 <tr>
 <td>74<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/queue-reconstruction-by-height/description/">根据身高重建队列</a></td>
@@ -887,16 +887,16 @@
 </tr>
 </thead>
 <tbody><tr>
-<td>80<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/integer-break/">整数拆分</a></td>
+<td>✅80<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/integer-break/">整数拆分</a></td>
 <td>中等</td>
-<td></td>
-<td>动态规划</td>
+<td>🌶🌶🌶</td>
+<td>枚举+动规</td>
 </tr>
 <tr>
-<td>81<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/unique-binary-search-trees/">不同的二叉搜索树</a></td>
+<td>✅81<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/unique-binary-search-trees/">不同的二叉搜索树</a></td>
 <td>中等</td>
-<td></td>
-<td>卡特兰数</td>
+<td>🌶🌶🌶</td>
+<td>卡特兰数 &#x2F; 🔖<strong>BST“形状与数值无关性”</strong></td>
 </tr>
 <tr>
 <td>82<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/2/">0-1 背包问题</a></td>
@@ -1800,14 +1800,37 @@
 <p><strong>难点</strong>：</p>
 <h2 id="69-跳跃游戏"><a href="#69-跳跃游戏" class="headerlink" title="69. 跳跃游戏"></a>69. <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/jump-game/">跳跃游戏</a></h2><p><strong>方法</strong>：</p>
 <p><strong>难点</strong>：</p>
-<h2 id="70-K次取反后最大化的数组和"><a href="#70-K次取反后最大化的数组和" class="headerlink" title="70. K次取反后最大化的数组和"></a>70. <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/maximize-sum-of-array-after-k-negations/description/">K次取反后最大化的数组和</a></h2><p><strong>方法</strong>：</p>
-<p><strong>难点</strong>：</p>
+<h2 id="70-K次取反后最大化的数组和"><a href="#70-K次取反后最大化的数组和" class="headerlink" title="70. K次取反后最大化的数组和"></a>70. <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/maximize-sum-of-array-after-k-negations/description/">K次取反后最大化的数组和</a></h2><p><strong>方法</strong>：排序 + 贪心</p>
+<p><strong>难点</strong>：两次排序</p>
+<p>不难想到，本题的贪心解分为前后两步。</p>
+<p>贪心 1：处理负数</p>
+<ul>
+<li>局部最优：让绝对值大的负数变为正数；</li>
+<li>整体最优：整个数组和达到最大。</li>
+</ul>
+<p>贪心 2：处理非负数</p>
+<ul>
+<li>局部最优：让最小非负数自旋</li>
+<li>整体最优：整个数组和最大</li>
+</ul>
+<p>贪心 1 2 之间插入一次排序，一切都简单了。否则捯饬指针很麻烦。</p>
+<p>❗️要敢于用性能换代码量……</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">largestSumAfterKNegations</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums, <span class="hljs-type">int</span> k)</span> </span>&#123;<br>        <span class="hljs-comment">// 第一次排序</span><br>        <span class="hljs-built_in">sort</span>(nums.<span class="hljs-built_in">begin</span>(), nums.<span class="hljs-built_in">end</span>());<br>        <span class="hljs-comment">// 贪心 1：对于负数，修改为正，移动指针</span><br>        <span class="hljs-type">int</span> i = <span class="hljs-number">0</span>, n = nums.<span class="hljs-built_in">size</span>();<br>        <span class="hljs-keyword">while</span> (k &gt; <span class="hljs-number">0</span> &amp;&amp; i &lt; n &amp;&amp; nums[i] &lt; <span class="hljs-number">0</span>) &#123;<br>            nums[i] = <span class="hljs-number">-1</span> * nums[i];<br>            k--; i++;<br>        &#125;<br>        <span class="hljs-comment">// 第二次排序</span><br>        <span class="hljs-built_in">sort</span>(nums.<span class="hljs-built_in">begin</span>(), nums.<span class="hljs-built_in">end</span>());<br>        <span class="hljs-comment">// 贪心 2：对于最小非负数，原地自旋</span><br>        <span class="hljs-keyword">while</span> (k--) &#123;<br>            nums[<span class="hljs-number">0</span>] = <span class="hljs-number">-1</span> * nums[<span class="hljs-number">0</span>];<br>        &#125;<br>        <span class="hljs-comment">// 计算数组和</span><br>        <span class="hljs-type">int</span> sum = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> num : nums) &#123;<br>            sum += num;<br>        &#125;<br>        <span class="hljs-keyword">return</span> sum;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
 <h2 id="71-加油站"><a href="#71-加油站" class="headerlink" title="71. 加油站"></a>71. <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/gas-station/description/">加油站</a></h2><p><strong>方法</strong>：</p>
 <p><strong>难点</strong>：</p>
 <h2 id="72-分发糖果"><a href="#72-分发糖果" class="headerlink" title="72. 分发糖果"></a>72. <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/candy/description/">分发糖果</a></h2><p><strong>方法</strong>：</p>
 <p><strong>难点</strong>：</p>
-<h2 id="73-柠檬水找零"><a href="#73-柠檬水找零" class="headerlink" title="73. 柠檬水找零"></a>73. <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/lemonade-change/">柠檬水找零</a></h2><p><strong>方法</strong>：</p>
-<p><strong>难点</strong>：</p>
+<h2 id="73-柠檬水找零"><a href="#73-柠檬水找零" class="headerlink" title="73. 柠檬水找零"></a>73. <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/lemonade-change/">柠檬水找零</a></h2><p><strong>方法</strong>：模拟+贪心原则</p>
+<p><strong>难点</strong>：条件分支</p>
+<p>前提：5 美元更万能，因此在 20 美元的条件分支中，优先消耗 10 美元。</p>
+<ul>
+<li>局部最优：遇到账单20，优先消耗美元10，完成本次找零。</li>
+<li>全局最优：完成全部账单的找零。</li>
+</ul>
+<p>注意 20 美元的条件分支写法。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">lemonadeChange</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; bills)</span> </span>&#123;<br>        <span class="hljs-comment">// 三个面值数组</span><br>        <span class="hljs-type">int</span> d5 = <span class="hljs-number">0</span>, d10 = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; bills.<span class="hljs-built_in">size</span>(); i++) &#123;<br>            <span class="hljs-keyword">if</span> (bills[i] == <span class="hljs-number">5</span>) &#123;<br>                <span class="hljs-comment">// 不找零</span><br>                d5++;<br>            &#125;<br>            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (bills[i] == <span class="hljs-number">10</span>) &#123;<br>                <span class="hljs-comment">// 找 5 刀</span><br>                <span class="hljs-keyword">if</span> (d5 == <span class="hljs-number">0</span>) &#123;<br>                    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>                &#125;<br>                d5--;<br>                d10++;<br>            &#125;<br>            <span class="hljs-keyword">else</span> &#123;<br>                <span class="hljs-type">bool</span> condition1 = (d5 &gt;= <span class="hljs-number">1</span> &amp;&amp; d10 &gt;= <span class="hljs-number">1</span>);    <span class="hljs-comment">// 有一张 5 刀，一张 10 刀</span><br>                <span class="hljs-type">bool</span> condition2 = (d5 &gt;= <span class="hljs-number">3</span>);    <span class="hljs-comment">// 有 3 张 5 刀</span><br>                <span class="hljs-keyword">if</span> (condition1) &#123;<br>                    <span class="hljs-comment">// 贪心法：优先使用 10 刀</span><br>                    d5--; d10--;<br>                &#125;<br>                <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (condition2) &#123;<br>                    <span class="hljs-comment">// 之后考虑使用 5 刀</span><br>                    d5 -= <span class="hljs-number">3</span>;<br>                &#125;<br>                <span class="hljs-keyword">else</span> &#123;<br>                    <span class="hljs-comment">// 无钱可找</span><br>                    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>                &#125;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
 <h2 id="74-根据身高重建队列"><a href="#74-根据身高重建队列" class="headerlink" title="74. 根据身高重建队列"></a>74. <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/queue-reconstruction-by-height/description/">根据身高重建队列</a></h2><p><strong>方法</strong>：</p>
 <p><strong>难点</strong>：</p>
 <h2 id="75-无重叠区间"><a href="#75-无重叠区间" class="headerlink" title="75. 无重叠区间"></a>75. <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/non-overlapping-intervals/description/">无重叠区间</a></h2><p><strong>方法</strong>：</p>
@@ -1826,16 +1849,31 @@
 <h3 id="思路-3"><a href="#思路-3" class="headerlink" title="思路"></a>思路</h3><p><a target="_blank" rel="noopener" href="https://programmercarl.com/0343.%E6%95%B4%E6%95%B0%E6%8B%86%E5%88%86.html">代码随想录:整数拆分</a></p>
 <p><code>dp[i]</code> 定义：拆分 <code>i</code> 所得 <code>k</code> 个正整数的最大乘积。其中 <strong>k &gt;&#x3D; 2</strong>。</p>
 <p>初始情况 <code>dp[2] = 1</code>，可以发现至少有两个变量：从 <code>i</code> 拆出来的第一个因子 <code>j</code>、拆分个数 <code>k</code>。</p>
-<p>从初始情况的下一轮找<strong>递推关系</strong>：假设拆出来的<strong>第一个因子 j 固定</strong>，那么剩余部分 i - j 还可以拆分出来 k - 1 个数。</p>
+<p>从初始情况的下一轮找<strong>递推关系</strong>：假设拆出来的<strong>第一个因子 j 固定</strong>，那么剩余部分 i - j 还可以<strong>纵向</strong>拆分出来 k - 1 个数。</p>
 <ul>
-<li>k &#x3D; 2 就是 j * (i - j) 的情况；</li>
-<li>k &gt; 2 就是 j * dp[i - j] 的情况。（<strong>按 dp 定义，i - j 至少要拆成 2 个数</strong>）</li>
+<li>k &#x3D; 2 的情况：乘积为 j * (i - j)；</li>
+<li>k &gt; 2 的情况：乘积为 j * dp[i - j]。（<strong>按 dp 定义，i - j 至少要拆成 2 个数</strong>）</li>
 </ul>
-<p>当 j 变化时，循环仍然处于同一轮（同一个 i），因此还要和上一个 j 的 dp[i] 比较。</p>
+<p>当 j 变化时，循环仍然处于同一轮（同一个 i），因此还要和上一个 j 的 dp[i] <strong>横向</strong>比较。</p>
 <h3 id="代码-14"><a href="#代码-14" class="headerlink" title="代码"></a>代码</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">integerBreak</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span> </span>&#123;<br>        <span class="hljs-comment">// dp[i]：正整数 i 拆分后的最大乘积</span><br>        <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">dp</span><span class="hljs-params">(n + <span class="hljs-number">1</span>)</span></span>;<br>        <span class="hljs-comment">// 数据范围：2 &lt;= n &lt;= 58</span><br>        dp[<span class="hljs-number">2</span>] = <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">2</span>; i &lt;= n; i++) &#123;<br>            <span class="hljs-comment">/* </span><br><span class="hljs-comment">             * 初始 k = 2，拆成 j * (i - j)，在此基础上两方向迭代</span><br><span class="hljs-comment">             * 横向找 j：1 &lt;= j &lt;= i，枚举出最合适的因子 j</span><br><span class="hljs-comment">             * 纵向找 k：dp[i - j]，拆出最合适的 k 个数</span><br><span class="hljs-comment">             */</span><br>            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt; i; j++) &#123;<br>                dp[i] = <span class="hljs-built_in">max</span>(<br>                    <span class="hljs-built_in">max</span>(    <span class="hljs-comment">// 纵向迭代</span><br>                        j * (i - j),    <span class="hljs-comment">// k = 2</span><br>                        j * dp[i - j]    <span class="hljs-comment">// k &gt;= 3</span><br>                    ),<br>                    dp[i]    <span class="hljs-comment">// 横向迭代</span><br>                );<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> dp[n];<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
-<h2 id="81-不同的二叉搜索树"><a href="#81-不同的二叉搜索树" class="headerlink" title="81. 不同的二叉搜索树"></a>81. <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/unique-binary-search-trees/">不同的二叉搜索树</a></h2><p><strong>方法</strong>：</p>
-<p><strong>难点</strong>：</p>
+<h2 id="81-不同的二叉搜索树"><a href="#81-不同的二叉搜索树" class="headerlink" title="81. 不同的二叉搜索树"></a>81. <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/unique-binary-search-trees/">不同的二叉搜索树</a></h2><p><strong>方法</strong>：卡特兰数 &#x2F; 动态规划</p>
+<p><strong>难点</strong>：防溢出 &#x2F; BST“形状与数值无关性”</p>
+<p>先用卡特兰过了一下。主要是防止溢出，要用 long long，还要在模拟中及时除掉分母的一部分。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">numTrees</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span> </span>&#123;<br>        <span class="hljs-comment">// catalan simulation</span><br>        <span class="hljs-type">long</span> <span class="hljs-type">long</span> up = <span class="hljs-number">1</span>, down = n + <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) &#123;<br>            up *= (<span class="hljs-number">2</span> * n - i);<br>            <span class="hljs-comment">// prevent overflow (barely)</span><br>            <span class="hljs-keyword">if</span> (up % (n - i) == <span class="hljs-number">0</span>) &#123;<br>                up /= (n - i);<br>            &#125;<br>            <span class="hljs-keyword">else</span> &#123;<br>                down *= (n - i);<br>            &#125;<br>        &#125;<br>        <span class="hljs-type">int</span> ans = up / down;<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h3 id="BST“形状与数值无关性”"><a href="#BST“形状与数值无关性”" class="headerlink" title="BST“形状与数值无关性”"></a>BST“形状与数值无关性”</h3><p>参考：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1eK411o7QA">代码随想录:动态规划找到子状态之间的关系很重要！</a></p>
+<p>动规做法比较巧，要结合 BST 特性：<strong><code>i</code> 个不同节点组成的 BST，形状一定只有 <code>dp[i]</code> 种，与节点数值无关。</strong></p>
+<p><img src="https://file1.kamacoder.com/i/algo/20210107093129889.png" srcset="/img/loadingdog.gif" lazyload alt="注意【前两棵树根的右子树】和【后两棵树根的左子树】"></p>
+<p>比如上图，【前两棵树根的右子树】和【后两棵树根的左子树】形状是一样的。也就是说，2 个不同节点组成的 BST，布局就如下 2 种。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs raw">  n      m<br> /   or   \<br>m          n<br></code></pre></td></tr></table></figure>
+
+<p>因此，<strong>dp[i] 定义</strong>：i 个不同结点组成的 BST 形状数。（与结点数值无关）</p>
+<blockquote>
+<p>解法：对于一棵 <code>i</code> 个不同节点的 BST，枚举以结点 <code>1 ~ i</code> 作为树根的情况，分别考虑其<strong>左右子树的结点数量</strong>。<br>AC关键：调试 <code>i</code> 和 <code>j</code> 此消彼长的关系。</p>
+</blockquote>
+<h3 id="代码-15"><a href="#代码-15" class="headerlink" title="代码"></a>代码</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">numTrees</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span> </span>&#123;<br>        <span class="hljs-comment">// dp vector init</span><br>        <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">dp</span><span class="hljs-params">(n + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>)</span></span>;<br>        dp[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>; dp[<span class="hljs-number">1</span>] = <span class="hljs-number">1</span>;<br>        <span class="hljs-comment">// build dp vector</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">2</span>; i &lt;= n; i++) &#123;<br>            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; i; j++) &#123;<br>                <span class="hljs-comment">// multiply lchild &amp; rchild types</span><br>                dp[i] += dp[j] * dp[i - <span class="hljs-number">1</span> - j];<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> dp[n];<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
 <h2 id="82-0-1背包问题"><a href="#82-0-1背包问题" class="headerlink" title="82. 0-1背包问题"></a>82. <a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/2/">0-1背包问题</a></h2><p><strong>方法</strong>：</p>
 <p><strong>难点</strong>：</p>
 <h2 id="83-完全背包问题"><a href="#83-完全背包问题" class="headerlink" title="83. 完全背包问题"></a>83. <a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/3/">完全背包问题</a></h2><p><strong>方法</strong>：</p>
